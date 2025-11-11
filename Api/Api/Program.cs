@@ -1,18 +1,14 @@
 using Microsoft.EntityFrameworkCore;
+using ApiAndreLeonorProjetoFinal.Data;
+using Microsoft.AspNetCore.Builder;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
-
-
-// 1. Ler a connection string do appsettings.json
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-// 2. Adicionar o serviço do DbContext (injeção de dependência)
-/*builder.Services.AddDbContext<CroaeDbContext>(options =>
-    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))
-);
-*/
+builder.Services.AddDbContext<CroaeDbContext>(options =>
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+
 
 // Add services to the container.
 builder.Services.AddControllers();

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ApiAndreLeonorProjetoFinal.Data.Models;
+namespace ApiAndreLeonorProjetoFinal.Models;
 
 public partial class FamiliaAdotante
 {
@@ -15,5 +15,5 @@ public partial class FamiliaAdotante
 
     public DateOnly? DataRegisto { get; set; }
 
-    public virtual ICollection<Adocoes> Adocos { get; set; } = new List<Adocoes>();
+    public virtual ICollection<Adocoes> Adocoes { get; set; } = new List<Adocoes>();
 }

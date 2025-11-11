@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ApiAndreLeonorProjetoFinal.Data.Models;
+namespace ApiAndreLeonorProjetoFinal.Models;
 
 public partial class Apadrinhamento
 {

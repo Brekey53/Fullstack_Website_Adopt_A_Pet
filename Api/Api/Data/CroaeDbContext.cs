@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using ApiAndreLeonorProjetoFinal.Data.Models;
+using ApiAndreLeonorProjetoFinal.Models;
 using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Scaffolding.Internal;
 
@@ -53,8 +53,9 @@ public partial class CroaeDbContext : DbContext
 
     public virtual DbSet<Voluntario> Voluntarios { get; set; }
 
+        // TODO: Move the connection string out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+            //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to */read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263. 
         => optionsBuilder.UseMySql("server=localhost;port=3306;database=croae_projeto;user=root;password=root", Microsoft.EntityFrameworkCore.ServerVersion.Parse("9.3.0-mysql"));
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -82,12 +83,12 @@ public partial class CroaeDbContext : DbContext
                 .HasColumnName("estado");
             entity.Property(e => e.FamiliaId).HasColumnName("familia_id");
 
-            entity.HasOne(d => d.Cao).WithMany(p => p.Adocos)
+            entity.HasOne(d => d.Cao).WithMany(p => p.Adocoes)
                 .HasForeignKey(d => d.CaoId)
                 .OnDelete(DeleteBehavior.SetNull)
                 .HasConstraintName("fk_adocoes_caes");
 
-            entity.HasOne(d => d.Familia).WithMany(p => p.Adocos)
+            entity.HasOne(d => d.Familia).WithMany(p => p.Adocoes)
                 .HasForeignKey(d => d.FamiliaId)
                 .OnDelete(DeleteBehavior.SetNull)
                 .HasConstraintName("fk_adocoes_familias");

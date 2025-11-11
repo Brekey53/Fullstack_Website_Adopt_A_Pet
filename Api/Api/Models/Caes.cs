@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ApiAndreLeonorProjetoFinal.Data.Models;
+namespace ApiAndreLeonorProjetoFinal.Models;
 
 public partial class Caes
 {
@@ -29,7 +29,7 @@ public partial class Caes
 
     public bool? Disponivel { get; set; }
 
-    public virtual ICollection<Adocoes> Adocos { get; set; } = new List<Adocoes>();
+    public virtual ICollection<Adocoes> Adocoes { get; set; } = new List<Adocoes>();
 
     public virtual ICollection<Apadrinhamento> Apadrinhamentos { get; set; } = new List<Apadrinhamento>();
 
