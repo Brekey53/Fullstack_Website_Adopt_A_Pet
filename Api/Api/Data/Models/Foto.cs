@@ -1,0 +1,15 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace ApiAndreLeonorProjetoFinal.Data.Models;
+
+public partial class Foto
+{
+    public int FotoId { get; set; }
+
+    public int CaoId { get; set; }
+
+    public byte[]? Foto1 { get; set; }
+
+    public virtual Cae Cao { get; set; } = null!;
+}
