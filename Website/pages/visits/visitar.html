@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CROAE - Visite-nos</title>
+    <link rel="shortcut icon" href="../../images/icone_titulo.png" type="image/x-icon">
+
+    <!--Bootstrap Link-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+    <!-- CSS Files-->
+    <link rel="stylesheet" href="../../styles_gerais/navbar.css">
+    <link rel="stylesheet" href="../../styles_gerais/footer.css">
+    <link rel="stylesheet" href="../../styles_gerais/hero.css">
+    <link rel="stylesheet" href="../../styles_gerais/tipografia.css">
+    <link rel="stylesheet" href="../../styles_gerais/buttons.css">
+    <link rel="stylesheet" href="../../styles_gerais/font_awesome.css">
+    
+    <link rel="stylesheet" href="styles/styles_visitar.css">
+    
+
+    <!-- For the Personalized Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+
+    <!--For gLightbox-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
+
+    <!-- Font Awesome Icons-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+    <header>
+        <nav id="mainNavbar" class="navbar navbar-expand-lg fixed-top navbar-custom navbar-dark">
+            <div class="container-fluid">
+                <div class="navbar-img">
+                    <a href="../../index.html"><img src="../../images/croae_logo.jpg" alt="CROAE logo"
+                            class="logo-desktop"></a>
+                    <a href="../../index.html"><img src="../../images/croae_logo_mobile.jpg" alt="CROAE logo mobile"
+                            class="logo-mobile"></a>
+                </div>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse custom-color" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="../adoptionPages/adocao.html" id="adocaoDropdown"
+                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Adoção
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="adocaoDropdown">
+                                <li>
+                                    <a class="dropdown-item" href="../adoptionPages/adocao.html">Adotar no CROAE</a>
+                                </li>
+                                <li><a class="dropdown-item" href="../adoptionPages/paraAdotar.html">Animais para
+                                        adoção</a></li>
+                                <li><a class="dropdown-item" href="../adoptionPages/adotados.html">Animais
+                                        adotados</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="../servicos/servicos.html" id="servicosDropdown"
+                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Serviços CROAE
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="servicosDropdown">
+                                <li>
+                                    <a class="dropdown-item" href="../servicos/servicos.html">Serviços CROAE</a>
+                                </li>
+                                <li><a class="dropdown-item" href="../servicos/servicosVet.html">Serviços
+                                        Veterinários</a></li>
+                                <li><a class="dropdown-item" href="../servicos/servicosRecolha.html">Serviços Recolha</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="visitar.html" id="ativo">Marcar Visita</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../blog/noticias.html">Notícias</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../contacts/contactos.html">Contactos</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero d-flex align-items-center text-center text-white">
+        <h1 class="display-4 fw-bold highlight">Visite o CROAE</h1>
+        <p class="mb-4 highlight">Conheça o nosso espaço, adote um amigo ou participe em ações de voluntariado.</p>
+    </section>
+
+    <form class="container-fluid shadow rounded bg-light mt-5">
+        <div class="text-center mb-4">
+            <img src="https://www.animatedimages.org/data/media/202/animated-dog-image-0931.gif" alt="Cão animado"
+                style="max-height:80px;">
+            <h3 class="mt-3">Marcação de Visita</h3>
+        </div>
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label for="nome_voluntario" class="form-label">Nome <span class="text-danger">*</span></label>
+                <input type="text" id="nome_voluntario" name="nome_voluntario" class="form-control"
+                    placeholder="Escreve o teu nome" required>
+            </div>
+            <div class="col-md-6">
+                <label for="email_voluntario" class="form-label">Email <span class="text-danger">*</span></label>
+                <input type="email" id="email_voluntario" name="email_voluntario" class="form-control"
+                    placeholder="O teu email" required>
+            </div>
+            <div class="col-md-6">
+                <label for="tipo_visita" class="form-label">Tipo de Visita <span class="text-danger">*</span></label>
+                <select id="tipo_visita" name="tipo_visita" class="form-select" required>
+                    <option value="">Escolhe uma opção...</option>
+                    <option value="adotar">Visitar o CROAE para adotar</option>
+                    <option value="voluntariado">Fazer voluntariado</option>
+                    <option value="escola">Solicitar visita do CROAE a uma escola</option>
+                </select>
+            </div>
+            <div class="col-12">
+                <div class="form-check">
+                    <input type="checkbox" id="consentimento" class="form-check-input" required>
+                    <label for="consentimento" class="form-check-label">
+                        Concordo em receber emails de contacto
+                    </label>
+                </div>
+            </div>
+            <div class="col-12 text-end">
+                <button type="submit" class="btn btn-warning px-4 fw-bold m-3">Submeter</button>
+            </div>
+        </div>
+    </form>
+
+    <section class="container-fluid mt-5">
+            <div class="row align-items-center justify-content-center">
+                <div class="col-12 text-center">
+                    <h3 class="text-center">Estamos à vossa espera </h3>
+                    <a href="images/animais_croae.png" class="glightbox">
+                        <img src="images/animais_croae.png" alt="Banner Cães CROAE"
+                            class="img-fluid rounded shadow">
+                    </a>
+                </div>
+            </div>
+    </section>
+
+    <a href="#" class="back-to-top" title="Voltar ao topo">
+        <i class="fa-solid fa-paw"></i>
+    </a>
+
+    <footer class="text-light text-center py-3 mt-5">
+        <p class="mb-0">&copy; 2025 CROAE - Todos os direitos reservados.</p>
+    </footer>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
+    <script src="../../js/script.js"></script>
+</body>
+
+</html>

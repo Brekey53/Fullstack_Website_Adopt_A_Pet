@@ -1,0 +1,119 @@
+/*==============
+      Navbar
+================*/
+/*
+    Used bootstrap navbar for responsiveness, just added:
+        1. colors
+        2. font type and size
+*/
+.navbar-custom {
+    background-color: #ffb300;
+}
+
+.navbar-img img {
+    max-width: 230px;
+    height: auto;
+    border-radius: 8%;
+}
+
+.navbar-custom .nav-link {
+    color: #fff !important;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 10px 30px;
+    margin: 0 30px;
+}
+
+.navbar-custom .nav-link:hover {
+    color: #333 !important;
+    transform: translateY(-3px);
+}
+
+.navbar-toggler {
+    border: none;
+}
+
+.logo-mobile {
+    display: none;
+}
+
+.navbar-custom .dropdown-menu {
+    background-color: #ffb300;
+    border: none;
+    margin-top: 0;
+}
+
+.navbar-custom .dropdown-item {
+    color: #ffffff;
+    font-weight: 500;
+    padding: 10px 15px;
+}
+
+.navbar-custom .dropdown-item:hover {
+    background-color: #f9a825;
+    color: #333 !important;
+}
+
+.navbar-custom .dropdown-toggle::after {
+    display: none;
+}
+
+@media (min-width: 992px) {
+    .nav-item.dropdown:hover .dropdown-menu {
+        display: block;
+    }
+
+    .navbar .nav-link.dropdown-toggle {
+        cursor: default;
+        pointer-events: none;
+    }
+}
+
+@media (max-width: 992px) {
+    .navbar-img {
+        text-align: center;
+        width: 100%;
+    }
+
+    .logo-desktop {
+        display: none;
+    }
+
+    .logo-mobile {
+        display: block;
+        width: 80px;
+        margin: 0 auto;
+    }
+}
+
+.navbar-custom img {
+    max-height: 80px;
+    transition: all 0.3s ease;
+}
+
+.navbar-custom.shrink img {
+    max-width: 100px;
+}
+
+@media (max-width: 992px) {
+    .navbar-custom.shrink img {
+        max-width: 50px;
+    }
+}
+
+.dropdown-item {
+    border-bottom: 1px solid white;
+}
+
+.dropdown-menu li:last-child .dropdown-item {
+    border-bottom: none;
+}
+
+#ativo {
+    color: #000 !important;
+    border-bottom: 2px solid white;
+}
+
+.dropdown-menu li:last-child #ativo {
+    border-bottom: none;
+}

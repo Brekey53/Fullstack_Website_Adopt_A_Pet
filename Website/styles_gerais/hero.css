@@ -1,0 +1,25 @@
+.hero {
+    background-position: center;
+    background-attachment: fixed;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+}
+
+.highlight {
+    background: rgba(50, 50, 50, 0.7);
+    padding: 5px 10px;
+    border-radius: 10px;
+    display: inline-block;
+}
+
+.hero-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}

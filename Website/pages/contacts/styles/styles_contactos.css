@@ -1,0 +1,94 @@
+body {
+  padding-top: 100px;
+}
+
+/*===================
+    Horario Lista
+=====================*/
+
+.horario ul {
+    list-style-type: none;
+}
+
+.horario li {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0px;
+    border-bottom: solid 1px #eee;
+}
+
+/*===================
+  Contacts Cards
+=====================*/
+
+.card-body ul li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.card-body ul li i {
+  font-size: 1.2rem;
+  min-width: 24px;
+  color: #ffb300;
+}
+
+.card-body ul li a {
+  color: #000;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+/*===================
+    Social Links 
+=====================*/
+
+.social-links {
+  display: flex;
+  justify-content: center;
+}
+
+.social-links a {
+  position: relative;
+  color: #ffb300;
+  font-size: 30px;
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 50%;
+}
+
+.social-links a:hover {
+  transform: translateY(-5px) scale(1.2);
+  text-shadow: 0 5px 15px rgba(17, 153, 158, 0.3);
+}
+
+/*===================
+  Social Links Hover
+=====================*/
+
+.facebook:hover {
+  background: #2a81f3;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.instagram:hover {
+  background: linear-gradient(45deg, #f58529, #dd2a7b, #8134af, #515bd4);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.youtube:hover {
+  background: #FF0000;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

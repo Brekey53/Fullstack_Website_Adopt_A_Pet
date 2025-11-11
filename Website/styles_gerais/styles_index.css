@@ -1,0 +1,25 @@
+html,
+body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+.croa-paragraph {
+    text-align: justify;
+}
+
+iframe {
+    width: 100%;
+    height: 315px;
+}
+
+@media (max-width: 992px) {
+    iframe {
+        height: 200px;
+    }
+}
+
+.hero {
+    background-image: url('../images/pirulito_homepage.jpg');
+    background-size: cover;
+}

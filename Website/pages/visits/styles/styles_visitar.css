@@ -1,0 +1,8 @@
+img {
+  max-width: 100%;
+}
+
+.hero {
+  background: url(../images/instalacoes_croae.jpg);
+  background-size: cover;
+}

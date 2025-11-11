@@ -1,0 +1,111 @@
+/*
+PÁGINA adocao.html
+*/
+
+/*==================
+Section Hero
+====================*/
+.hero {
+  background: url(../images/adocao/croa_localizacao.jpg);
+  background-size: cover;
+}
+
+/*==================
+Cards na Section Hero
+=====================*/
+
+.card-adocao {
+  max-width: 300px;
+  margin: auto;
+  background-color: #ffffff;
+  color: black;
+  font-family: "Roboto", sans-serif;
+}
+
+
+.list-group-item {
+  border: none;
+  background: #ffd15e;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+
+.adopt-card {
+  background: #fff;
+  border-left: 6px solid #f4b400;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.40);
+  margin-bottom: 15px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.adopt-card i {
+  margin-top: 4px;
+}
+
+.adopt-card:hover {
+  transform: scale(1.25);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+}
+
+/*==========================================
+        paraAdotar.html e adotados.html
+============================================*/
+.animais {
+  padding-top: 120px;
+}
+
+.animal-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.img-cao {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+
+.animal-header {
+  background-color: #f4b400;
+  color: white;
+}
+
+.animal-header i {
+  font-size: 1.2rem;
+}
+
+.animal-body {
+  font-size: 0.95rem;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+/*
+Icones nas cards para  sexo masculino feminino
+*/
+.fa-venus {
+  color: #f400bf;
+}
+
+.fa-mars {
+  color: blue;
+}
+
+@media (max-width: 992px) {
+  .hero {
+    padding-top: 130px;
+  }
+
+  .animais {
+    padding-top: 130px;
+  }
+}

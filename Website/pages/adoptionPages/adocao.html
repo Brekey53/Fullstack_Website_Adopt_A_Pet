@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CROAE - Adoção</title>
+    <link rel="shortcut icon" href="../../images/icone_titulo.png" type="image/x-icon">
+
+    <!--BootStrap Links-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+    <!-- CSS Links-->
+    <link rel="stylesheet" href="../../styles_gerais/navbar.css">
+    <link rel="stylesheet" href="../../styles_gerais/footer.css">
+    <link rel="stylesheet" href="../../styles_gerais/hero.css">
+    <link rel="stylesheet" href="../../styles_gerais/tipografia.css">
+    <link rel="stylesheet" href="../../styles_gerais/font_awesome.css">
+    <link rel="stylesheet" href="../../styles_gerais/buttons.css">
+    <link rel="stylesheet" href="styles_adocao/adocao.css">
+
+    <!-- For the Personalized Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome Icons-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+    <header>
+        <nav id="mainNavbar" class="navbar navbar-expand-lg fixed-top navbar-custom navbar-dark">
+            <div class="container-fluid">
+                <div class="navbar-img">
+                    <a href="../../index.html"><img src="../../images/croae_logo.jpg" alt="CROAE logo"
+                            class="logo-desktop"></a>
+                    <a href="../../index.html"><img src="../../images/croae_logo_mobile.jpg" alt="CROAE logo mobile"
+                            class="logo-mobile"></a>
+                </div>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse custom-color" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="adocao.html" id="adocaoDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Adoção
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="adocaoDropdown">
+                                <li>
+                                    <a id="ativo" class="dropdown-item" href="adocao.html">Adotar no CROAE</a>
+                                </li>
+                                <li><a class="dropdown-item" href="paraAdotar.html">Animais para
+                                        adoção</a></li>
+                                <li><a class="dropdown-item" href="adotados.html">Animais
+                                        adotados</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="../servicos/servicos.html" id="servicosDropdown"
+                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Serviços CROAE
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="servicosDropdown">
+                                <li><a class="dropdown-item" href="../servicos/servicos.html">Serviços CROAE</a></li>
+                                <li><a class="dropdown-item" href="../servicos/servicosVet.html">Serviços
+                                        Veterinários</a></li>
+                                <li><a class="dropdown-item" href="../servicos/servicosRecolha.html">Serviços
+                                        Recolha</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="../visits/visitar.html">Marcar Visita</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../blog/noticias.html">Notícias</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../contacts/contactos.html">Contactos</a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Section hero with three cards-->
+    <section class="hero">
+        <div class="container py-3">
+            <h1 class="text-center mb-4 highlight">Como Funciona a Adoção no CROA</h1>
+            <div class="row g-4 text-center">
+                <div class="col-12 col-md-4">
+                    <div class="card h-100 shadow-sm card-adocao">
+                        <div class="card-body ">
+                            <i class="fa-solid fa-clipboard-list fa-2x mb-3 ico"></i>
+                            <h5 class="card-title">1. Pedido</h5>
+                            <p class="card-text">Preenche o formulário para marcar uma visita.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="card h-100 shadow-sm card-adocao">
+                        <div class="card-body">
+                            <i class="fa-solid fa-dog fa-2x mb-3 ico"></i>
+                            <h5 class="card-title">2. Conhecer</h5>
+                            <p class="card-text">Visita o CROA e conhece os patudos disponíveis para adoção.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="card h-100 shadow-sm card-adocao">
+                        <div class="card-body">
+                            <i class="fa-solid fa-bone fa-2x mb-3 ico"></i>
+                            <h5 class="card-title">3. Adoção</h5>
+                            <p class="card-text">Após avaliação e aprovação, levas o teu novo cãopanheiro para casa.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Porquê Adotar section-->
+    <section class="py-3">
+        <div class="text-center mb-4">
+            <h3>Porquê Adotar?</h3>
+        </div>
+        <div class="container my-5">
+            <div class="row justify-content-center align-items-center m-2">
+
+                <div class="col-12 col-md-6 col-lg-6">
+                    <div class="adopt-card">
+                        <i class="fa-solid fa-heart"></i>
+                        <p><strong>Salvas uma vida</strong> – ao adotar, dás uma segunda oportunidade a um animal.</p>
+                    </div>
+                    <div class="adopt-card">
+                        <i class="fa-solid fa-paw"></i>
+                        <p><strong>Combates o abandono</strong> – cada adoção abre espaço no CROA para outro animal.</p>
+                    </div>
+                    <div class="adopt-card">
+                        <i class="fa-solid fa-syringe"></i>
+                        <p><strong>Custos mais acessíveis</strong> – já vêm vacinados, desparasitados e esterilizados.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-6">
+                    <div class="adopt-card">
+                        <i class="fa-solid fa-hand-holding-heart"></i>
+                        <p><strong>Contribuis para o bem-estar animal</strong> – ajudas a travar a exploração de
+                            criadores.</p>
+                    </div>
+                    <div class="adopt-card">
+                        <i class="fa-solid fa-face-smile-beam"></i>
+                        <p><strong>Reduzes o stress</strong> – um lar amoroso melhora a saúde física e emocional.</p>
+                    </div>
+                    <div class="adopt-card">
+                        <i class="fa-solid fa-dog"></i>
+                        <p><strong>Ganhas um companheiro fiel</strong> – lealdade, gratidão e muito carinho.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!--Botão Back to The Top-->
+    <a href="#" class="back-to-top" title="Voltar ao topo">
+        <i class="fa-solid fa-paw"></i>
+    </a>
+
+    <footer class="text-light text-center py-3 mt-5">
+        <p class="mb-0">&copy; 2025 CROAE - Todos os direitos reservados.</p>
+    </footer>
+
+    <!--Script Bootstrap-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!--Script JS próprio-->
+    <script src="../../js/script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CROAE - Serviços</title>
+    <link rel="shortcut icon" href="../../images/icone_titulo.png" type="image/x-icon">
+
+    <!--Bootstrap Link-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+    <!--CSS links-->
+    <link rel="stylesheet" href="../../styles_gerais/navbar.css">
+    <link rel="stylesheet" href="../../styles_gerais/footer.css">
+    <link rel="stylesheet" href="../../styles_gerais/hero.css">
+    <link rel="stylesheet" href="../../styles_gerais/tipografia.css">
+    <link rel="stylesheet" href="../../styles_gerais/font_awesome.css">
+    <link rel="stylesheet" href="../../styles_gerais/buttons.css">
+    <link rel="stylesheet" href="styles/styles_servicos.css">
+
+    <!-- For the Personalized Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome Icons-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+    <header>
+        <nav id="mainNavbar" class="navbar navbar-expand-lg fixed-top navbar-custom navbar-dark">
+            <div class="container-fluid">
+                <div class="navbar-img">
+                    <a href="../../index.html"><img src="../../images/croae_logo.jpg" alt="CROAE logo"
+                            class="logo-desktop"></a>
+                    <a href="../../index.html"><img src="../../images/croae_logo_mobile.jpg" alt="CROAE logo mobile"
+                            class="logo-mobile"></a>
+                </div>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse custom-color" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="../adoptionPages/adocao.html" id="adocaoDropdown"
+                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Adoção
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="adocaoDropdown">
+                                <li>
+                                    <a class="dropdown-item" href="../adoptionPages/adocao.html">Adotar no CROAE</a>
+                                </li>
+                                <li><a class="dropdown-item" href="../adoptionPages/paraAdotar.html">Animais para
+                                        adoção</a></li>
+                                <li><a class="dropdown-item" href="../adoptionPages/adotados.html">Animais
+                                        adotados</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="servicos.html" id="servicosDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Serviços CROAE
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="servicosDropdown">
+                                <li>
+                                    <a id="ativo" class="dropdown-item" href="servicos.html">Serviços CROAE</a>
+                                </li>
+                                <li><a class="dropdown-item" href="servicosVet.html">Serviços
+                                        Veterinários</a></li>
+                                <li><a class="dropdown-item" href="servicosRecolha.html">Serviços Recolha</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="../visits/visitar.html">Marcar Visita</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../blog/noticias.html">Notícias</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../contacts/contactos.html">Contactos</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero d-flex align-items-center text-center text-white">
+        <h1 class="display-4 fw-bold highlight">Serviços CROAE</h1>
+        <p class="mb-4 highlight">Conheça todos os serviços que disponibilizamos para garantir o bem-estar animal e
+            apoiar a comunidade.</p>
+        <a href="#servicos-lista" class="btn px-4 rounded-pill shadow">
+            <i class="fa-solid fa-paw me-2"></i> Ver Serviços
+        </a>
+    </section>
+
+    <section id="servicos-lista" class="py-5">
+        <div class="container-fluid">
+            <h3 class="text-center mb-5">Os serviços que o CROAE dispõe</h3>
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <ul class="list-group shadow">
+                        <li class="list-group-item"><i class="fa-solid fa-microchip text-warning me-2"></i>
+                            Identificação eletrónica – custo variável de acordo com a campanha da DGAV</li>
+                        <li class="list-group-item"><i class="fa-solid fa-syringe text-warning me-2"></i> Vacinação
+                            antirrábica – custo variável</li>
+                        <li class="list-group-item"><i class="fa-solid fa-notes-medical text-warning me-2"></i> Emissão
+                            de Boletim Sanitário</li>
+                        <li class="list-group-item"><i class="fa-solid fa-passport text-warning me-2"></i> Emissão de
+                            passaporte – 11,60€ (s/IVA)</li>
+                        <li class="list-group-item"><i class="fa-solid fa-dog text-warning me-2"></i> Captura de animais
+                            vadios – 45,10€ (s/IVA)</li>
+                        <li class="list-group-item"><i class="fa-solid fa-stethoscope text-warning me-2"></i> Vistorias
+                            de saúde e bem-estar – 28,80€ (s/IVA)</li>
+                        <li class="list-group-item"><i class="fa-solid fa-notes-medical text-warning me-2"></i>
+                            Inspeções sanitárias – 28,80€ (s/IVA)</li>
+                        <li class="list-group-item"><i class="fa-solid fa-dumpster text-warning me-2"></i> Destruição de
+                            alimentos apreendidos – 19,80€ (+IVA)</li>
+                        <li class="list-group-item"><i class="fa-solid fa-file-contract text-warning me-2"></i> Emissão
+                            de parecer – 19,00€ (s/IVA)</li>
+                    </ul>
+                </div>
+                <!-- CARROUSSEL -->
+                <div class="col-lg-6 foto-carrousel">
+                    <div id="carouselImagens" class="carousel slide" data-bs-ride="carousel" data-bs-pause="false">
+                        <div class="carousel-indicators">
+                            <button type="button" data-bs-target="#carouselImagens" data-bs-slide-to="0" class="active"
+                                aria-current="true" aria-label="Slide 1"></button>
+                            <button type="button" data-bs-target="#carouselImagens" data-bs-slide-to="1"
+                                aria-label="Slide 2"></button>
+                            <button type="button" data-bs-target="#carouselImagens" data-bs-slide-to="2"
+                                aria-label="Slide 3"></button>
+                            <button type="button" data-bs-target="#carouselImagens" data-bs-slide-to="3"
+                                aria-label="Slide 4"></button>
+                        </div>
+
+                        <div class="carousel-inner text-center">
+                            <div class="carousel-item active">
+                                <img src="images/campanha_esterializacao.png" class="d-block mx-auto img-carousel"
+                                    alt="Campanha Esterilização">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="images/campanha_microchip.jpg" class="d-block mx-auto img-carousel"
+                                    alt="Campanha Recolha">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="images/campanha_recolha.png" class="d-block mx-auto img-carousel"
+                                    alt="Campanha Microchip">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="images/campanha_recolha_alimentos.jpg" class="d-block mx-auto img-carousel"
+                                    alt="Campanha Alimentos">
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselImagens"
+                            data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Anterior</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselImagens"
+                            data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Seguinte</span>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!--Back to the Top Button-->
+    <a href="#" class="back-to-top" title="Voltar ao topo">
+        <i class="fa-solid fa-paw"></i>
+    </a>
+
+    <footer class="text-light text-center py-3 mt-5">
+        <p class="mb-0">&copy; 2025 CROAE - Todos os direitos reservados.</p>
+    </footer>
+
+    <!--BootStrap Script-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!--Script JS próprio-->
+    <script src="../../js/script.js"></script>
+</body>
+
+</html>
