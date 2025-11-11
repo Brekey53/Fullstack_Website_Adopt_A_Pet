@@ -1,0 +1,13 @@
+services:
+  db: # Nome do serviço mais claro
+    image: mysql:latest
+    container_name: UC00605-Website-adopt-a-pet # Nome do contentor
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
