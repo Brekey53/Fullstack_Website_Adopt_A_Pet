@@ -15,5 +15,5 @@ public partial class FamiliaAdotante
 
     public DateOnly? DataRegisto { get; set; }
 
-    public virtual ICollection<Adoco> Adocos { get; set; } = new List<Adoco>();
+    public virtual ICollection<Adocoes> Adocos { get; set; } = new List<Adocoes>();
 }

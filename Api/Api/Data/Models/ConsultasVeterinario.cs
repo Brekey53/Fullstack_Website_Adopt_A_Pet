@@ -17,7 +17,7 @@ public partial class ConsultasVeterinario
 
     public string? Observacao { get; set; }
 
-    public virtual Cae? Cao { get; set; }
+    public virtual Caes? Cao { get; set; }
 
     public virtual Funcionario? Funcionario { get; set; }
 }

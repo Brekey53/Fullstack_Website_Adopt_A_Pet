@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ApiAndreLeonorProjetoFinal.Data.Models;
 
-public partial class Vacinaco
+public partial class Vacinacao
 {
     public int VacinacaoId { get; set; }
 
@@ -15,7 +15,7 @@ public partial class Vacinaco
 
     public DateTime DataVacinacao { get; set; }
 
-    public virtual Cae Cao { get; set; } = null!;
+    public virtual Caes Cao { get; set; } = null!;
 
     public virtual Funcionario? Funcionario { get; set; }
 

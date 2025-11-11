@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ApiAndreLeonorProjetoFinal.Data.Models;
 
-public partial class Doaco
+public partial class Doacoes
 {
     public int DoacaoId { get; set; }
 

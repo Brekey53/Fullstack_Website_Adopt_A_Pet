@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ApiAndreLeonorProjetoFinal.Data.Models;
 
-public partial class Adoco
+public partial class Adocoes
 {
     public int AdocaoId { get; set; }
 
@@ -15,7 +15,7 @@ public partial class Adoco
 
     public string Estado { get; set; } = null!;
 
-    public virtual Cae? Cao { get; set; }
+    public virtual Caes? Cao { get; set; }
 
     public virtual FamiliaAdotante? Familia { get; set; }
 }

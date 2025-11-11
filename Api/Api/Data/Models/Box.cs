@@ -11,5 +11,5 @@ public partial class Box
 
     public virtual Ala? Ala { get; set; }
 
-    public virtual ICollection<Cae> Caes { get; set; } = new List<Cae>();
+    public virtual ICollection<Caes> Caes { get; set; } = new List<Caes>();
 }

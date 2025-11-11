@@ -15,7 +15,7 @@ public partial class Apadrinhamento
 
     public DateOnly? DataFim { get; set; }
 
-    public virtual Cae Cao { get; set; } = null!;
+    public virtual Caes Cao { get; set; } = null!;
 
     public virtual Padrinho Padrinho { get; set; } = null!;
 }

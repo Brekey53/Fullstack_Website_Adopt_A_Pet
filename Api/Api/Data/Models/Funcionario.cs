@@ -19,7 +19,7 @@ public partial class Funcionario
 
     public virtual ICollection<ConsultasVeterinario> ConsultasVeterinarios { get; set; } = new List<ConsultasVeterinario>();
 
-    public virtual ICollection<Doaco> Doacos { get; set; } = new List<Doaco>();
+    public virtual ICollection<Doacoes> Doacos { get; set; } = new List<Doacoes>();
 
-    public virtual ICollection<Vacinaco> Vacinacos { get; set; } = new List<Vacinaco>();
+    public virtual ICollection<Vacinacao> Vacinacos { get; set; } = new List<Vacinacao>();
 }

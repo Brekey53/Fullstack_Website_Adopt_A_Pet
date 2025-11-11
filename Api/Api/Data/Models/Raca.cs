@@ -9,5 +9,5 @@ public partial class Raca
 
     public string Raca1 { get; set; } = null!;
 
-    public virtual ICollection<Cae> Caes { get; set; } = new List<Cae>();
+    public virtual ICollection<Caes> Caes { get; set; } = new List<Caes>();
 }

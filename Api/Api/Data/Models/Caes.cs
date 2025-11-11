@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ApiAndreLeonorProjetoFinal.Data.Models;
 
-public partial class Cae
+public partial class Caes
 {
     public int CaoId { get; set; }
 
@@ -29,7 +29,7 @@ public partial class Cae
 
     public bool? Disponivel { get; set; }
 
-    public virtual ICollection<Adoco> Adocos { get; set; } = new List<Adoco>();
+    public virtual ICollection<Adocoes> Adocos { get; set; } = new List<Adocoes>();
 
     public virtual ICollection<Apadrinhamento> Apadrinhamentos { get; set; } = new List<Apadrinhamento>();
 
@@ -41,13 +41,13 @@ public partial class Cae
 
     public virtual ICollection<OcorrenciasCaoVoluntario> OcorrenciasCaoVoluntarios { get; set; } = new List<OcorrenciasCaoVoluntario>();
 
-    public virtual ICollection<OcorrenciasEntreCae> OcorrenciasEntreCaeCaoAgressorNavigations { get; set; } = new List<OcorrenciasEntreCae>();
+    public virtual ICollection<OcorrenciasEntreCaes> OcorrenciasEntreCaeCaoAgressorNavigations { get; set; } = new List<OcorrenciasEntreCaes>();
 
-    public virtual ICollection<OcorrenciasEntreCae> OcorrenciasEntreCaeCaoEnvolvidoNavigations { get; set; } = new List<OcorrenciasEntreCae>();
+    public virtual ICollection<OcorrenciasEntreCaes> OcorrenciasEntreCaeCaoEnvolvidoNavigations { get; set; } = new List<OcorrenciasEntreCaes>();
 
     public virtual ICollection<OrdensTribunal> OrdensTribunals { get; set; } = new List<OrdensTribunal>();
 
     public virtual Raca? Raca { get; set; }
 
-    public virtual ICollection<Vacinaco> Vacinacos { get; set; } = new List<Vacinaco>();
+    public virtual ICollection<Vacinacao> Vacinacos { get; set; } = new List<Vacinacao>();
 }

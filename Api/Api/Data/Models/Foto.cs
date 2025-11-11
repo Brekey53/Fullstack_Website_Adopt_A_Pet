@@ -11,5 +11,5 @@ public partial class Foto
 
     public byte[]? Foto1 { get; set; }
 
-    public virtual Cae Cao { get; set; } = null!;
+    public virtual Caes Cao { get; set; } = null!;
 }

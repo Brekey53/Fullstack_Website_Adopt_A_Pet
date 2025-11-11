@@ -17,7 +17,7 @@ public partial class OcorrenciasCaoVoluntario
 
     public bool? SeguroAtivado { get; set; }
 
-    public virtual Cae? Cao { get; set; }
+    public virtual Caes? Cao { get; set; }
 
     public virtual Voluntario? Voluntario { get; set; }
 }

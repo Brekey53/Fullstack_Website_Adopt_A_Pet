@@ -11,5 +11,5 @@ public partial class OrdensTribunal
 
     public string Observacao { get; set; } = null!;
 
-    public virtual Cae Cao { get; set; } = null!;
+    public virtual Caes Cao { get; set; } = null!;
 }
