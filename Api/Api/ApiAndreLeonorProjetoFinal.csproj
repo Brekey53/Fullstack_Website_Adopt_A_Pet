@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -18,6 +18,32 @@
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="9.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.14.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\images\adotados\be.jpg" />
+    <None Include="wwwroot\images\adotados\bitoke.jpg" />
+    <None Include="wwwroot\images\adotados\chibi.jpg" />
+    <None Include="wwwroot\images\adotados\chucky.jpg" />
+    <None Include="wwwroot\images\adotados\dina.jpg" />
+    <None Include="wwwroot\images\adotados\dino.jpg" />
+    <None Include="wwwroot\images\adotados\duque.jpg" />
+    <None Include="wwwroot\images\adotados\faial.jpg" />
+    <None Include="wwwroot\images\adotados\jaime.jpg" />
+    <None Include="wwwroot\images\adotados\jaime_2.jpg" />
+    <None Include="wwwroot\images\adotados\jeny.jpg" />
+    <None Include="wwwroot\images\adotados\joca.jpg" />
+    <None Include="wwwroot\images\adotados\judy.jpg" />
+    <None Include="wwwroot\images\adotados\juju.jpg" />
+    <None Include="wwwroot\images\adotados\kyra.jpg" />
+    <None Include="wwwroot\images\adotados\martinha.jpg" />
+    <None Include="wwwroot\images\adotados\martinho.jpg" />
+    <None Include="wwwroot\images\adotados\migalha.jpg" />
+    <None Include="wwwroot\images\adotados\nina.jpg" />
+    <None Include="wwwroot\images\adotados\pepa.jpg" />
+    <None Include="wwwroot\images\adotados\pirulito.jpg" />
+    <None Include="wwwroot\images\adotados\timon.jpg" />
+    <None Include="wwwroot\images\adotados\tino.jpg" />
   </ItemGroup>
 
 </Project>

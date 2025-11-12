@@ -52,3 +52,5 @@ const lightbox = GLightbox({
   zoomable: true,
   touchNavigation: true,
 });
+
+

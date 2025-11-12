@@ -9,7 +9,7 @@ public partial class Foto
 
     public int CaoId { get; set; }
 
-    public byte[]? Foto1 { get; set; }
+    public string? Foto1 { get; set; }
 
     public virtual Caes Cao { get; set; } = null!;
 }

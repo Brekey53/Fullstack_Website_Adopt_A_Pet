@@ -1,9 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using ApiAndreLeonorProjetoFinal.Data;
-using Microsoft.AspNetCore.Mvc; 
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authorization; // [Authorize(Roles = "Administrador")] // Colocar aqui o role que pode eliminar "Administrador" ou "Admin" (exemplo)
 
 namespace ApiAndreLeonorProjetoFinal.Controllers
 {
@@ -18,12 +15,21 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
             _dbContext = dbContext;
         }
 
-        // Additional actions (GET, POST, PUT, DELETE) would go here
-
         [HttpGet("/api/caes")]
         public IActionResult GetCaes()
         {
-            var caes = _dbContext.Caes.ToList();
+            var caes = _dbContext.Caes.Include(c => c.Fotos).Select(c => new
+                {
+                    c.CaoId,
+                    c.Nome,
+                    c.Porte,
+                    c.Sexo,
+                    c.Disponivel,
+                    c.Caracteristica,
+                    Foto = c.Fotos.FirstOrDefault() != null ? c.Fotos.FirstOrDefault().Foto1
+                        : "images/adotados/default.jpg"
+                }).ToList();
+
             return Ok(caes);
         }
 
