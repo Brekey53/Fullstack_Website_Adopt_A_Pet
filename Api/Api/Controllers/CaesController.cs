@@ -15,7 +15,7 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
             _dbContext = dbContext;
         }
 
-        [HttpGet("/api/caes")]
+        [HttpGet]
         public IActionResult GetCaes()
         {
             var caes = _dbContext.Caes.Include(c => c.Fotos).Select(c => new
@@ -34,7 +34,7 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
         }
 
 
-        [HttpGet("/caes/{id}")] // assim ou como o prof fez
+        [HttpGet("/{id}")] // assim ou como o prof fez
         public JsonResult GetId(int id)
         {
             var result = _dbContext.Caes.Find(id);
