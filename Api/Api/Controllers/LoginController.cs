@@ -1,6 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using ApiAndreLeonorProjetoFinal.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace ApiAndreLeonorProjetoFinal.Controllers
 {
@@ -8,21 +13,44 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
     [ApiController]
     public class LoginController : ControllerBase
     {
-        [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginDto request)
+        private readonly IConfiguration _config;
+
+        public LoginController(IConfiguration config)
         {
-            var user = await _context.Users
-                .SingleOrDefaultAsync(u => u.Email == request.Email);
+            _config = config;
+        }
 
-            if (user == null)
-                return Unauthorized("Utilizador não encontrado");
+        [HttpPost]
+        public IActionResult Login([FromBody] Login loginData)
+        {
+            if (loginData.Username != "administrador" || loginData.Password != "root")
+                return Unauthorized();
 
-            // Verificar password (hash)
-            if (!BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash))
-                return Unauthorized("Password incorrecta");
-
-            var token = GerarJwtToken(user);
+            var token = GenerateJwtToken(loginData.Username);
             return Ok(new { token });
+        }
+
+        private string GenerateJwtToken(string username)
+        {
+            var key = Encoding.UTF8.GetBytes(_config["JwtSettings:Key"]);
+
+            var securityKey = new SymmetricSecurityKey(key);
+            var creds = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+
+            var claims = new[]
+            {
+        new Claim(ClaimTypes.Name, username)
+    };
+
+            var token = new JwtSecurityToken(
+                issuer: _config["JwtSettings:Issuer"],
+                audience: _config["JwtSettings:Audience"],
+                claims: claims,
+                expires: DateTime.Now.AddHours(2),
+                signingCredentials: creds
+            );
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
     }
