@@ -25,3 +25,27 @@ async function sendCredentials() {
     localStorage.setItem("token", result.token);
     localStorage.setItem("username", usernameInput.value);
 }
+
+function logout() {
+    localStorage.removeItem("token");
+    localStorage.removeItem("username");
+    window.location.reload();
+}
+
+const loginBtn = document.getElementById("loginBtn");
+
+function updateLoginButton() {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+        loginBtn.textContent = "Sair";
+        loginBtn.href = "#";
+        loginBtn.onclick = logout;
+    } else {
+        loginBtn.textContent = "Login";
+        loginBtn.href = "pages/login/login.html";
+        loginBtn.onclick = null;
+    }
+}
+
+updateLoginButton();
