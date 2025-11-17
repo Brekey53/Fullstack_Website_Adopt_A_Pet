@@ -44,7 +44,7 @@ public class AdotadosController : ControllerBase
     [HttpGet("{id}")]
     public async Task<IActionResult> GetAdotado(int id)
     {
-        var caoId = await _dbContext.Caes.Include(c => c.Fotos)
+        var cao = await _dbContext.Caes.Include(c => c.Fotos)
             .Where(c => c.CaoId == id)
             .Select(c => new
             {
@@ -56,15 +56,16 @@ public class AdotadosController : ControllerBase
                 c.Castrado,
                 c.Disponivel,
                 c.Caracteristica,
-                Foto = c.Fotos.FirstOrDefault() != null ? c.Fotos.FirstOrDefault().Foto1 : "images/adotados/default.jpg"
-            }).ToListAsync();
+                Foto = c.Fotos.Select(f => f.Foto1).FirstOrDefault() ?? "images/adotados/default.jpg"
+            }).FirstOrDefaultAsync();
 
-        if (caoId == null)
+        if (cao == null)
             return NotFound("Cão não encontrado.");
 
-        return Ok(caoId);
+        return Ok(cao);
     }
 
+    /* Para ja nao utilizar pois este controller servira apenas para leitura dos disponiveis para adotar
     // Patch: api/adotados/1
     [HttpPatch("{id}")]
     public async Task<IActionResult> PatchAdotado(int id, [FromBody] JsonPatchDocument<Caes> patchDoc)
@@ -100,6 +101,7 @@ public class AdotadosController : ControllerBase
         // 5. Retornar "Sem Conteúdo", que é o padrão para um PATCH bem-sucedido
         return NoContent(); // HTTP 204
     }
+    */
 
 
 }
