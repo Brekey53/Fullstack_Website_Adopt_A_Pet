@@ -1,6 +1,8 @@
 using ApiAndreLeonorProjetoFinal.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -31,6 +33,17 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             IssuerSigningKey = new SymmetricSecurityKey(key)
         };
     });
+
+// Adicionar Cache L1 - Local "Polly"
+builder.Services.AddMemoryCache();
+
+// Adicionar Cache L2 - Distribuído/Redis
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    // Pega a connection string do Redis do appsettings.json
+    options.Configuration = builder.Configuration.GetConnectionString("Redis");
+    options.InstanceName = "ProjetoFinal_"; // Prefixo para as chaves
+});
 
 // MVC
 builder.Services.AddControllers().AddNewtonsoftJson();
