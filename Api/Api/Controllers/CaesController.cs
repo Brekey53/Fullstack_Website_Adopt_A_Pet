@@ -56,6 +56,7 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
                     c.Castrado,
                     c.Disponivel,
                     c.Caracteristica,
+                    // Faz uma sub-consulta só pela Foto1 e usa ?? (null-coalescing)
                     Foto = c.Fotos.Select(f => f.Foto1).FirstOrDefault() ?? "images/adotados/default.jpg" // Verificar se há fotos
                 }).FirstOrDefaultAsync();
 
@@ -166,6 +167,42 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
             await _dbContext.SaveChangesAsync();
             return NoContent(); // HTTP 204
 
+        }
+
+        // Patch: api/caes/1
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> PatchAdotado(int id, [FromBody] JsonPatchDocument<Caes> patchDoc)
+        {
+            if (patchDoc == null)
+            {
+                return BadRequest("O documento de patch não pode ser nulo.");
+            }
+
+            // 1. Encontrar a entidade ORIGINAL no banco de dados
+            var caoParaAtualizar = await _dbContext.Caes.FindAsync(id);
+
+            if (caoParaAtualizar == null)
+            {
+                return NotFound("Cão não encontrado.");
+            }
+
+            // 2. Aplicar as alterações do 'patchDoc' ao objeto que veio da BD
+            patchDoc.ApplyTo(caoParaAtualizar, error =>
+            {
+                ModelState.AddModelError(string.Empty, error.ErrorMessage);
+            });
+
+            // 3. Validar o modelo DEPOIS de aplicar o patch
+            if (!TryValidateModel(caoParaAtualizar))
+            {
+                return ValidationProblem(ModelState); // Devolve 400 Bad Request com os erros
+            }
+
+            // 4. Salvar as alterações na Base de Dados
+            await _dbContext.SaveChangesAsync();
+
+            // 5. Retornar "Sem Conteúdo", que é o padrão para um PATCH bem-sucedido
+            return NoContent(); // HTTP 204
         }
     }
 }
