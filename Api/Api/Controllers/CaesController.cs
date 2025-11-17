@@ -16,33 +16,50 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetCaes()
+        public async Task<IActionResult> GetCaes()
         {
-            var caes = _dbContext.Caes.Include(c => c.Fotos).Select(c => new
+            var caesDisponiveis = await _dbContext.Caes.Include(c => c.Fotos)
+                .Select(c => new
                 {
                     c.CaoId,
                     c.Nome,
+                    c.DataNascimento,
                     c.Porte,
                     c.Sexo,
+                    c.Castrado,
                     c.Disponivel,
                     c.Caracteristica,
-                    Foto = c.Fotos.FirstOrDefault() != null ? c.Fotos.FirstOrDefault().Foto1
-                        : "images/adotados/default.jpg"
-                }).ToList();
+                    Foto = c.Fotos.FirstOrDefault() != null ? c.Fotos.FirstOrDefault().Foto1 : "images/adotados/default.jpg"
+                }).ToListAsync();
 
-            return Ok(caes);
+
+            return Ok(caesDisponiveis);
+
         }
 
 
         [HttpGet("/{id}")] // assim ou como o prof fez
-        public JsonResult GetId(int id)
+        public async Task<IActionResult> GetCao(int id)
         {
-            var result = _dbContext.Caes.Find(id);
+            var caoId = await _dbContext.Caes.Include(c => c.Fotos)
+                .Where(c => c.CaoId == id)
+                .Select(c => new
+                {
+                    c.CaoId,
+                    c.Nome,
+                    c.DataNascimento,
+                    c.Porte,
+                    c.Sexo,
+                    c.Castrado,
+                    c.Disponivel,
+                    c.Caracteristica,
+                    Foto = c.Fotos.FirstOrDefault() != null ? c.Fotos.FirstOrDefault().Foto1 : "images/adotados/default.jpg"
+                }).ToListAsync();
 
-            if (result == null)
-                return new JsonResult(NotFound());
+            if (caoId == null)
+                return NotFound("Cão não encontrado.");
 
-            return new JsonResult(Ok(result));
+            return Ok(caoId);
         }
     }
 }
