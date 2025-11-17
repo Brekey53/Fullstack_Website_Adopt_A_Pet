@@ -20,6 +20,7 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
             _config = config;
         }
 
+        // TODO: get information from database, agora está só aqui agora
         [HttpPost]
         public IActionResult Login([FromBody] Login loginData)
         {
@@ -38,9 +39,7 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
             var creds = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
             var claims = new[]
-            {
-        new Claim(ClaimTypes.Name, username)
-    };
+            { new Claim(ClaimTypes.Name, username) };
 
             var token = new JwtSecurityToken(
                 issuer: _config["JwtSettings:Issuer"],
