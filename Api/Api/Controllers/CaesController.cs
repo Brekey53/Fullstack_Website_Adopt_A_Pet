@@ -92,8 +92,6 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
             return Ok(caes);
         }
 
-        }
-
         // Get: api/Caes/1
         [HttpGet("{id}")]
         public async Task<IActionResult> GetCao(int id)
