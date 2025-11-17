@@ -138,6 +138,9 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
             // Guardar as alterações
             await _dbContext.SaveChangesAsync();
 
+            // Invalida o cache de cães para garantir que a lista é atualizada
+            await InvalidateCacheAsync();
+
             // Retorna 201 Created + URL para o novo Cão e objeto Cão
             return CreatedAtAction(nameof(GetCao), new { id = cao.CaoId }, cao);
 
@@ -186,6 +189,9 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
             try
             {
                 await _dbContext.SaveChangesAsync();
+
+                // Invalida o cache de cães para garantir que a lista é atualizada
+                await InvalidateCacheAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -218,7 +224,12 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
 
             _dbContext.Caes.Remove(cao);
 
+            // guardar as alterações na BD
             await _dbContext.SaveChangesAsync();
+
+            // Invalida o cache de cães para garantir que a lista é atualizada
+            await InvalidateCacheAsync();
+
             return NoContent(); // HTTP 204
 
         }
@@ -232,7 +243,7 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
                 return BadRequest("O documento de patch não pode ser nulo.");
             }
 
-            // 1. Encontrar a entidade ORIGINAL no banco de dados
+            // Encontrar a entidade ORIGINAL no banco de dados
             var caoParaAtualizar = await _dbContext.Caes.FindAsync(id);
 
             if (caoParaAtualizar == null)
@@ -240,23 +251,38 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
                 return NotFound("Cão não encontrado.");
             }
 
-            // 2. Aplicar as alterações do 'patchDoc' ao objeto que veio da BD
+            // Aplicar as alterações do 'patchDoc' ao objeto que veio da BD
             patchDoc.ApplyTo(caoParaAtualizar, error =>
             {
                 ModelState.AddModelError(string.Empty, error.ErrorMessage);
             });
 
-            // 3. Validar o modelo DEPOIS de aplicar o patch
+            // Validar o modelo DEPOIS de aplicar o patch
             if (!TryValidateModel(caoParaAtualizar))
             {
                 return ValidationProblem(ModelState); // Devolve 400 Bad Request com os erros
             }
 
-            // 4. Salvar as alterações na Base de Dados
+            // Salvar as alterações na Base de Dados
             await _dbContext.SaveChangesAsync();
 
-            // 5. Retornar "Sem Conteúdo", que é o padrão para um PATCH bem-sucedido
+            // Invalida o cache de cães para garantir que a lista é atualizada
+            await InvalidateCacheAsync();
+
+            // Retornar "Sem Conteúdo", que é o padrão para um PATCH bem-sucedido
             return NoContent(); // HTTP 204
+        }
+
+        /// <summary>
+        /// Remove a chave de cache da lista de cães (L1 e L2)
+        /// </summary>
+        private async Task InvalidateCacheAsync()
+        {
+            // Remove do L2 (Redis)
+            await _distributedCache.RemoveAsync(CaesCacheKey);
+
+            // Remove do L1 (Memória)
+            _memoryCache.Remove(CaesCacheKey);
         }
     }
 }
