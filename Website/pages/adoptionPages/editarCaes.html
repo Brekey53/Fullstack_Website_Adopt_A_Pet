@@ -17,6 +17,15 @@
     <link rel="stylesheet" href="../../styles_gerais/tipografia.css">
     <link rel="stylesheet" href="../../styles_gerais/buttons.css">
 
+    <!-- ALTERAR ISTO PARA FOLHA CSS EXTERIROR-->
+    <style>
+        #fotoPreview {
+            width: 250px;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+    </style>
 </head>
 
 <body>
@@ -81,29 +90,24 @@
 
     <section class="py-5 mt-5">
         <div class="container">
-
             <h2 class="fw-bold text-center mb-4">Editar Cão</h2>
-
             <div class="row g-4">
-  
-                <div class="col-lg-6 text-center">
-                    <img id="fotoPreview" src="" class="img-fluid rounded shadow-sm mb-3" style="max-height: 350px;">
-                    <input type="file" id="foto" class="form-control mt-3">
+                <div class="col-lg-5 text-center">
+                    <img id="fotoPreview" src="" class="shadow-sm mb-3">
+                    <input type="file" id="foto" class="form-control mt-2">
                 </div>
-
-                <div class="col-lg-6">
-                    <div class="p-4 rounded shadow-sm">
-
+                <div class="col-lg-7">
+                    <div class="form-box">
+                        <input type="hidden" id="caoId">
+                        <h5 class="section-title">Informações Gerais</h5>
                         <div class="mb-3">
                             <label class="form-label">Nome</label>
                             <input id="nome" type="text" class="form-control">
                         </div>
-
                         <div class="mb-3">
-                            <label class="form-label">Idade</label>
-                            <input id="idade" type="number" class="form-control">
+                            <label class="form-label">Data de Nascimento</label>
+                            <input id="dataNascimento" type="date" class="form-control">
                         </div>
-
                         <div class="mb-3">
                             <label class="form-label">Sexo</label>
                             <select id="sexo" class="form-select">
@@ -111,12 +115,6 @@
                                 <option value="F">Fêmea</option>
                             </select>
                         </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Tipo</label>
-                            <input id="tipo" type="text" class="form-control">
-                        </div>
-
                         <div class="mb-3">
                             <label class="form-label">Porte</label>
                             <select id="porte" class="form-select">
@@ -125,14 +123,24 @@
                                 <option value="Grande">Grande</option>
                             </select>
                         </div>
-
-                        <button class="btn btn-primary w-100 mt-3" onclick="guardar()">Guardar</button>
-                        <a href="../adotados.html" class="btn btn-secondary w-100 mt-2">Cancelar</a>
-
+                        <h5 class="section-title">Estado</h5>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="castrado">
+                            <label class="form-check-label">Castrado</label>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="disponivel">
+                            <label class="form-check-label">Disponível para adoção</label>
+                        </div>
+                        <h5 class="section-title">Características</h5>
+                        <div class="mb-3">
+                            <textarea id="caracteristica" class="form-control" rows="4"></textarea>
+                        </div>
+                        <button class="btn btn-primary w-100 mt-2" onclick="guardar()">Guardar Alterações</button>
+                        <a href="adotados.html" class="btn btn-secondary w-100 mt-2">Cancelar</a>
                     </div>
                 </div>
             </div>
-
         </div>
     </section>
 
