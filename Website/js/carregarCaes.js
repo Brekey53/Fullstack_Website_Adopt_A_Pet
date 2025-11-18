@@ -1,12 +1,13 @@
 async function carregarAnimais() {
   try {
-    const resposta = await fetch("http://localhost:5013/api/caes");
+    const resposta = await fetch("http://localhost:5013/api/adotados");
     if (!resposta.ok) throw new Error("Erro ao carregar os dados dos animais");
 
     const animais = await resposta.json();
     const container = document.getElementById("adotados-container");
+    const token = localStorage.getItem("token");
 
-    container.innerHTML = animais.map(animal => `
+container.innerHTML = animais.map(animal => `
   <div class="col-12 col-sm-6 col-lg-4 mb-4">
     <div class="animal-card shadow-sm">
       <a href="adotados/${animal.id}.html">
@@ -20,6 +21,9 @@ async function carregarAnimais() {
           <p class="mb-0">Porte ${animal.porte}</p>
         </div>
       </a>
+      <div class="d-flex justify-content-center">
+        ${token ? `<button class="btn btn-warning w-50 mt-2 d-flex justify-content-center text-white" onclick="editarCao(${animal.caoId})">Editar</button>` : ""}
+      </div>
     </div>
   </div>
 `).join("");
@@ -79,3 +83,7 @@ function calcularIdade(dataNascimentoString) {
 
 
 carregarAnimais();
+
+function editarCao(id) {
+    window.location.href = `editarCaes.html?id=${id}`;
+}
