@@ -58,7 +58,7 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
 
             // Não está em cache. Ir à Base de Dados
             caes = await _dbContext.Caes.Include(c => c.Fotos)
-                .Select(c => new CaoDto // Mudar para o DTO
+                .Select(c => new CaoDto
                 {
                     CaoId = c.CaoId,
                     Nome = c.Nome,
@@ -96,24 +96,54 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetCao(int id)
         {
+            // Definir a Chave ÚNICA para este cão
+            string cacheKey = $"cao_{id}";
+
+            // Tentar Cache L1 (Memória)
+            if (_memoryCache.TryGetValue(cacheKey, out CaoDto caoCache))
+            {
+                return Ok(caoCache);
+            }
+
+            // Tentar Cache L2 (Redis)
+            var caoJsonRedis = await _distributedCache.GetStringAsync(cacheKey);
+            if (!string.IsNullOrEmpty(caoJsonRedis))
+            {
+                caoCache = JsonConvert.DeserializeObject<CaoDto>(caoJsonRedis);
+                _memoryCache.Set(cacheKey, caoCache, TimeSpan.FromMinutes(5));
+                return Ok(caoCache);
+            }
+
+            // Não está em cache. Ir à Base de Dados
             var cao = await _dbContext.Caes.Include(c => c.Fotos)
                 .Where(c => c.CaoId == id)
-                .Select(c => new
+                .Select(c => new CaoDto
                 {
-                    c.CaoId,
-                    c.Nome,
-                    c.DataNascimento,
-                    c.Porte,
-                    c.Sexo,
-                    c.Castrado,
-                    c.Disponivel,
-                    c.Caracteristica,
-                    // Faz uma sub-consulta só pela Foto1 e usa ?? (null-coalescing)
-                    Foto = c.Fotos.Select(f => f.Foto1).FirstOrDefault() ?? "images/adotados/default.jpg" // Verificar se há fotos
-                }).FirstOrDefaultAsync();
+                    CaoId = c.CaoId,
+                    Nome = c.Nome,
+                    DataNascimento = c.DataNascimento,
+                    Porte = c.Porte,
+                    Sexo = c.Sexo,
+                    Castrado = c.Castrado,
+                    Disponivel = c.Disponivel,
+                    Caracteristica = c.Caracteristica,
+                    Foto = c.Fotos.Select(f => f.Foto1).FirstOrDefault() ?? "images/adotados/default.jpg"
+                })
+                .FirstOrDefaultAsync(); // Aqui já tens o objeto ou null
 
             if (cao == null)
                 return NotFound("Cão não encontrado.");
+
+            // Guardar nos Caches (L2 e L1)
+            var caoParaCacheJson = JsonConvert.SerializeObject(cao);
+
+            var opcoesRedis = new DistributedCacheEntryOptions
+            {
+                AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(30)
+            };
+
+            await _distributedCache.SetStringAsync(cacheKey, caoParaCacheJson, opcoesRedis);
+            _memoryCache.Set(cacheKey, cao, TimeSpan.FromMinutes(5));
 
             return Ok(cao);
         }
@@ -149,13 +179,13 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCao(int id, [FromBody] Caes cao)
         {
-            // 1. Validar se o ID do URL corresponde ao ID do objeto
+            // Validar se o ID do URL corresponde ao ID do objeto
             if (id != cao.CaoId)
             {
                 return BadRequest("O ID do URL não corresponde ao ID do objeto.");
             }
 
-            // 2. Encontrar o cão na banco de dados
+            // Encontrar o cão na banco de dados
             var caoParaAtualizar = await _dbContext.Caes.FindAsync(id);
 
             if (caoParaAtualizar == null)
@@ -163,7 +193,7 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
                 return NotFound("Cão não encontrado.");
             }
 
-            // 3. Aplicar o PUT
+            // Aplicar o PUT
             // Copiamos TODOS os valores do objeto 'cao' (do Body)
             // para o objeto 'caoParaAtualizar' (que veio da BD)
             // O Entity Framework vai detetar estas mudanças.
@@ -175,21 +205,22 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
             caoParaAtualizar.Castrado = cao.Castrado;
             caoParaAtualizar.Disponivel = cao.Disponivel;
             caoParaAtualizar.Caracteristica = cao.Caracteristica;
+
             // Nota: Não atualizamos o CaoId, pois é a chave primária.
 
-            // 4. Validar o modelo DEPOIS de aplicar as alterações
+            // Validar o modelo DEPOIS de aplicar as alterações
             if (!TryValidateModel(caoParaAtualizar))
             {
                 return ValidationProblem(ModelState);
             }
 
-            // 5. Salvar as alterações na Base de Dados
+            // Salvar as alterações na Base de Dados
             try
             {
                 await _dbContext.SaveChangesAsync();
 
                 // Invalida o cache de cães para garantir que a lista é atualizada
-                await InvalidateCacheAsync();
+                await InvalidateCacheAsync(id);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -205,7 +236,7 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
                 }
             }
 
-            // 6. Retornar "Sem Conteúdo", que é o padrão para um PUT/PATCH bem-sucedido
+            // Retornar "Sem Conteúdo", que é o padrão para um PUT/PATCH bem-sucedido
             return NoContent(); // HTTP 204
         }
 
@@ -226,7 +257,7 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
             await _dbContext.SaveChangesAsync();
 
             // Invalida o cache de cães para garantir que a lista é atualizada
-            await InvalidateCacheAsync();
+            await InvalidateCacheAsync(id);
 
             return NoContent(); // HTTP 204
 
@@ -265,7 +296,7 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
             await _dbContext.SaveChangesAsync();
 
             // Invalida o cache de cães para garantir que a lista é atualizada
-            await InvalidateCacheAsync();
+            await InvalidateCacheAsync(id);
 
             // Retornar "Sem Conteúdo", que é o padrão para um PATCH bem-sucedido
             return NoContent(); // HTTP 204
@@ -274,13 +305,19 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
         /// <summary>
         /// Remove a chave de cache da lista de cães (L1 e L2)
         /// </summary>
-        private async Task InvalidateCacheAsync()
+        private async Task InvalidateCacheAsync(int? caoId = null)
         {
-            // Remove do L2 (Redis)
+            // Limpar a lista geral (Sempre)
             await _distributedCache.RemoveAsync(CaesCacheKey);
-
-            // Remove do L1 (Memória)
             _memoryCache.Remove(CaesCacheKey);
+
+            // Se fornecermos um ID, limpar também o cache desse cão específico
+            if (caoId.HasValue)
+            {
+                string individualKey = $"cao_{caoId.Value}";
+                await _distributedCache.RemoveAsync(individualKey);
+                _memoryCache.Remove(individualKey);
+            }
         }
     }
 }

@@ -1,9 +1,12 @@
 ﻿using ApiAndreLeonorProjetoFinal.Data;
+using ApiAndreLeonorProjetoFinal.Models;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Caching.Memory;
+using Newtonsoft.Json;
 using System;
-using ApiAndreLeonorProjetoFinal.Models;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -11,97 +14,146 @@ public class AdotadosController : ControllerBase
 {
     private readonly CroaeDbContext _dbContext;
 
-    public AdotadosController(CroaeDbContext context)
+    // Dependência de cache
+    private readonly IMemoryCache _memoryCache;
+    private readonly IDistributedCache _distributedCache;
+
+    // Chave de cache
+    private const string CaesCacheKey = "lista_caes_adotados";
+
+    public AdotadosController(CroaeDbContext context, IMemoryCache memoryCache, IDistributedCache distributedCache)
     {
         _dbContext = context;
+        _memoryCache = memoryCache;
+        _distributedCache = distributedCache;
     }
 
     // GET: api/adotados
     [HttpGet]
     public async Task<IActionResult> GetAdotados()
     {
-        var caesDisponiveis = await _dbContext.Caes.Include(c => c.Fotos)
-            .Where(c => c.Disponivel == true)
-            .Select(c => new
-            {
-                c.CaoId,
-                c.Nome,
-                c.DataNascimento,
-                c.Porte,
-                c.Sexo,
-                c.Castrado,
-                c.Disponivel,
-                c.Caracteristica,
-                Foto = c.Fotos.FirstOrDefault() != null? c.Fotos.FirstOrDefault().Foto1 : "images/adotados/default.jpg"
-            }).ToListAsync();
 
+        // Obter do Cache L1
+        if (_memoryCache.TryGetValue(CaesCacheKey, out List<CaoDto> caesDisponiveis))
+        {
+            // Encontra e devolve imediatamente.
+            return Ok(caesDisponiveis);
+        }
 
+        // Obter do Cache L2
+        var caesJsonRedis = await _distributedCache.GetStringAsync(CaesCacheKey);
+
+        if (!string.IsNullOrEmpty(caesJsonRedis))
+        {
+            // Encontra o L2!
+            // Desserializar o JSON do Redis
+            caesDisponiveis = JsonConvert.DeserializeObject<List<CaoDto>>(caesJsonRedis);
+
+            // Guardar no L1 (Memória) para o próximo pedido ser mais rápido
+            _memoryCache.Set(CaesCacheKey, caesDisponiveis, TimeSpan.FromMinutes(5)); // Expirar L1 em 5 min
+
+            return Ok(caesDisponiveis);
+        }
+
+        // Não está em cache. Ir à Base de Dados
+
+        caesDisponiveis = await _dbContext.Caes.Include(c => c.Fotos)
+                .Where(c => c.Disponivel == false) 
+                .Select(c => new CaoDto
+                {
+                    CaoId = c.CaoId,
+                    Nome = c.Nome,
+                    DataNascimento = c.DataNascimento,
+                    Porte = c.Porte,
+                    Sexo = c.Sexo,
+                    Castrado = c.Castrado,
+                    Disponivel = c.Disponivel,
+                    Caracteristica = c.Caracteristica,
+                    Foto = c.Fotos.Select(f => f.Foto1).FirstOrDefault() ?? "images/adotados/default.jpg"
+                }).ToListAsync();
+
+        // Guardar o resultado nos Caches (L2 e L1)
+
+        // Serializar para guardar no Redis
+        var caesParaCacheJson = JsonConvert.SerializeObject(caesDisponiveis);
+
+        // Definir opções de expiração para o Redis (ex: 30 minutos)
+        var opcoesRedis = new DistributedCacheEntryOptions
+        {
+            AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(30)
+        };
+
+        // Guardar no L2 (Redis)
+        await _distributedCache.SetStringAsync(CaesCacheKey, caesParaCacheJson, opcoesRedis);
+
+        // Guardar também no L1 (Memória)
+        _memoryCache.Set(CaesCacheKey, caesDisponiveis, TimeSpan.FromMinutes(5)); // L1 expira mais rápido
+
+        // Devolver o resultado acabado de ir buscar à BD
         return Ok(caesDisponiveis);
 
     }
 
-    // GET: api/adotados/1
-    [HttpGet("{id}")]
-    public async Task<IActionResult> GetAdotado(int id)
-    {
-        var cao = await _dbContext.Caes.Include(c => c.Fotos)
-            .Where(c => c.CaoId == id)
-            .Select(c => new
-            {
-                c.CaoId,
-                c.Nome,
-                c.DataNascimento,
-                c.Porte,
-                c.Sexo,
-                c.Castrado,
-                c.Disponivel,
-                c.Caracteristica,
-                Foto = c.Fotos.Select(f => f.Foto1).FirstOrDefault() ?? "images/adotados/default.jpg"
-            }).FirstOrDefaultAsync();
+    /*
+     * 
+     * Para já comentado pois não vale a pena ter varios pedidos de ID por várias API 
+     * 
+     */
+    //// GET: api/adotados/1
+    //[HttpGet("{id}")]
+    //public async Task<IActionResult> GetAdotado(int id)
+    //{
 
-        if (cao == null)
-            return NotFound("Cão não encontrado.");
+    //    // Definir a Chave ÚNICA para este cão
+    //    string cacheKey = $"cao_adotatos_{id}";
 
-        return Ok(cao);
-    }
+    //    // Tentar Cache L1 (Memória)
+    //    if (_memoryCache.TryGetValue(cacheKey, out CaoDto caoCache))
+    //    {
+    //        return Ok(caoCache);
+    //    }
 
-    /* Para ja nao utilizar pois este controller servira apenas para leitura dos disponiveis para adotar
-    // Patch: api/adotados/1
-    [HttpPatch("{id}")]
-    public async Task<IActionResult> PatchAdotado(int id, [FromBody] JsonPatchDocument<Caes> patchDoc)
-    {
-        if (patchDoc == null)
-        {
-            return BadRequest("O documento de patch não pode ser nulo.");
-        }
+    //    // Tentar Cache L2 (Redis)
+    //    var caoJsonRedis = await _distributedCache.GetStringAsync(cacheKey);
+    //    if (!string.IsNullOrEmpty(caoJsonRedis))
+    //    {
+    //        caoCache = JsonConvert.DeserializeObject<CaoDto>(caoJsonRedis);
+    //        _memoryCache.Set(cacheKey, caoCache, TimeSpan.FromMinutes(5));
+    //        return Ok(caoCache);
+    //    }
 
-        // 1. Encontrar a entidade ORIGINAL no banco de dados
-        var caoParaAtualizar = await _dbContext.Caes.FindAsync(id);
+    //    // Não está em cache. Ir à Base de Dados
+    //    var cao = await _dbContext.Caes.Include(c => c.Fotos)
+    //        .Where(c => c.CaoId == id)
+    //        .Select(c => new CaoDto
+    //        {
+    //            CaoId = c.CaoId,
+    //            Nome = c.Nome,
+    //            DataNascimento = c.DataNascimento,
+    //            Porte = c.Porte,
+    //            Sexo = c.Sexo,
+    //            Castrado = c.Castrado,
+    //            Disponivel = c.Disponivel,
+    //            Caracteristica = c.Caracteristica,
+    //            Foto = c.Fotos.Select(f => f.Foto1).FirstOrDefault() ?? "images/adotados/default.jpg"
+    //        })
+    //        .FirstOrDefaultAsync(); // Aqui já tens o objeto ou null
 
-        if (caoParaAtualizar == null)
-        {
-            return NotFound("Cão não encontrado.");
-        }
+    //    if (cao == null)
+    //        return NotFound("Cão não encontrado.");
 
-        // 2. Aplicar as alterações do 'patchDoc' ao objeto que veio da BD
-        patchDoc.ApplyTo(caoParaAtualizar, error =>
-        {
-            ModelState.AddModelError(string.Empty, error.ErrorMessage);
-        });
+    //    // Guardar nos Caches (L2 e L1)
+    //    var caoParaCacheJson = JsonConvert.SerializeObject(cao);
 
-        // 3. Validar o modelo DEPOIS de aplicar o patch
-        if (!TryValidateModel(caoParaAtualizar))
-        {
-            return ValidationProblem(ModelState); // Devolve 400 Bad Request com os erros
-        }
+    //    var opcoesRedis = new DistributedCacheEntryOptions
+    //    {
+    //        AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(30)
+    //    };
 
-        // 4. Salvar as alterações na Base de Dados
-        await _dbContext.SaveChangesAsync();
+    //    await _distributedCache.SetStringAsync(cacheKey, caoParaCacheJson, opcoesRedis);
+    //    _memoryCache.Set(cacheKey, cao, TimeSpan.FromMinutes(5));
 
-        // 5. Retornar "Sem Conteúdo", que é o padrão para um PATCH bem-sucedido
-        return NoContent(); // HTTP 204
-    }
-    */
-
+    //    return Ok(cao);
+    //}
 
 }
