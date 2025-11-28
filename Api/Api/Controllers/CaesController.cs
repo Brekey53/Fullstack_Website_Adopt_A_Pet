@@ -16,11 +16,11 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
         private readonly CroaeDbContext _dbContext;
 
         // Dependência de cache
-        private readonly IMemoryCache _memoryCache;
+        private readonly IMemoryCache _memoryCache; // a cache local não tem de ser polly? 
         private readonly IDistributedCache _distributedCache;
 
         // Chave de cache
-        private const string CaesCacheKey = "lista_caes_ativos";
+        private const string CaesCacheKey = "lista_caes_ativos"; //talvez disponivel aqui? 
 
         public CaesController(CroaeDbContext dbContext, IMemoryCache memoryCache, IDistributedCache distributedCache)
         {

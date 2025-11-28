@@ -45,14 +45,14 @@ builder.Services.AddStackExchangeRedisCache(options =>
     options.InstanceName = "ProjetoFinal_"; // Prefixo para as chaves
 });
 
-// MVC
+// Para usar o json patch
 builder.Services.AddControllers().AddNewtonsoftJson();
 
-// Swagger
+// Swagger para documentação
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// CORS
+// CORS - para que qualquer origem comunique com a API
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("PermitirTudo",
@@ -64,10 +64,10 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// Static files
+// Static files - imagens dos cães em wwwroot
 app.UseStaticFiles();
 
-// Dev tools
+// Dev tools - Swagger
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -77,14 +77,14 @@ if (app.Environment.IsDevelopment())
 // HTTPS redirection
 app.UseHttpsRedirection();
 
-// CORS
+// CORS - Ativar Politica criada acima
 app.UseCors("PermitirTudo");
 
 // Autenticação e autorização
 app.UseAuthentication();
 app.UseAuthorization();
 
-// Controllers
+// Controllers - ativar todos os controllers 
 app.MapControllers();
 
 // run
