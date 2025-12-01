@@ -52,6 +52,12 @@ builder.Services.AddControllers().AddNewtonsoftJson();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// builder para Mock do mountbank
+builder.Services.AddHttpClient("BancoMock", client =>
+{
+    client.BaseAddress = new Uri("http://localhost:4545/");
+});
+
 // CORS - para que qualquer origem comunique com a API
 builder.Services.AddCors(options =>
 {
