@@ -1,0 +1,61 @@
+{
+  "imposters": [
+    {
+      "port": 4545,
+      "protocol": "http",
+      "name": "Banco e Inventario Mock",
+      "stubs": [
+        {
+          "predicates": [
+            {
+              "equals": {
+                "method": "POST",
+                "path": "/payments"
+              }
+            },
+            {
+              "contains": {
+                "body": { "numeroCartao": "0000" }
+              }
+            }
+          ],
+          "responses": [
+            {
+              "is": {
+                "statusCode": 402,
+                "headers": { "Content-Type": "application/json" },
+                "body": {
+                  "status": "Recusado",
+                  "erro": "Saldo Insuficiente"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "predicates": [
+            {
+              "equals": {
+                "method": "POST",
+                "path": "/payments"
+              }
+            }
+          ],
+          "responses": [
+            {
+              "is": {
+                "statusCode": 200,
+                "headers": { "Content-Type": "application/json" },
+                "body": {
+                  "status": "Sucesso",
+                  "transacaoId": "9999-fake-id",
+                  "mensagem": "Pagamento aprovado pelo Mountebank"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
