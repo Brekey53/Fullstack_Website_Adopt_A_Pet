@@ -34,7 +34,7 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
             if (!response.IsSuccessStatusCode)
             {
                 // Se o Mountebank devolver erro 402 (regra do cartao 0000)
-                return BadRequest("Pagamento Recusado pelo Banco.");
+                return BadRequest(new { erro = "Pagamento recusado pelo banco." });
             }
 
             return Ok(new { mensagem = "Doação aceite com sucesso!" });
@@ -43,7 +43,7 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
 
     public class DoacaoDto
     {
-        public string NumeroCartao { get; set; }
+        public string? NumeroCartao { get; set; }
         public decimal Valor { get; set; }
     }
 }

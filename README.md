@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 🐶 Voluntariado no CROAE da Moita
 
 Desde 2024 que faço voluntariado no **CROAE** do Concelho **Moita** em que todos os fins de semana de manhã participo e auxilio no convivio e bem estar dos >60 animais que vivem atualmente no CROAE.  
@@ -166,3 +167,8 @@ Leonor_Joaquim_Projecto_TPSI_0525/
 ```
 
 ### Desenvolvido por Leonor Joaquim || 2025
+=======
+# Fullstack_Website_Adopt_A_Pet
+
+Project from UC00605
+>>>>>>> b0ed182fccb75b5dd706035ed91887fa17094504

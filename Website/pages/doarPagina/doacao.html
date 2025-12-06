@@ -1,35 +1,33 @@
 <!DOCTYPE html>
-<html lang="pt-pt">
+<html lang="pt">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CROAE - Para Adotar</title>
+    <title>Doar um Osso</title>
     <link rel="shortcut icon" href="../../images/icone_titulo.png" type="image/x-icon">
 
-    <!--BootStrap Link-->
+    <!-- BootStrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 
-    <!--CSS Links-->
+    <!-- CSS Gerais -->
     <link rel="stylesheet" href="../../styles_gerais/navbar.css">
     <link rel="stylesheet" href="../../styles_gerais/footer.css">
+    <link rel="stylesheet" href="../../styles_gerais/hero.css">
     <link rel="stylesheet" href="../../styles_gerais/tipografia.css">
-    <link rel="stylesheet" href="../../styles_gerais/buttons.css">
     <link rel="stylesheet" href="../../styles_gerais/font_awesome.css">
+    <link rel="stylesheet" href="../../styles_gerais/buttons.css">
     <link rel="stylesheet" href="styles_adocao/adocao.css">
 
-    <!-- For Lightbox2-->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet">
-
-    <!-- For the Personalized Google Font -->
+    <!-- Fontes Google -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@100..900&family=Roboto:wght@100..900&display=swap"
         rel="stylesheet">
 
-    <!-- Font Awesome Icons-->
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
@@ -47,23 +45,22 @@
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+
                 <div class="collapse navbar-collapse custom-color" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
+
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="adocao.html" id="adocaoDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
                                 Adoção
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="adocaoDropdown">
-                                <li>
-                                    <a class="dropdown-item" href="adocao.html">Adotar no CROAE</a>
-                                </li>
-                                <li><a id="ativo" class="dropdown-item" href="paraAdotar.html">Animais para
-                                        adoção</a></li>
-                                <li><a class="dropdown-item" href="adotados.html">Animais
-                                        adotados</a></li>
+                                <li><a id="ativo" class="dropdown-item" href="adocao.html">Adotar no CROAE</a></li>
+                                <li><a class="dropdown-item" href="paraAdotar.html">Animais para adoção</a></li>
+                                <li><a class="dropdown-item" href="adotados.html">Animais adotados</a></li>
                             </ul>
                         </li>
+
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="../servicos/servicos.html" id="servicosDropdown"
                                 role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -74,17 +71,22 @@
                                 <li><a class="dropdown-item" href="../servicos/servicosVet.html">Serviços
                                         Veterinários</a></li>
                                 <li><a class="dropdown-item" href="../servicos/servicosRecolha.html">Serviços
-                                        Recolha</a>
-                                </li>
+                                        Recolha</a></li>
                             </ul>
                         </li>
 
                         <li class="nav-item">
                             <a class="nav-link" href="../visits/visitar.html">Marcar Visita</a>
                         </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><i class="fa-solid fa-bone text-light p-1"></i>Doar um Osso</a>
+                        </li>
+
                         <li class="nav-item">
                             <a class="nav-link" href="../blog/noticias.html">Notícias</a>
                         </li>
+
                         <li class="nav-item">
                             <a class="nav-link" href="../contacts/contactos.html">Contactos</a>
                         </li>
@@ -94,63 +96,67 @@
             </div>
         </nav>
     </header>
-    <!-- Galeria de animais por Adotar-->
-    <section class="animais">
-        <div class="container">
-            <h3 class="text-center m-4">Adoção</h3>
-            <!-- Filtro Por idade -->
-            <section class="py-4 bg-light">
-                <div class="container">
-                    <h3 class="text-center mb-3">Filtrar Animais</h3>
+    <div style="height:120px;"></div>
 
-                    <div class="row justify-content-center g-3">
-                        <div class="col-12 col-md-4">
-                            <input type="text" id="filtroRaca" class="form-control" placeholder="Procurar por raça...">
-                        </div>
+    <h3 class="text-center mt-3">Quer ajudar os nossos patudos mas não tem tempo livre?</h3>
+    <section class="py-3">
+        <div class="text-center mb-4">
+            <p>A sua ajuda faz toda a diferença.</p>
+        </div>
 
-                        <div class="col-12 col-md-3">
-                            <select id="filtroIdade" class="form-control">
-                                <option value="">Qualquer idade</option>
-                                <option value="1">Menos de 1 ano</option>
-                                <option value="2">1 a 5 anos</option>
-                                <option value="3">Mais de 5 anos</option>
-                            </select>
-                        </div>
-                        <div>
-                            
-                        </div>
+        <div class="container my-5">
+            <div class="row justify-content-center align-items-center g-4">
 
-                        <div class="col-12 col-md-2">
-                            <button id="btnFiltrar" class="btn btn-primary w-100">Filtrar</button>
+                <div class="col-12 col-md-5">
+                    <div class="card">
+                        <img src="../../images/osso.jpg" class="card-img-top" alt="Osso">
+                        <div class="card-body">
+                            <h5 class="card-title">Osso</h5>
+                            <p class="card-text">Ofereça um ossinho a um dos nossos patudos.</p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Contribuição simbólica</li>
+                            <li class="list-group-item">2,50€</li>
+                            <li class="list-group-item">Pode escolher na página a seguir a quem doar :)</li>
+                        </ul>
+                        <div class="card-body">
+                            <a id="btnDoarOsso" class="btn d-flex justify-content-center" href="#">Doar</a>
                         </div>
                     </div>
                 </div>
-            </section>
-            <div class="row" id="adotados-container">
-                <!-- Onde vai aparecer os caes adotados-->
+                <div class="col-12 col-md-5">
+                    <div class="card">
+                        <img src="../../images/manta.jpg" class="card-img-top" alt="Manta">
+                        <div class="card-body">
+                            <h5 class="card-title">Manta</h5>
+                            <p class="card-text">Ajude a manter um animal quentinho e confortável.</p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Essencial no inverno</li>
+                            <li class="list-group-item">4€</li>
+                            <li class="list-group-item">Pode escolher na página a seguir a quem doar :)</li>
+                        </ul>
+                        <div class="card-body">
+                            <a id="btnDoarManta" class="btn d-flex justify-content-center" href="#">Doar</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!--Back to the Top Button-->
-    <a href="#" class="back-to-top" title="Voltar ao topo">
-        <i class="fa-solid fa-paw"></i>
-    </a>
-
-    <footer class="text-light text-center py-3 mt-5">
+    <footer class="text-light text-center py-3">
         <p class="mb-0">&copy; 2025 CROAE - Todos os direitos reservados.</p>
     </footer>
 
-    <!--Script Bootstrap-->
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/jquery-1.11.0.min.js"></script>
+    <script src="../../js/lightbox.min.js"></script>
 
-    <!--Scripts Lightbox-->
-    <script type="text/javascript" src="../../js/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript" src="../../js/lightbox.min.js"></script>
-
-    <!--Script JS próprio-->
-    <script src="../../js/script.js"></script>
     <script src="../../js/carregarCaesParaAdotar.js"></script>
+    <script src="../../js/doacoes.js"></script>
+
 </body>
 
 </html>

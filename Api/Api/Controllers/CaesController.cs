@@ -172,7 +172,6 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
             // Retorna 201 Created + URL para o novo Cão e objeto Cão
             return CreatedAtAction(nameof(GetCao), new { id = cao.CaoId }, cao);
 
-
         }
 
         // Put: api/Caes/1

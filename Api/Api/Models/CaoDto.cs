@@ -9,7 +9,8 @@
         public string Sexo { get; set; }
         public bool Castrado { get; set; }
         public bool? Disponivel { get; set; }
-        public string Caracteristica { get; set; }
-        public string Foto { get; set; }
+        public string? Caracteristica { get; set; }
+        public string? Foto { get; set; }
+        public string? Raca { get; set; }
     }
 }
