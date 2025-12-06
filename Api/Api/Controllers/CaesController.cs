@@ -51,7 +51,7 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
                 caes = JsonConvert.DeserializeObject<List<CaoDto>>(caesJsonRedis);
 
                 // Guardar no L1 (Memória) para o próximo pedido ser mais rápido
-                _memoryCache.Set(CaesCacheKey, caes, TimeSpan.FromMinutes(5)); // Expirar L1 em 5 min
+                _memoryCache.Set(CaesCacheKey, caes, TimeSpan.FromSeconds(30)); // Expirar L1 em 5 min
 
                 return Ok(caes);
             }
@@ -79,7 +79,7 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
             // Definir opções de expiração para o Redis (ex: 30 minutos)
             var opcoesRedis = new DistributedCacheEntryOptions
             {
-                AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(30)
+                AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(1)
             };
 
             // Guardar no L2 (Redis)
