@@ -1,6 +1,6 @@
 # 🐶 Voluntariado no CROAE da Moita
 
-Desde 2024 que faço voluntariado no **CROAE** do Concelho **Moita** em que todos os fins de semana de manhã participo e auxilio no convivio e bem estar dos >60 animais que vivem atualmente no CROAE.  
+Desde 2024 que faço voluntariado no **CROAE** do Concelho **Moita** em que todos os fins de semana de manhã participo e auxilio no convivio e bem estar dos >60 animais que vivem atualmente no CROAE.
 
 ## ✍️ O que falta melhorar
 
@@ -37,16 +37,16 @@ projecto:
    git clone https://github.com/leonormcjoaquim/Leonor_Joaquim_Projecto_TPSI_0525
 ```
 
-2. Abram a pasta onde se localiza o projeto, e utilizem o browser para abrir o ficheiro ```index.html```
-Caso tenham VSCode instalado, recomendo a extensão LivePreview para conseguir ver as alterações no browser _in real time_ e assim podem abrir o projecto dessa forma.
+2. Abram a pasta onde se localiza o projeto, e utilizem o browser para abrir o ficheiro `index.html`
+   Caso tenham VSCode instalado, recomendo a extensão LivePreview para conseguir ver as alterações no browser _in real time_ e assim podem abrir o projecto dessa forma.
 
 ## 🚀 Features Utilizadas
 
 - **HTML5**
 - **CSS3** + **Bootstrap 5**
-   - Utilização de **Accordion** e **Carousel** para uma apresentação diferente, mais interativa e apelativa ao utilizador
+  - Utilização de **Accordion** e **Carousel** para uma apresentação diferente, mais interativa e apelativa ao utilizador
 - **JavaScript**
-   - Utilização de um botão **Back to Top**, uma **Navbar fixa mas que encolhe com scroll** e um **formulário sem backend** mas que interage com o utilizador.
+  - Utilização de um botão **Back to Top**, uma **Navbar fixa mas que encolhe com scroll** e um **formulário sem backend** mas que interage com o utilizador.
 - **Font Awesome** (ícones)
 - **Google Fonts** (Roboto)
 - **Lightbox2** (galerias de imagens em overlay) - muito obrigada a [@lokesh](https://github.com/lokesh/lightbox2) - repositório público de lightbox e de toda a documentação
@@ -54,15 +54,14 @@ Caso tenham VSCode instalado, recomendo a extensão LivePreview para conseguir v
 
 - **Site para retirar gifs usados dos cães** [gifsCães](https://www.animatedimages.org/cat-dogs-202.htm)
 
-
 ## 📁📄 Organização de Diretorias e Ficheiros
 
 Para conseguir fazer esta árvore utilizei a extensão do VSCode chamada
-```project-tree```. Instalem através das extensões do VSC e podem depois:
+`project-tree`. Instalem através das extensões do VSC e podem depois:
 
-1. Em ambiente Windows ou Linux, ```Ctrl + Shift + P``` e escrever _Project Tree_. Vai gerar automaticamente a estrutura do projecto no ficheiro ReadME que tenham criado.Os comentários são adicionei individualmente.
+1. Em ambiente Windows ou Linux, `Ctrl + Shift + P` e escrever _Project Tree_. Vai gerar automaticamente a estrutura do projecto no ficheiro ReadME que tenham criado.Os comentários são adicionei individualmente.
 
-2. Em ambiente MAC, ```⌘ + ⇧ + P``` e escrever _Project Tree_.
+2. Em ambiente MAC, `⌘ + ⇧ + P` e escrever _Project Tree_.
 
 ```bash
 Leonor_Joaquim_Projecto_TPSI_0525/
@@ -165,9 +164,8 @@ Leonor_Joaquim_Projecto_TPSI_0525/
 
 ```
 
-### Desenvolvido por Leonor Joaquim || 2025
-=======
-# Fullstack_Website_Adopt_A_Pet
+## 👤 Autor
 
-Project from UC00605
->>>>>>> b0ed182fccb75b5dd706035ed91887fa17094504
+### Desenvolvido por Leonor Joaquim e André Correia || 2025
+
+[![GitHub](https://img.shields.io/badge/GitHub-leonormcjoaquim-181717?style=for-the-badge&logo=github)](https://github.com/leonormcjoaquim) [![GitHub](https://img.shields.io/badge/GitHub-Brekey53-181717?style=for-the-badge&logo=github)](https://github.com/Brekey53)
