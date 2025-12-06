@@ -41,6 +41,15 @@ Todos os botões
   border: 0;
 }
 
+.btn-danger {
+  background-color: red;
+  font-weight: bold;
+}
+
+.btn-danger:hover {
+  background-color: rgb(168, 5, 5);
+}
+
 @media (max-width: 992px) {
   .back-to-top {
       right: 20px;
