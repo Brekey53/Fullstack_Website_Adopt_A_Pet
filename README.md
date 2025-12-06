@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # 🐶 Voluntariado no CROAE da Moita
 
 Desde 2024 que faço voluntariado no **CROAE** do Concelho **Moita** em que todos os fins de semana de manhã participo e auxilio no convivio e bem estar dos >60 animais que vivem atualmente no CROAE.  
