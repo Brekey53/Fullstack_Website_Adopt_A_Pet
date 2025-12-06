@@ -6,35 +6,55 @@ async function carregarAnimaisParaAdotar() {
     const animais = await resposta.json();
     const container = document.getElementById("adotados-container");
     const token = localStorage.getItem("token");
+    console.log(animais);
+    container.innerHTML = animais
+      .map((animal) => {
+        const idadeNum =
+          new Date().getFullYear() -
+          new Date(animal.dataNascimento).getFullYear();
 
-container.innerHTML = animais.map(animal => `
+        return `
   <div class="col-12 col-sm-6 col-lg-4 mb-4">
-    <div class="animal-card shadow-sm">
+    <div class="animal-card card-adocao-item shadow-sm"
+         data-raca="${animal.raca}"
+         data-idade="${idadeNum}">
+         
       <a href="adotados/adotadosDetalhes.html?id=${animal.caoId}">
-        <img src="http://localhost:5013/${animal.foto}" alt="${animal.nome}" class="img-cao">
+        <img src="http://localhost:5013/${animal.foto}" alt="${
+          animal.nome
+        }" class="img-cao">
+
         <div class="animal-header d-flex justify-content-between align-items-center px-3 py-2">
           <h5 class="mb-0 text-white fw-bold">${animal.nome}</h5>
-          <i class="fa-solid ${animal.sexo === 'M' ? 'fa-mars' : 'fa-venus'}"></i>
+          <i class="fa-solid ${
+            animal.sexo === "M" ? "fa-mars" : "fa-venus"
+          }"></i>
         </div>
+
         <div class="animal-body p-3">
           <p class="mb-1"> Cão | ${calcularIdade(animal.dataNascimento)}</p>
           <p class="mb-0">Porte ${animal.porte}</p>
+          <p class="mb-0">Raça: ${animal.raca || "Desconhecida"}</p>
         </div>
       </a>
+
       <div class="d-flex justify-content-center">
-        ${token ? `<button class="btn btn-warning w-50 mt-2 d-flex justify-content-center text-white" onclick="editarCao(${animal.caoId})">Editar</button>` : ""}
+        ${
+          token
+            ? `<button class="btn btn-warning w-50 mt-2 d-flex justify-content-center text-white" onclick="editarCao(${animal.caoId})">Editar</button>`
+            : ""
+        }
       </div>
     </div>
-  </div>
-`).join("");
+  </div>`;
+      })
+      .join("");
   } catch (erro) {
     console.error(erro);
     document.getElementById("adotados-container").innerHTML =
       "<p class='text-center text-danger'>Não foi possível carregar os animais.</p>";
   }
-
 }
-
 
 function calcularIdade(dataNascimentoString) {
   const hoje = new Date();
@@ -45,19 +65,16 @@ function calcularIdade(dataNascimentoString) {
   totalMeses -= nascimento.getMonth();
   totalMeses += hoje.getMonth();
 
-
   if (hoje.getDate() < nascimento.getDate()) {
     totalMeses--;
   }
 
-
   if (totalMeses <= 0) {
-
     const diffTime = Math.abs(hoje - nascimento);
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    
+
     if (diffDays <= 30) {
-         return diffDays === 1 ? "1 dia" : `${diffDays} dias`;
+      return diffDays === 1 ? "1 dia" : `${diffDays} dias`;
     }
     return "Menos de 1 mês";
   }
@@ -68,22 +85,64 @@ function calcularIdade(dataNascimentoString) {
   let idadeFormatada = "";
 
   if (anos > 0) {
-    idadeFormatada += `${anos} ${anos === 1 ? 'ano' : 'anos'}`;
+    idadeFormatada += `${anos} ${anos === 1 ? "ano" : "anos"}`;
   }
 
   if (meses > 0) {
     if (anos > 0) {
       idadeFormatada += " e ";
     }
-    idadeFormatada += `${meses} ${meses === 1 ? 'mês' : 'meses'}`;
+    idadeFormatada += `${meses} ${meses === 1 ? "mês" : "meses"}`;
   }
 
   return idadeFormatada;
 }
 
+function editarCao(id) {
+  window.location.href = `editarCaes.html?id=${id}`;
+}
+
+const btnFiltrar = document.getElementById("btnFiltrar");
+
+function normalizarTexto(texto) {
+  return texto
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "") // remove acentos
+    .toLowerCase()
+    .trim();
+}
+
+btnFiltrar.addEventListener("click", function () {
+  const racaFiltro = normalizarTexto(
+    document.getElementById("filtroRaca").value
+  );
+  const idadeFiltro = document.getElementById("filtroIdade").value;
+
+  const cards = document.querySelectorAll(".card-adocao-item");
+
+  cards.forEach((card) => {
+    const raca = normalizarTexto(card.dataset.raca || "");
+    const idade = parseInt(card.dataset.idade);
+
+    let mostrar = true;
+
+    if (racaFiltro && !raca.includes(racaFiltro)) {
+      mostrar = false;
+    }
+
+    if (idadeFiltro) {
+      if (idadeFiltro === "1" && idade >= 1) mostrar = false;
+      if (idadeFiltro === "2" && (idade < 1 || idade > 5)) mostrar = false;
+      if (idadeFiltro === "3" && idade <= 5) mostrar = false;
+    }
+
+    const coluna =
+      card.closest(".col-12") ||
+      card.closest(".col-sm-6") ||
+      card.closest(".col-lg-4");
+
+    if (coluna) coluna.style.display = mostrar ? "" : "none";
+  });
+});
 
 carregarAnimaisParaAdotar();
-
-function editarCao(id) {
-    window.location.href = `editarCaes.html?id=${id}`;
-}
