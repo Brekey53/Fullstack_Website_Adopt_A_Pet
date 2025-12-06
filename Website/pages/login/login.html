@@ -29,6 +29,8 @@
 
     <!-- Font Awesome Icons-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <link rel="stylesheet" href="styles/style_login.css">
 </head>
 
 <body>
@@ -36,10 +38,8 @@
         <nav id="mainNavbar" class="navbar navbar-expand-lg fixed-top navbar-custom navbar-dark">
             <div class="container-fluid">
                 <div class="navbar-img">
-                    <a href="../../index.html"><img src="../../images/croae_logo.jpg" alt="CROAE logo"
-                            class="logo-desktop"></a>
-                    <a href="../../index.html"><img src="../../images/croae_logo_mobile.jpg" alt="CROAE logo mobile"
-                            class="logo-mobile"></a>
+                    <a href="../../index.html"><img src="../../images/croae_logo.jpg" alt="CROAE logo" class="logo-desktop"></a>
+                    <a href="../../index.html"><img src="../../images/croae_logo_mobile.jpg" alt="CROAE logo mobile" class="logo-mobile"></a>
                 </div>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,61 +48,54 @@
                 <div class="collapse navbar-collapse custom-color" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="../adoptionPages/adocao.html" id="adocaoDropdown"
-                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Adoção
-                            </a>
+                            <a class="nav-link dropdown-toggle" href="../adoptionPages/adocao.html" id="adocaoDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Adoção</a>
                             <ul class="dropdown-menu" aria-labelledby="adocaoDropdown">
-                                <li>
-                                    <a class="dropdown-item" href="../adoptionPages/adocao.html">Adotar no CROAE</a>
-                                </li>
-                                <li><a class="dropdown-item" href="../adoptionPages/paraAdotar.html">Animais para
-                                        adoção</a></li>
-                                <li><a class="dropdown-item" href="../adoptionPages/adotados.html">Animais
-                                        adotados</a></li>
+                                <li><a class="dropdown-item" href="../adoptionPages/adocao.html">Adotar no CROAE</a></li>
+                                <li><a class="dropdown-item" href="../adoptionPages/paraAdotar.html">Animais para adoção</a></li>
+                                <li><a class="dropdown-item" href="../adoptionPages/adotados.html">Animais adotados</a></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="servicos.html" id="servicosDropdown" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                Serviços CROAE
-                            </a>
+                            <a class="nav-link dropdown-toggle" href="servicos.html" id="servicosDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Serviços CROAE</a>
                             <ul class="dropdown-menu" aria-labelledby="servicosDropdown">
-                                <li>
-                                    <a id="ativo" class="dropdown-item" href="servicos.html">Serviços CROAE</a>
-                                </li>
-                                <li><a class="dropdown-item" href="servicosVet.html">Serviços
-                                        Veterinários</a></li>
-                                <li><a class="dropdown-item" href="servicosRecolha.html">Serviços Recolha</a>
-                                </li>
+                                <li><a id="ativo" class="dropdown-item" href="servicos.html">Serviços CROAE</a></li>
+                                <li><a class="dropdown-item" href="servicosVet.html">Serviços Veterinários</a></li>
+                                <li><a class="dropdown-item" href="servicosRecolha.html">Serviços Recolha</a></li>
                             </ul>
                         </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="../visits/visitar.html">Marcar Visita</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="../blog/noticias.html">Notícias</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="../contacts/contactos.html">Contactos</a>
-                        </li>
+                        <li class="nav-item"><a class="nav-link" href="../visits/visitar.html">Marcar Visita</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../blog/noticias.html">Notícias</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../contacts/contactos.html">Contactos</a></li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <!--TODO alterar PARA MODAL-->
-    <section class="hero d-flex align-items-center text-center text-white">
-        <h1 class="display-4 fw-bold highlight">Serviços CROAE</h1>
-        <p class="mb-4 highlight"></p>
-        <form action="submit">
-            <label for="username">Username</label>
-            <input id="username" placeholder="Login"></input>
-            <label for="password">Passe</label>
-            <input id="password" placeholder="Password"></input>
-            <button class="btn px-4 rounded-pill shadow" onclick="sendCredentials()">Submit</button>
-        </form>
+
+    <section class="hero-login">
+        
+        <div class="login-card text-center">
+            <h2 class="mb-4 fw-bold">Área Reservada</h2>
+            
+            <form onsubmit="return false;">
+                
+                <div class="mb-3 text-start">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" class="form-control" placeholder="Inserir utilizador">
+                </div>
+                
+                <div class="mb-4 text-start">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" class="form-control" placeholder="Inserir password">
+                </div>
+
+                <button type="button" class="btn btn-light w-100 fw-bold rounded-pill shadow py-2" onclick="sendCredentials()">
+                    Entrar <i class="fa-solid fa-right-to-bracket ms-2"></i>
+                </button>
+
+            </form>
+        </div>
+
     </section>
 
 
@@ -111,7 +104,7 @@
         <i class="fa-solid fa-paw"></i>
     </a>
 
-    <footer class="text-light text-center py-3 mt-5">
+    <footer class="text-light text-center py-3 ">
         <p class="mb-0">&copy; 2025 CROAE - Todos os direitos reservados.</p>
     </footer>
 

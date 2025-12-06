@@ -18,6 +18,9 @@ async function sendCredentials() {
     if (!response.ok) {
         alert("Credenciais inválidas");
         return;
+    } else {
+        alert("Login efectuado com sucesso!")
+        window.history.back();
     }
     const result = await response.json();
 
