@@ -20,9 +20,9 @@
     <!-- ALTERAR ISTO PARA FOLHA CSS EXTERIROR-->
     <style>
         #fotoPreview {
-            width: 250px;
-            height: 250px;
-            object-fit: cover;
+            width: 500px;
+            height: 500px;
+            object-fit:cover;
             border-radius: 12px;
         }
     </style>
@@ -92,11 +92,11 @@
         <div class="container">
             <h2 class="fw-bold text-center mb-4">Editar Cão</h2>
             <div class="row g-4">
-                <div class="col-lg-5 text-center">
-                    <img id="fotoPreview" src="" class="shadow-sm mb-3">
+                <div class="col-lg-5 text-center m-4">
+                    <img id="fotoPreview" src="" class="shadow-sm mb-3 h-100">
                     <input type="file" id="foto" class="form-control mt-2">
                 </div>
-                <div class="col-lg-7">
+                <div class="col-lg-5">
                     <div class="form-box">
                         <input type="hidden" id="caoId">
                         <h5 class="section-title">Informações Gerais</h5>
@@ -137,13 +137,15 @@
                             <textarea id="caracteristica" class="form-control" rows="4"></textarea>
                         </div>
                         <button class="btn btn-primary w-100 mt-2" onclick="guardar()">Guardar Alterações</button>
-                        <a href="adotados.html" class="btn btn-secondary w-100 mt-2">Cancelar</a>
+                        <button type="button" class="btn btn-secondary w-100 mt-2" onclick="history.back()">Cancelar</button>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-
+    <div class="container text-center"><button type="button" class="btn btn-danger w-10 mt-2" onclick="apagar()">Deletar Cão (USAR COM CUIDADO)</button>
+</div>
+    
     <footer class="text-light text-center py-3 mt-5">
         <p class="mb-0">&copy; 2025 CROAE - Todos os direitos reservados.</p>
     </footer>
