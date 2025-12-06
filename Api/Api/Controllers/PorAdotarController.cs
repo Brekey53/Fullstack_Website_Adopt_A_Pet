@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.JsonPatch;
 
 namespace ApiAndreLeonorProjetoFinal.Controllers
 {
@@ -57,20 +58,19 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
 
             // Não está em cache. Ir à Base de Dados
 
-            caesDisponiveis = await _dbContext.Caes.Include(c => c.Fotos)
-                    .Where(c => c.Disponivel == true)
-                    .Select(c => new CaoDto
-                    {
-                        CaoId = c.CaoId,
-                        Nome = c.Nome,
-                        DataNascimento = c.DataNascimento,
-                        Porte = c.Porte,
-                        Sexo = c.Sexo,
-                        Castrado = c.Castrado,
-                        Disponivel = c.Disponivel,
-                        Caracteristica = c.Caracteristica,
-                        Foto = c.Fotos.Select(f => f.Foto1).FirstOrDefault() ?? "images/adotados/default.jpg"
-                    }).ToListAsync();
+            caesDisponiveis = await _dbContext.Caes.Where(c => c.Disponivel == true).Include(c => c.Fotos).Include(c => c.Raca).Select(c => new CaoDto
+                {
+                    CaoId = c.CaoId,
+                    Nome = c.Nome,
+                    DataNascimento = c.DataNascimento,
+                    Porte = c.Porte,
+                    Sexo = c.Sexo,
+                    Castrado = c.Castrado,
+                    Disponivel = c.Disponivel,
+                    Caracteristica = c.Caracteristica,
+                    Foto = c.Fotos.Select(f => f.Foto1).FirstOrDefault() ?? "images/adotados/default.jpg",
+                    Raca = c.Raca != null ? c.Raca.Raca1 : "Desconhecida"
+                }).ToListAsync();
 
             // Guardar o resultado nos Caches (L2 e L1)
 
@@ -91,7 +91,6 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
 
             // Devolver o resultado acabado de ir buscar à BD
             return Ok(caesDisponiveis);
-
         }
 
 
