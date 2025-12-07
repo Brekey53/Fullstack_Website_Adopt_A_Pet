@@ -69,8 +69,8 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
                     Disponivel = c.Disponivel,
                     Caracteristica = c.Caracteristica,
                     Foto = c.Fotos.Select(f => f.Foto1).FirstOrDefault() ?? "images/adotados/default.jpg",
-                    Raca = c.Raca != null ? c.Raca.Raca1 : "Desconhecida"
-                }).ToListAsync();
+                    Raca = c.RacaId == 16 ? (c.CruzamentoRaca ?? "Rafeiro") : (c.Raca != null ? c.Raca.Raca1 : "Desconhecida")
+            }).ToListAsync();
 
             // Guardar o resultado nos Caches (L2 e L1)
 
@@ -80,14 +80,14 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
             // Definir opções de expiração para o Redis (ex: 30 minutos)
             var opcoesRedis = new DistributedCacheEntryOptions
             {
-                AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(30)
+                AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(2)
             };
 
             // Guardar no L2 (Redis)
             await _distributedCache.SetStringAsync(CaesCacheKey, caesParaCacheJson, opcoesRedis);
 
             // Guardar também no L1 (Memória)
-            _memoryCache.Set(CaesCacheKey, caesDisponiveis, TimeSpan.FromMinutes(5)); // L1 expira mais rápido
+            _memoryCache.Set(CaesCacheKey, caesDisponiveis, TimeSpan.FromMinutes(1)); // L1 expira mais rápido
 
             // Devolver o resultado acabado de ir buscar à BD
             return Ok(caesDisponiveis);
