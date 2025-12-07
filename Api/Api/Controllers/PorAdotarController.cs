@@ -21,7 +21,7 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
         private readonly IDistributedCache _distributedCache;
 
         // Chave de cache
-        private const string CaesCacheKey = "lista_caes_por_adotar";
+        public const string CaesCacheKey = "lista_caes_por_adotar";
 
         public PorAdotarController(CroaeDbContext context, IMemoryCache memoryCache, IDistributedCache distributedCache)
         {

@@ -19,7 +19,7 @@ public class AdotadosController : ControllerBase
     private readonly IDistributedCache _distributedCache;
 
     // Chave de cache
-    private const string CaesCacheKey = "lista_caes_adotados";
+    public const string CaesCacheKey = "lista_caes_adotados";
 
     public AdotadosController(CroaeDbContext context, IMemoryCache memoryCache, IDistributedCache distributedCache)
     {

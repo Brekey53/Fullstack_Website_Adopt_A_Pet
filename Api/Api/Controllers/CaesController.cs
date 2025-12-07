@@ -306,9 +306,17 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
         /// </summary>
         private async Task InvalidateCacheAsync(int? caoId = null)
         {
+            const string adotadosKey = AdotadosController.CaesCacheKey;
+            const string porAdotarKey = PorAdotarController.CaesCacheKey;
+
             // Limpar a lista geral (Sempre)
             await _distributedCache.RemoveAsync(CaesCacheKey);
+            await _distributedCache.RemoveAsync(adotadosKey);
+            await _distributedCache.RemoveAsync(porAdotarKey);
+
             _memoryCache.Remove(CaesCacheKey);
+            _memoryCache.Remove(adotadosKey);
+            _memoryCache.Remove(porAdotarKey);
 
             // Se fornecermos um ID, limpar também o cache desse cão específico
             if (caoId.HasValue)
