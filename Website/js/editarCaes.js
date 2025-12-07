@@ -70,7 +70,7 @@ async function guardar() {
     return;
   }
 
-  window.location.href = "paraAdotar.html";
+  window.location.back
 }
 
 async function apagar() {
