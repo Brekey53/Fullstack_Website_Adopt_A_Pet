@@ -24,7 +24,7 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
 
                 using var smtp = new SmtpClient("smtp-mail.outlook.com", 587)
                 {
-                    Credentials = new NetworkCredential("croaemoita@outlook.pt", "utbfwtkbmavyjhdr"),
+                    Credentials = new NetworkCredential("croaemoita@outlook.pt", "utbf wtkb mavy jhdr"),
                     EnableSsl = true
                 };
 
