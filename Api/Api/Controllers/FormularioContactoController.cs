@@ -22,9 +22,9 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
                 mail.Body = $"Olá {form.Nome},\n\nObrigado pelo teu contacto!\nTipo de visita escolhido: {form.TipoVisita}";
                 mail.IsBodyHtml = false;
 
-                using var smtp = new SmtpClient("smtp.gmail.com", 587)
+                using var smtp = new SmtpClient("smtp-mail.outlook.com", 587)
                 {
-                    Credentials = new NetworkCredential("croaemoita@outlook.pt", "fjtvgplntrgysive"),
+                    Credentials = new NetworkCredential("croaemoita@outlook.pt", "utbfwtkbmavyjhdr"),
                     EnableSsl = true
                 };
 
