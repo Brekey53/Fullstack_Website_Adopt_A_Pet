@@ -24,7 +24,7 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
 
                 using var smtp = new SmtpClient("smtp.gmail.com", 587)
                 {
-                    Credentials = new NetworkCredential("leonorjoaquim98@gmail.com", "qtyu qmsn emak uavq"),
+                    Credentials = new NetworkCredential("leonorjoaquim98@gmail.com", "ADICIONAR CHAVE AQUI"),
                     EnableSsl = true
                 };
 
