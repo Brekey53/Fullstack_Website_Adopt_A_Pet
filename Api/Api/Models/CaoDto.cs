@@ -12,5 +12,6 @@
         public string? Caracteristica { get; set; }
         public string? Foto { get; set; }
         public string? Raca { get; set; }
+        public string? CruzamentoRaca { get; set; }
     }
 }
