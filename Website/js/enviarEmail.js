@@ -12,7 +12,7 @@ form.addEventListener("submit", async (e) => {
 
   try {
     const resposta = await fetch(
-      "http://localhost:5013/api/FomularioContacto/enviar",
+      "http://localhost:5013/api/FormularioContacto/enviar",
       {
         method: "POST",
         body: dados,

@@ -8,7 +8,7 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class FomularioContactoController : ControllerBase
+    public class FormularioContactoController : ControllerBase
     {
         [HttpPost("enviar")]
         public IActionResult Enviar([FromForm] FormularioContacto form)
@@ -16,7 +16,7 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
             try
             {
                 var mail = new MailMessage();
-                mail.From = new MailAddress("leonorjoaquim98@gmail.com", "CROAE");
+                mail.From = new MailAddress("croaemoita@outlook.pt", "CROAE");
                 mail.To.Add(form.Email);
                 mail.Subject = $"Resposta ao contacto: {form.Nome}";
                 mail.Body = $"Olá {form.Nome},\n\nObrigado pelo teu contacto!\nTipo de visita escolhido: {form.TipoVisita}";
@@ -24,7 +24,7 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
 
                 using var smtp = new SmtpClient("smtp.gmail.com", 587)
                 {
-                    Credentials = new NetworkCredential("leonorjoaquim98@gmail.com", "ADICIONAR CHAVE AQUI"),
+                    Credentials = new NetworkCredential("croaemoita@outlook.pt", "fjtvgplntrgysive"),
                     EnableSsl = true
                 };
 
