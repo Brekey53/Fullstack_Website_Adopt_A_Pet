@@ -3,7 +3,7 @@
 	       Criar e Utilizar a DB
 --------------------------------------------
 */
-
+-- Drop database croae_projeto;
 -- Criar base de dados
 CREATE DATABASE IF NOT EXISTS croae_projeto;
 
@@ -304,12 +304,12 @@ VALUES
 	(16, 'Timon', '2017-12-09', 'Médio', 'M', '2021-10-10 13:45:00', 'Labrador', 4, TRUE, 'Muito obediente', TRUE), -- 5
 	(16, 'Dino', '2020-08-01', 'Pequeno', 'M', '2023-02-22 15:00:00', NULL, 2, TRUE, 'Calmo e educado', FALSE),
 	(16, 'Simba', '2019-04-10', 'Médio', 'M', '2022-09-14 10:30:00', NULL, 3, FALSE, 'Muito curioso', TRUE),
-	(16, 'Martinha', '2022-01-28', 'Médio', 'F', '2024-06-02 12:00:00', NULL, 1, FALSE, 'Adora brincar', TRUE),
-	(16, 'Martinho', '2020-07-07', 'Médio', 'M', '2023-05-20 09:00:00', NULL, 4, TRUE, 'Muito dócil', TRUE),
-	(2, 'Nina', '2016-06-15', 'Grande', 'F', '2020-11-30 08:15:00', NULL, 2, TRUE, 'Veterana calma e experiente', TRUE), -- 10
+	(16, 'Martinha', '2022-01-28', 'Médio', 'F', '2024-06-02 12:00:00', 'Pitbull', 1, FALSE, 'Adora brincar', TRUE),
+	(16, 'Martinho', '2020-07-07', 'Médio', 'M', '2023-05-20 09:00:00', 'Pitbull', 4, TRUE, 'Muito dócil', TRUE),
+	(11, 'Nina', '2016-06-15', 'Grande', 'F', '2020-11-30 08:15:00', NULL, 2, TRUE, 'Veterana calma e experiente', TRUE), -- 10
 	(16, 'Dina', '2021-10-25', 'Pequeno', 'F', '2024-04-18 10:45:00', 'Pinscher', 3, FALSE, 'Muito ativa', TRUE),
 	(16, 'Judy', '2018-01-30', 'Grande', 'F', '2021-01-01 11:00:00', NULL, 1, TRUE, 'Guardiã atenta', TRUE),
-	(16, 'Pirulito', '2019-09-14', 'Médio', 'M', '2022-12-12 14:30:00', NULL, 2, FALSE, 'Muito afetuoso', TRUE),
+	(16, 'Pirulito', '2019-09-14', 'Médio', 'M', '2022-12-12 14:30:00', 'Pitbull', 2, FALSE, 'Muito afetuoso', TRUE),
 	(16, 'Pepa', '2020-06-01', 'Pequeno', 'F', '2023-07-07 10:10:00', NULL, 4, TRUE, 'Adora correr', TRUE),
 	(6, 'Joca', '2022-03-03', 'Grande', 'M', '2024-02-05 09:20:00', NULL, 3, FALSE, 'Muito brincalhão', TRUE), -- 15
 	(16, 'Jynx', '2021-04-16', 'Grande', 'M', '2024-05-15 13:35:00', NULL, 1, FALSE, 'Muito inteligente', FALSE),
@@ -317,8 +317,8 @@ VALUES
     (15, 'Chibi', '2018-01-11', 'Pequeno', 'M', '2025-04-15 13:35:00', NULL, 10, FALSE, 'Medroso e pouco sociável', FALSE),
     (16, 'Chucky', '2023-01-01', 'Grande', 'M', '2024-02-15 13:35:00', NULL, 5, FALSE, 'Adora brincar na Praia', TRUE),
     (16, 'Duque', '2022-08-15', 'Grande', 'M', '2023-03-24 13:35:00', NULL, 1, TRUE, 'Adora crianças e festas', TRUE), -- 20
-    (16, 'Faial', '2023-01-01', 'Grande', 'M', '2024-03-24 13:35:00', NULL, 1, TRUE, 'Adora correr e jogar com uma bola', TRUE),
-    (16, 'Jeny', '2023-05-05', 'Grande', 'F', '2024-03-24 13:35:00', 'Rafeiro Alentejano', 1, TRUE, 'Passeios grandes mas demorados', TRUE),
+    (16, 'Faial', '2023-01-01', 'Grande', 'M', '2024-03-24 13:35:00', 'Pitbull', 1, TRUE, 'Adora correr e jogar com uma bola', TRUE),
+    (6, 'Jeny', '2023-05-05', 'Grande', 'F', '2024-03-24 13:35:00', NULL, 1, TRUE, 'Passeios grandes mas demorados', TRUE),
     (16, 'Jujú', '2023-05-05', 'Pequeno', 'F', '2025-07-01 13:35:00', NULL, 1, TRUE, 'Adora Mimos', TRUE),
     (16, 'Migalha', '2025-01-01', 'Pequeno', 'M', '2025-06-24 13:35:00', NULL, 1, TRUE, 'Medroso', TRUE); -- 24
     
