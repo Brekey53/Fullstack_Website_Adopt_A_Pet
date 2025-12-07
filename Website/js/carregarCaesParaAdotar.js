@@ -41,7 +41,7 @@ async function carregarAnimaisParaAdotar() {
       <div class="d-flex justify-content-center">
         ${
           token
-            ? `<button class="btn btn-warning w-50 mt-2 d-flex justify-content-center text-white" onclick="editarCao(${animal.caoId})">Editar</button>`
+            ? `<button class="btn btn-warning w-50 mt-2 mb-2 d-flex justify-content-center text-white" onclick="editarCao(${animal.caoId})">Editar</button>`
             : ""
         }
       </div>
