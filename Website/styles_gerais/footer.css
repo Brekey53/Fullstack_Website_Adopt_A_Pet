@@ -3,7 +3,9 @@
 ================*/
 
 footer {
-    background-color: #ffb300;
-    z-index: 1;
-    font-size: 1.2rem;
+  background-color: #ffb300;
+  z-index: 1;
+  font-size: 1.2rem;
+  position: sticky;
+  top: 100vh;
 }
