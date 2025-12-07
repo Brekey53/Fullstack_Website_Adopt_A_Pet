@@ -20,7 +20,7 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
         private readonly IDistributedCache _distributedCache;
 
         // Chave de cache
-        private const string CaesCacheKey = "lista_caes_ativos"; //talvez disponivel aqui? 
+        private const string CaesCacheKey = "lista_caes"; //talvez disponivel aqui? 
 
         public CaesController(CroaeDbContext dbContext, IMemoryCache memoryCache, IDistributedCache distributedCache)
         {
