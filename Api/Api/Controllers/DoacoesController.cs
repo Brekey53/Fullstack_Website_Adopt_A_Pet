@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel;
 
 namespace ApiAndreLeonorProjetoFinal.Controllers
 {
@@ -18,15 +19,37 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
         [HttpPost]
         public async Task<IActionResult> FazerDoacao([FromBody] DoacaoDto doacao)
         {
+            // Validar se vem nulo
+            if (doacao == null)
+            {
+                return BadRequest(new { erro = "Dados inválidos." });
+            }
+            // Validar valor - tem de ser positivo
+            if (doacao.Valor <= 0)
+            {
+                return BadRequest(new { erro = "O valor da doação deve ser maior que zero." });
+            }
+            // Validar se o numero de cartão apenas possui digitos
+            if (!doacao.NumeroCartao.All(char.IsDigit))
+            {
+                return BadRequest(new { erro = "O cartão deve conter apenas números." });
+            }
+            // Verificar se não é só zeros
+            if (doacao.NumeroCartao.All(c => c == '0'))
+            {
+                return BadRequest(new { erro = "Número de cartão inválido (zeros)." });
+            }
+
             // Criar o cliente que aponta para o Mountebank
             var client = _httpClientFactory.CreateClient("BancoMock");
 
             // Dados para enviar
             var dadosPagamento = new
             {
-                numeroCartao = doacao.NumeroCartao, // Mountebank espera isto
+                numeroCartao = doacao.NumeroCartao,
                 valor = doacao.Valor
             };
+
 
             // Enviar pedido ao Mountebank (POST /payments)
             var response = await client.PostAsJsonAsync("payments", dadosPagamento);
@@ -37,7 +60,7 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
                 return BadRequest(new { erro = "Pagamento recusado pelo banco." });
             }
 
-            return Ok(new { mensagem = "Doação aceite com sucesso!" });
+            return Ok(new { mensagem = "Doação aceite com sucesso! Obrigado "});
         }
     }
 
