@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.ComponentModel;
+using ApiAndreLeonorProjetoFinal.Models;
+using ApiAndreLeonorProjetoFinal.Data;
 
 namespace ApiAndreLeonorProjetoFinal.Controllers
 {
@@ -9,64 +10,30 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
     [ApiController]
     public class DoacoesController : ControllerBase
     {
-        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly CroaeDbContext _context;
 
-        public DoacoesController(IHttpClientFactory httpClientFactory)
+        public DoacoesController(CroaeDbContext context)
         {
-            _httpClientFactory = httpClientFactory;
+            _context = context;
         }
 
         [HttpPost]
-        public async Task<IActionResult> FazerDoacao([FromBody] DoacaoDto doacao)
+        public async Task<IActionResult> Post(DoacaoDTO dto)
         {
-            // Validar se vem nulo
-            if (doacao == null)
+            var doacao = new Doacoes
             {
-                return BadRequest(new { erro = "Dados inválidos." });
-            }
-            // Validar valor - tem de ser positivo
-            if (doacao.Valor <= 0)
-            {
-                return BadRequest(new { erro = "O valor da doação deve ser maior que zero." });
-            }
-            // Validar se o numero de cartão apenas possui digitos
-            if (!doacao.NumeroCartao.All(char.IsDigit))
-            {
-                return BadRequest(new { erro = "O cartão deve conter apenas números." });
-            }
-            // Verificar se não é só zeros
-            if (doacao.NumeroCartao.All(c => c == '0'))
-            {
-                return BadRequest(new { erro = "Número de cartão inválido (zeros)." });
-            }
-
-            // Criar o cliente que aponta para o Mountebank
-            var client = _httpClientFactory.CreateClient("BancoMock");
-
-            // Dados para enviar
-            var dadosPagamento = new
-            {
-                numeroCartao = doacao.NumeroCartao,
-                valor = doacao.Valor
+                NomeDoador = dto.NomeDoador,
+                TipoDoacao = dto.TipoDoacao,
+                Valor = dto.Valor,
+                Descricao = dto.Descricao,
+                FuncionarioId = null,
+                DataDoacao = DateOnly.FromDateTime(dto.Data)
             };
 
+            _context.Doacoes.Add(doacao);
+            await _context.SaveChangesAsync();
 
-            // Enviar pedido ao Mountebank (POST /payments)
-            var response = await client.PostAsJsonAsync("payments", dadosPagamento);
-
-            if (!response.IsSuccessStatusCode)
-            {
-                // Se o Mountebank devolver erro 402 (regra do cartao 0000)
-                return BadRequest(new { erro = "Pagamento recusado pelo banco." });
-            }
-
-            return Ok(new { mensagem = "Doação aceite com sucesso! Obrigado "});
+            return Ok(new { mensagem = "Doação registada com sucesso" });
         }
-    }
-
-    public class DoacaoDto
-    {
-        public string? NumeroCartao { get; set; }
-        public decimal Valor { get; set; }
     }
 }
