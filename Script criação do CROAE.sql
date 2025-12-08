@@ -55,7 +55,7 @@ CREATE TABLE caes (
     CONSTRAINT fk_caes_boxes FOREIGN KEY (box_id) REFERENCES boxes(box_id) ON DELETE SET NULL -- nao quero apagar um cao só porque se apagou uma box
 );
 
-DROP TABLE IF EXISTS doacoes_web;
+/*DROP TABLE IF EXISTS doacoes_web;
 CREATE TABLE doacoes_web (
 	doacao_web_id INT PRIMARY KEY AUTO_INCREMENT,
     nome_doador VARCHAR(100) NOT NULL,
@@ -63,7 +63,7 @@ CREATE TABLE doacoes_web (
     quantidade_doada INT NOT NULL,
     valor_pago DOUBLE NOT NULL,
     descricao VARCHAR(100)
-);
+);*/
 
 DROP TABLE IF EXISTS padrinhos;
 CREATE TABLE padrinhos (

@@ -143,16 +143,16 @@ document.addEventListener("DOMContentLoaded", function () {
         );
       }
 
-      let descricao = "";
+      let descricaoDoacao = "";
       if (selectAnimal.value === "-1") {
         const lista = document.getElementById("inputListaAnimais").value;
-        descricao = `Cães selecionados: ${lista}`;
+        descricaoDoacao = `Cães selecionados: ${lista}`;
       } else if (selectAnimal.value === "0") {
-        descricao = "Doação sem preferência";
+        descricaoDoacao = "Doação sem preferência";
       } else {
         const nomeAnimal =
           selectAnimal.options[selectAnimal.selectedIndex].text;
-        descricao = `${nomeAnimal}`;
+        descricaoDoacao = `${nomeAnimal}`;
       }
 
       await fetch("http://localhost:5013/api/doacoes", {
@@ -162,7 +162,7 @@ document.addEventListener("DOMContentLoaded", function () {
           nomeDoador,
           tipoDoacao: "Bens ou Comida",
           valor: valorTotal,
-          descricao,
+          descricaoDoacao,
           data: new Date().toISOString(),
         }),
       });
