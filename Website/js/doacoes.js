@@ -67,6 +67,16 @@ document.addEventListener("DOMContentLoaded", function () {
   let precoUnitarioAtual = 0;
   let itemAtual = "";
 
+  const modal = document.getElementById('modalDoacao');
+
+  modal.addEventListener('shown.bs.modal', () => {
+    const backdrop = document.querySelector('.modal-backdrop');
+    if (backdrop) {
+        backdrop.style.opacity = '0.87';
+        backdrop.style.backgroundColor = '#000'; 
+    }
+});
+
   // Elementos do DOM
   const selectAnimal = document.getElementById("selectAnimal");
   const inputQuantidade = document.getElementById("inputQuantidade");
@@ -74,6 +84,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const labelPreco = document.getElementById("labelPreco");
   const labelItem = document.getElementById("labelItem");
   const btnConfirmar = document.getElementById("btnConfirmarDoacao");
+  const preto = document.getElementById("background");
 
   // 1. Carregar a lista de animais da API ao abrir a página
   carregarAnimais();

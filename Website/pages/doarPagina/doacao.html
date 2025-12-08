@@ -1,218 +1,379 @@
 <!DOCTYPE html>
 <html lang="pt">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Doar um Osso</title>
-    <link rel="shortcut icon" href="../../images/icone_titulo.png" type="image/x-icon">
+    <link
+      rel="shortcut icon"
+      href="../../images/icone_titulo.png"
+      type="image/x-icon"
+    />
 
     <!-- BootStrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
 
     <!-- CSS Gerais -->
-    <link rel="stylesheet" href="../../styles_gerais/navbar.css">
-    <link rel="stylesheet" href="../../styles_gerais/footer.css">
-    <link rel="stylesheet" href="../../styles_gerais/hero.css">
-    <link rel="stylesheet" href="../../styles_gerais/tipografia.css">
-    <link rel="stylesheet" href="../../styles_gerais/font_awesome.css">
-    <link rel="stylesheet" href="../../styles_gerais/buttons.css">
-    <link rel="stylesheet" href="styles_adocao/adocao.css">
+    <link rel="stylesheet" href="../../styles_gerais/navbar.css" />
+    <link rel="stylesheet" href="../../styles_gerais/footer.css" />
+    <link rel="stylesheet" href="../../styles_gerais/hero.css" />
+    <link rel="stylesheet" href="../../styles_gerais/tipografia.css" />
+    <link rel="stylesheet" href="../../styles_gerais/font_awesome.css" />
+    <link rel="stylesheet" href="../../styles_gerais/buttons.css" />
+    <link rel="stylesheet" href="styles_adocao/adocao.css" />
 
     <!-- Fontes Google -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-        href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@100..900&family=Roboto:wght@100..900&display=swap"
-        rel="stylesheet">
+      href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@100..900&family=Roboto:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
 
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-</head>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+  </head>
 
-<body>
+  <body>
     <header>
-        <nav id="mainNavbar" class="navbar navbar-expand-lg fixed-top navbar-custom navbar-dark">
-            <div class="container-fluid">
-                <div class="navbar-img">
-                    <a href="../../index.html"><img src="../../images/croae_logo.jpg" alt="CROAE logo"
-                            class="logo-desktop"></a>
-                    <a href="../../index.html"><img src="../../images/croae_logo_mobile.jpg" alt="CROAE logo mobile"
-                            class="logo-mobile"></a>
-                </div>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+      <nav
+        id="mainNavbar"
+        class="navbar navbar-expand-lg fixed-top navbar-custom navbar-dark"
+      >
+        <div class="container-fluid">
+          <div class="navbar-img">
+            <a href="../../index.html"
+              ><img
+                src="../../images/croae_logo.jpg"
+                alt="CROAE logo"
+                class="logo-desktop"
+            /></a>
+            <a href="../../index.html"
+              ><img
+                src="../../images/croae_logo_mobile.jpg"
+                alt="CROAE logo mobile"
+                class="logo-mobile"
+            /></a>
+          </div>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
 
-                <div class="collapse navbar-collapse custom-color" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
+          <div class="collapse navbar-collapse custom-color" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="adocao.html"
+                  id="adocaoDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Adoção
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="adocaoDropdown">
+                  <li>
+                    <a
+                      id="ativo"
+                      class="dropdown-item"
+                      href="../adoptionPages/adocao.html"
+                      >Adotar no CROAE</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="dropdown-item"
+                      href="../adoptionPages/paraAdotar.html"
+                      >Animais para adoção</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="dropdown-item"
+                      href="../adoptionPages/adotados.html"
+                      >Animais adotados</a
+                    >
+                  </li>
+                </ul>
+              </li>
 
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="adocao.html" id="adocaoDropdown" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                Adoção
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="adocaoDropdown">
-                                <li><a id="ativo" class="dropdown-item" href="adocao.html">Adotar no CROAE</a></li>
-                                <li><a class="dropdown-item" href="paraAdotar.html">Animais para adoção</a></li>
-                                <li><a class="dropdown-item" href="adotados.html">Animais adotados</a></li>
-                            </ul>
-                        </li>
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="../servicos/servicos.html"
+                  id="servicosDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Serviços CROAE
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="servicosDropdown">
+                  <li>
+                    <a class="dropdown-item" href="../servicos/servicos.html"
+                      >Serviços CROAE</a
+                    >
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="../servicos/servicosVet.html"
+                      >Serviços Veterinários</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="dropdown-item"
+                      href="../servicos/servicosRecolha.html"
+                      >Serviços Recolha</a
+                    >
+                  </li>
+                </ul>
+              </li>
 
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="../servicos/servicos.html" id="servicosDropdown"
-                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Serviços CROAE
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="servicosDropdown">
-                                <li><a class="dropdown-item" href="../servicos/servicos.html">Serviços CROAE</a></li>
-                                <li><a class="dropdown-item" href="../servicos/servicosVet.html">Serviços
-                                        Veterinários</a></li>
-                                <li><a class="dropdown-item" href="../servicos/servicosRecolha.html">Serviços
-                                        Recolha</a></li>
-                            </ul>
-                        </li>
+              <li class="nav-item">
+                <a class="nav-link" href="../visits/visitar.html"
+                  >Marcar Visita</a
+                >
+              </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="../visits/visitar.html">Marcar Visita</a>
-                        </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#"
+                  ><i class="fa-solid fa-bone text-light p-1"></i>Doar um
+                  Osso</a
+                >
+              </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="#"><i class="fa-solid fa-bone text-light p-1"></i>Doar um Osso</a>
-                        </li>
+              <li class="nav-item">
+                <a class="nav-link" href="../blog/noticias.html">Notícias</a>
+              </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="../blog/noticias.html">Notícias</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="../contacts/contactos.html">Contactos</a>
-                        </li>
-
-                    </ul>
-                </div>
-            </div>
-        </nav>
+              <li class="nav-item">
+                <a class="nav-link" href="../contacts/contactos.html"
+                  >Contactos</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
     </header>
-    <div style="height:120px;"></div>
+    <div style="height: 120px"></div>
 
-    <h3 class="text-center mt-3">Quer ajudar os nossos patudos mas não tem tempo livre?</h3>
+    <h3 class="text-center mt-3">
+      Quer ajudar os nossos patudos mas não tem tempo livre?
+    </h3>
     <section class="py-3">
-        <div class="text-center mb-4">
-            <p><b><br/><h3>A sua ajuda faz toda a diferença.</h3></b></p>
-        </div>
+      <div class="text-center mb-4">
+        <p>
+          <br />
+            <marquee><b><h4 style="color: #ffb300">A sua ajuda faz toda a diferença.</h4></b></marquee>
+        </p>
+      </div>
 
-        <div class="container my-5">
-            <div class="row justify-content-center g-4">
-
-                <div class="col-12 col-md-5">
-                    <div class="card h-100">
-                        <img src="../../images/osso.jpg" class="card-img-top h-100" alt="Osso">
-                        <div class="card-body">
-                            <h5 class="card-title">Osso</h5>
-                            <p class="card-text">Ofereça um ossinho a um dos nossos patudos.</p>
-                        </div>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Contribuição simbólica</li>
-                            <li class="list-group-item">2,50€</li>
-                            <li class="list-group-item">Pode escolher na página a seguir a quem doar :)</li>
-                        </ul>
-                        <div class="card-body">
-                            <button class="btn d-flex justify-content-center w-100 btn-doar-trigger" 
-                                data-bs-toggle="modal" 
-                                data-bs-target="#modalDoacao"
-                                data-item="Osso"
-                                data-preco="2.50">
-                                Doar Osso (2,50€)
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-5">
-                    <div class="card h-100">
-                        <img src="../../images/manta.jpg" class="card-img-top h-100" alt="Manta">
-                        <div class="card-body">
-                            <h5 class="card-title">Manta</h5>
-                            <p class="card-text">Ajude a manter um animal quentinho e confortável.</p>
-                        </div>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Essencial no inverno</li>
-                            <li class="list-group-item">4€</li>
-                            <li class="list-group-item">Pode escolher na página a seguir a quem doar :)</li>
-                        </ul>
-                        <div class="card-body">
-                            <button class="btn d-flex justify-content-center w-100 btn-doar-trigger" 
-                                data-bs-toggle="modal" 
-                                data-bs-target="#modalDoacao"
-                                data-item="Manta"
-                                data-preco="4.00">
-                                Doar Manta (4,00€)
-                            </button>
-                        </div>
-                    </div>
-                </div>
+      <div class="container my-5">
+        <div class="row justify-content-center g-4">
+          <div class="col-12 col-md-5">
+            <div class="card h-100">
+              <img
+                src="../../images/osso.jpg"
+                class="card-img-top h-100"
+                alt="Osso"
+              />
+              <div class="card-body">
+                <h5 class="card-title">Osso</h5>
+                <p class="card-text">
+                  Ofereça um ossinho a um dos nossos patudos.
+                </p>
+              </div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">Contribuição simbólica</li>
+                <li class="list-group-item">2,50€</li>
+                <li class="list-group-item">
+                  Pode escolher na página a seguir a quem doar :)
+                </li>
+              </ul>
+              <div class="card-body">
+                <button
+                  class="btn btn-secondary d-flex justify-content-center w-100 btn-doar-trigger"
+                  data-bs-toggle="modal"
+                  data-bs-target="#modalDoacao"
+                  data-item="Osso"
+                  data-preco="2.50"
+                >
+                  Doar Osso (2,50€)
+                </button>
+              </div>
             </div>
+          </div>
+          <div class="col-12 col-md-5">
+            <div class="card h-100">
+              <img
+                src="../../images/manta.jpg"
+                class="card-img-top h-100"
+                alt="Manta"
+              />
+              <div class="card-body">
+                <h5 class="card-title">Manta</h5>
+                <p class="card-text">
+                  Ajude a manter um animal quentinho e confortável.
+                </p>
+              </div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">Essencial no inverno</li>
+                <li class="list-group-item">4€</li>
+                <li class="list-group-item">
+                  Pode escolher na página a seguir a quem doar :)
+                </li>
+              </ul>
+              <div class="card-body">
+                <button
+                  class="btn btn-secondary d-flex justify-content-center w-100 btn-doar-trigger"
+                  data-bs-toggle="modal"
+                  data-bs-target="#modalDoacao"
+                  data-item="Manta"
+                  data-preco="4.00"
+                >
+                  Doar Manta (4,00€)
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
     </section>
 
     <footer class="text-light text-center py-3">
-        <p class="mb-0">&copy; 2025 CROAE - Todos os direitos reservados.</p>
+      <p class="mb-0">&copy; 2025 CROAE - Todos os direitos reservados.</p>
     </footer>
 
     <!-- Modal Pagamento -->
-    <div class="modal fade" id="modalDoacao" tabindex="-1" aria-labelledby="modalDoacaoLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div
+      class="modal fade"
+      id="modalDoacao"
+      tabindex="-1"
+      aria-labelledby="modalDoacaoLabel"
+      aria-hidden="true"
+      style="padding-top: 10rem"
+    >
+      <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalDoacaoLabel">Finalizar Doação</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="formDoacao">
-                    <div class="mb-3 p-3 bg-light rounded text-center">
-                        <h4 id="labelItem">Item Selecionado</h4>
-                        <p class="text-muted mb-0">Preço unitário: <span id="labelPreco">0.00</span>€</p>
-                    </div>
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalDoacaoLabel">Finalizar Doação</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="formDoacao">
+              <div class="mb-3 p-3 bg-light rounded text-center">
+                <h4 id="labelItem">Item Selecionado</h4>
+                <p class="text-muted mb-0">
+                  Preço unitário: <span id="labelPreco">0.00</span>€
+                </p>
+              </div>
 
-                    <div class="mb-3">
-                        <label for="selectAnimal" class="form-label">A quem quer oferecer? 🐶</label>
-                        <select class="form-select" id="selectAnimal" required>
-                            <option value="" selected disabled>A carregar lista de animais...</option>
-                        </select>
-                    </div>
+              <div class="mb-3">
+                <label for="selectAnimal" class="form-label"
+                  >A quem quer oferecer? 🐶</label
+                >
+                <select class="form-select" id="selectAnimal" required>
+                  <option value="" selected disabled>
+                    A carregar lista de animais...
+                  </option>
+                </select>
+              </div>
 
-                    <div class="mb-3">
-                        <label for="inputQuantidade" class="form-label">Quantidade</label>
-                        <input type="number" class="form-control" id="inputQuantidade" value="1" min="1" required>
-                    </div>
+              <div class="mb-3">
+                <label for="inputQuantidade" class="form-label"
+                  >Quantidade</label
+                >
+                <input
+                  type="number"
+                  class="form-control"
+                  id="inputQuantidade"
+                  value="1"
+                  min="1"
+                  required
+                />
+              </div>
 
-                    <hr>
-                    <h6>Dados de Pagamento</h6>
-                    
-                    <div class="mb-3">
-                        <label for="inputNomeDoador" class="form-label">Nome do Titular</label>
-                        <input type="text" class="form-control" id="inputNomeDoador" placeholder="O seu nome" required>
-                    </div>
+              <hr />
+              <h6>Dados de Pagamento</h6>
 
-                    <div class="mb-3">
-                        <label for="inputCartao" class="form-label">Número do Cartão</label>
-                        <input type="text" class="form-control" id="inputCartao" placeholder="0000 0000 0000 0000" maxlength="19" required>
-                    </div>
+              <div class="mb-3">
+                <label for="inputNomeDoador" class="form-label"
+                  >Nome do Titular</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="inputNomeDoador"
+                  placeholder="O seu nome"
+                  required
+                />
+              </div>
 
-                    <div class="d-flex justify-content-between align-items-center mt-4">
-                        <span class="h5">Total a Pagar:</span>
-                        <span class="h3 text-primary"><span id="labelTotal">0.00</span>€</span>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">😭 Cancelar</button>
-                <button type="button" class="btn btn-success" id="btnConfirmarDoacao">❤️ Confirmar Doação</button>
-            </div>
+              <div class="mb-3">
+                <label for="inputCartao" class="form-label"
+                  >Número do Cartão</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="inputCartao"
+                  placeholder="0000 0000 0000 0000"
+                  maxlength="19"
+                  required
+                />
+              </div>
+
+              <div
+                class="d-flex justify-content-between align-items-center mt-4"
+              >
+                <span class="h5">Total a Pagar:</span>
+                <span class="h3 text-primary"
+                  ><span id="labelTotal">0.00</span>€</span
+                >
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              😭 Cancelar
+            </button>
+            <button
+              type="button"
+              class="btn btn-success"
+              id="btnConfirmarDoacao"
+            >
+              ❤️ Confirmar Doação
+            </button>
+          </div>
         </div>
-    </div>
+      </div>
     </div>
 
     <!-- Scripts -->
@@ -222,7 +383,5 @@
 
     <script src="../../js/carregarCaesParaAdotar.js"></script>
     <script src="../../js/doacoes.js"></script>
-
-</body>
-
+  </body>
 </html>
