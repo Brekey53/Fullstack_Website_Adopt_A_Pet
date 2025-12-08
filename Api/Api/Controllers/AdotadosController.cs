@@ -78,7 +78,7 @@ public class AdotadosController : ControllerBase
 
             return caesDisponiveis;
 
-        }, new Context(CaesCacheKey);
+        }, new Context(CaesCacheKey));
 
         // Devolver o resultado acabado de ir buscar à BD
         return Ok(caesDisponiveisA);
