@@ -16,15 +16,15 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
             try
             {
                 var mail = new MailMessage();
-                mail.From = new MailAddress("croaemoita@outlook.pt", "CROAE");
+                mail.From = new MailAddress("croaemoita@gmail.com", "CROAE");
                 mail.To.Add(form.Email);
                 mail.Subject = $"Resposta ao contacto: {form.Nome}";
                 mail.Body = $"Olá {form.Nome},\n\nObrigado pelo teu contacto!\nTipo de visita escolhido: {form.TipoVisita}";
                 mail.IsBodyHtml = false;
 
-                using var smtp = new SmtpClient("smtp-mail.outlook.com", 587)
+                using var smtp = new SmtpClient("smtp.gmail.com", 587)
                 {
-                    Credentials = new NetworkCredential("croaemoita@outlook.pt", "utbf wtkb mavy jhdr"),
+                    Credentials = new NetworkCredential("croaemoita@gmail.com", "rhzm lvru aacx mucs"),
                     EnableSsl = true
                 };
 
