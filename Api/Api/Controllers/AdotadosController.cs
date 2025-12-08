@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
+using Polly;
 using System;
 
 [ApiController]
@@ -15,17 +16,18 @@ public class AdotadosController : ControllerBase
     private readonly CroaeDbContext _dbContext;
 
     // Dependência de cache
-    private readonly IMemoryCache _memoryCache;
+    private readonly IAsyncPolicy<List<CaoDto>> _cachePolicy;
     private readonly IDistributedCache _distributedCache;
 
     // Chave de cache
     public const string CaesCacheKey = "lista_caes_adotados";
 
-    public AdotadosController(CroaeDbContext context, IMemoryCache memoryCache, IDistributedCache distributedCache)
+    public AdotadosController(CroaeDbContext context, IDistributedCache distributedCache, IAsyncPolicy<List<CaoDto>> cachePolicy)
     {
         _dbContext = context;
-        _memoryCache = memoryCache;
         _distributedCache = distributedCache;
+        _cachePolicy = cachePolicy;
+
     }
 
     // GET: api/adotados
@@ -33,127 +35,54 @@ public class AdotadosController : ControllerBase
     public async Task<IActionResult> GetAdotados()
     {
 
-        // Obter do Cache L1
-        if (_memoryCache.TryGetValue(CaesCacheKey, out List<CaoDto> caesDisponiveis))
+        var caesDisponiveisA = await _cachePolicy.ExecuteAsync(async context =>
         {
-            // Encontra e devolve imediatamente.
-            return Ok(caesDisponiveis);
-        }
+            // Obter do Cache L2
+            var caesJsonRedis = await _distributedCache.GetStringAsync(CaesCacheKey);
+            if (!string.IsNullOrEmpty(caesJsonRedis))
+            {
+                return JsonConvert.DeserializeObject<List<CaoDto>>(caesJsonRedis);
+            }
 
-        // Obter do Cache L2
-        var caesJsonRedis = await _distributedCache.GetStringAsync(CaesCacheKey);
+            // Não está em cache. Ir à Base de Dados
 
-        if (!string.IsNullOrEmpty(caesJsonRedis))
-        {
-            // Encontra o L2!
-            // Desserializar o JSON do Redis
-            caesDisponiveis = JsonConvert.DeserializeObject<List<CaoDto>>(caesJsonRedis);
+            var caesDisponiveis = await _dbContext.Caes.Include(c => c.Fotos)
+                    .Where(c => c.Disponivel == false)
+                    .Select(c => new CaoDto
+                    {
+                        CaoId = c.CaoId,
+                        Nome = c.Nome,
+                        DataNascimento = c.DataNascimento,
+                        Porte = c.Porte,
+                        Sexo = c.Sexo,
+                        Castrado = c.Castrado,
+                        Disponivel = c.Disponivel,
+                        Caracteristica = c.Caracteristica,
+                        Foto = c.Fotos.Select(f => f.Foto1).FirstOrDefault() ?? "images/adotados/default.jpg"
+                    }).ToListAsync();
 
-            // Guardar no L1 (Memória) para o próximo pedido ser mais rápido
-            _memoryCache.Set(CaesCacheKey, caesDisponiveis, TimeSpan.FromMinutes(5)); // Expirar L1 em 5 min
+            // Guardar o resultado nos Caches (L2 e L1)
 
-            return Ok(caesDisponiveis);
-        }
+            // Serializar para guardar no Redis
+            var caesParaCacheJson = JsonConvert.SerializeObject(caesDisponiveis);
 
-        // Não está em cache. Ir à Base de Dados
+            // Definir opções de expiração para o Redis (ex: 30 minutos)
+            var opcoesRedis = new DistributedCacheEntryOptions
+            {
+                AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(30)
+            };
 
-        caesDisponiveis = await _dbContext.Caes.Include(c => c.Fotos)
-                .Where(c => c.Disponivel == false) 
-                .Select(c => new CaoDto
-                {
-                    CaoId = c.CaoId,
-                    Nome = c.Nome,
-                    DataNascimento = c.DataNascimento,
-                    Porte = c.Porte,
-                    Sexo = c.Sexo,
-                    Castrado = c.Castrado,
-                    Disponivel = c.Disponivel,
-                    Caracteristica = c.Caracteristica,
-                    Foto = c.Fotos.Select(f => f.Foto1).FirstOrDefault() ?? "images/adotados/default.jpg"
-                }).ToListAsync();
+            // Guardar no L2 (Redis)
+            await _distributedCache.SetStringAsync(CaesCacheKey, caesParaCacheJson, opcoesRedis);
 
-        // Guardar o resultado nos Caches (L2 e L1)
 
-        // Serializar para guardar no Redis
-        var caesParaCacheJson = JsonConvert.SerializeObject(caesDisponiveis);
+            return caesDisponiveis;
 
-        // Definir opções de expiração para o Redis (ex: 30 minutos)
-        var opcoesRedis = new DistributedCacheEntryOptions
-        {
-            AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(30)
-        };
-
-        // Guardar no L2 (Redis)
-        await _distributedCache.SetStringAsync(CaesCacheKey, caesParaCacheJson, opcoesRedis);
-
-        // Guardar também no L1 (Memória)
-        _memoryCache.Set(CaesCacheKey, caesDisponiveis, TimeSpan.FromMinutes(5)); // L1 expira mais rápido
+        }, new Context(CaesCacheKey);
 
         // Devolver o resultado acabado de ir buscar à BD
-        return Ok(caesDisponiveis);
+        return Ok(caesDisponiveisA);
 
     }
-
-    /*
-     * 
-     * Para já comentado pois não vale a pena ter varios pedidos de ID por várias API 
-     * 
-     */
-    //// GET: api/adotados/1
-    //[HttpGet("{id}")]
-    //public async Task<IActionResult> GetAdotado(int id)
-    //{
-
-    //    // Definir a Chave ÚNICA para este cão
-    //    string cacheKey = $"cao_adotatos_{id}";
-
-    //    // Tentar Cache L1 (Memória)
-    //    if (_memoryCache.TryGetValue(cacheKey, out CaoDto caoCache))
-    //    {
-    //        return Ok(caoCache);
-    //    }
-
-    //    // Tentar Cache L2 (Redis)
-    //    var caoJsonRedis = await _distributedCache.GetStringAsync(cacheKey);
-    //    if (!string.IsNullOrEmpty(caoJsonRedis))
-    //    {
-    //        caoCache = JsonConvert.DeserializeObject<CaoDto>(caoJsonRedis);
-    //        _memoryCache.Set(cacheKey, caoCache, TimeSpan.FromMinutes(5));
-    //        return Ok(caoCache);
-    //    }
-
-    //    // Não está em cache. Ir à Base de Dados
-    //    var cao = await _dbContext.Caes.Include(c => c.Fotos)
-    //        .Where(c => c.CaoId == id)
-    //        .Select(c => new CaoDto
-    //        {
-    //            CaoId = c.CaoId,
-    //            Nome = c.Nome,
-    //            DataNascimento = c.DataNascimento,
-    //            Porte = c.Porte,
-    //            Sexo = c.Sexo,
-    //            Castrado = c.Castrado,
-    //            Disponivel = c.Disponivel,
-    //            Caracteristica = c.Caracteristica,
-    //            Foto = c.Fotos.Select(f => f.Foto1).FirstOrDefault() ?? "images/adotados/default.jpg"
-    //        })
-    //        .FirstOrDefaultAsync(); // Aqui já tens o objeto ou null
-
-    //    if (cao == null)
-    //        return NotFound("Cão não encontrado.");
-
-    //    // Guardar nos Caches (L2 e L1)
-    //    var caoParaCacheJson = JsonConvert.SerializeObject(cao);
-
-    //    var opcoesRedis = new DistributedCacheEntryOptions
-    //    {
-    //        AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(30)
-    //    };
-
-    //    await _distributedCache.SetStringAsync(cacheKey, caoParaCacheJson, opcoesRedis);
-    //    _memoryCache.Set(cacheKey, cao, TimeSpan.FromMinutes(5));
-
-    //    return Ok(cao);
-    //}
 
 }
