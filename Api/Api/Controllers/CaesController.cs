@@ -78,8 +78,6 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
                 // Guardar no L2 (Redis)
                 await _distributedCache.SetStringAsync(CaesCacheKey, caesParaCacheJson, opcoesRedis);
 
-                // Guardar também no L1 (Memória)
-                _memoryCache.Set(CaesCacheKey, caes, TimeSpan.FromMinutes(5)); // L1 expira mais rápido
 
                 return caes;
 
