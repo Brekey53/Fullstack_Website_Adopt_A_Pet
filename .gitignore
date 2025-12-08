@@ -21,3 +21,4 @@ appsettings.Local.json
 *.env
 *.secrets.json
 node_modules/
+*.pid

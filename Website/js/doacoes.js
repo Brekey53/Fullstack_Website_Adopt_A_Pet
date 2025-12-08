@@ -120,19 +120,25 @@ document.addEventListener("DOMContentLoaded", function () {
         '<i class="fa fa-spinner fa-spin"></i> A processar...';
       btnConfirmar.disabled = true;
 
-      // Enviar para o Mountebank (via tua API C#)
-      const resposta = await fetch("http://localhost:5013/api/payments", {
+      const resposta = await fetch("http://localhost:5013/api/Pagamentos", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(dadosDoacao),
       });
 
-      const resultado = await resposta.json();
+      // ← EVITA CRASH QUANDO A RESPOSTA NÃO É JSON
+      let resultado = null;
+      try {
+        resultado = await resposta.json();
+      } catch (e) {
+        resultado = null;
+      }
 
       if (!resposta.ok) {
-        // Se o Mountebank ou a API recusarem (ex: cartão 0000)
         throw new Error(
-          resultado.mensagem || "Erro no processamento da doação"
+          resultado?.erro ||
+            resultado?.mensagem ||
+            "Erro no processamento da doação"
         );
       }
 
