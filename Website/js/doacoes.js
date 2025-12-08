@@ -1,81 +1,16 @@
-// document.addEventListener("DOMContentLoaded", function () {
-//   const btnDoarOsso = document.getElementById("btnDoarOsso");
-
-//   btnDoarOsso.addEventListener("click", async function (e) {
-//     e.preventDefault();
-
-//     const dados = { // alterar futuramente
-//       numeroCartao: "0000",
-//       valor: 2.5,
-//     };
-
-//     try {
-//       const resposta = await fetch("http://localhost:5013/api/doacoes", {
-//         method: "POST",
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//         body: JSON.stringify(dados),
-//       });
-
-//       const result = await resposta.json();
-
-//       if (!resposta.ok) {
-//         alert("Erro: " + result);
-//         return;
-//       }
-//     } catch (erro) {
-//       console.error("Erro a contactar API:", erro); // TODO: apagar, é só para testar
-//     }
-//   });
-
-//   const btnDoarManta = document.getElementById("btnDoarManta");
-
-//   btnDoarManta.addEventListener("click", async function (e) {
-//     e.preventDefault();
-//     const dados = {
-//       // TODO: arranjar segunda pagina para testar dados do cartão ou um Modal ?
-//       numeroCartao: "1234",
-//       valor: 4,
-//     };
-
-//     try {
-//       const resposta = await fetch("http://localhost:5013/api/doacoes", {
-//         method: "POST",
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//         body: JSON.stringify(dados),
-//       });
-
-//       const result = await resposta.json();
-
-//       if (!resposta.ok) {
-//         alert("Erro: " + result);
-//         return;
-//       }
-
-//       alert(result.mensagem);
-//     } catch (erro) {
-//       console.error("Erro a contactar API:", erro);
-//     }
-//   });
-// });
-
 document.addEventListener("DOMContentLoaded", function () {
-  // Variáveis globais para controlar o estado do modal
   let precoUnitarioAtual = 0;
   let itemAtual = "";
 
-  const modal = document.getElementById('modalDoacao');
+  const modal = document.getElementById("modalDoacao");
 
-  modal.addEventListener('shown.bs.modal', () => {
-    const backdrop = document.querySelector('.modal-backdrop');
+  modal.addEventListener("shown.bs.modal", () => {
+    const backdrop = document.querySelector(".modal-backdrop");
     if (backdrop) {
-        backdrop.style.opacity = '0.87';
-        backdrop.style.backgroundColor = '#000'; 
+      backdrop.style.opacity = "0.87";
+      backdrop.style.backgroundColor = "#000";
     }
-});
+  });
 
   // Elementos do DOM
   const selectAnimal = document.getElementById("selectAnimal");
@@ -84,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const labelPreco = document.getElementById("labelPreco");
   const labelItem = document.getElementById("labelItem");
   const btnConfirmar = document.getElementById("btnConfirmarDoacao");
-  const preto = document.getElementById("background");
+  const animaisDoacoes = document.getElementById("animaisDoacoes");
 
   // 1. Carregar a lista de animais da API ao abrir a página
   carregarAnimais();
@@ -118,8 +53,6 @@ document.addEventListener("DOMContentLoaded", function () {
   // 4. Função para carregar animais da API
   async function carregarAnimais() {
     try {
-      // Nota: Usa a rota correta da tua API. Se for "api/caes" usa essa.
-      // Se queres apenas os disponíveis, certifica-te que a API retorna isso ou filtra aqui.
       const response = await fetch("http://localhost:5013/api/caes");
 
       if (!response.ok) throw new Error("Erro ao carregar animais");
@@ -131,15 +64,25 @@ document.addEventListener("DOMContentLoaded", function () {
         '<option value="" selected disabled>Escolha um patudo...</option>';
       selectAnimal.innerHTML +=
         '<option value="0">Qualquer animal (Sem preferência)</option>';
+      selectAnimal.innerHTML += '<option value="-1">Vários cães</option>';
 
-      // Adicionar cada animal como uma opção
+      // Adicionar cada animal como opção
       animais.forEach((animal) => {
-        // Filtro opcional: Só mostrar se estiver disponível
         if (animal.disponivel) {
           const option = document.createElement("option");
-          option.value = animal.caoId; // O ID que vai para a BD
-          option.textContent = `${animal.nome}`;
+          option.value = animal.caoId;
+          option.textContent = animal.nome;
           selectAnimal.appendChild(option);
+        }
+      });
+
+      selectAnimal.addEventListener("change", () => {
+        if (selectAnimal.value === "-1") {
+          animaisDoacoes.innerHTML = `
+            <label class="my-2">A que cães gostaria de oferecer? (Ex: Simba, Timon, Jaime)</label>
+            <input type="text" style="width: 300px; height: 35px; padding: 5px;"/> `;
+        } else {
+          animaisDoacoes.innerHTML = "";
         }
       });
     } catch (error) {
@@ -157,22 +100,17 @@ document.addEventListener("DOMContentLoaded", function () {
     const animalId = selectAnimal.value;
     const quantidade = inputQuantidade.value;
     const valorTotal = quantidade * precoUnitarioAtual;
+    const animaisDoacoes = document.getElementById("animaisDoacoes");
 
     if (!numeroCartao || !nomeDoador || !animalId || quantidade <= 0) {
       alert("Por favor, preencha todos os campos obrigatórios.");
       return;
     }
 
-    // Construir o objeto para enviar à API
-    // NOTA: A tua API DoacoesController tem de estar à espera destes campos!
     const dadosDoacao = {
       nomeDoador: nomeDoador,
       numeroCartao: numeroCartao,
       valor: valorTotal,
-      // Campos extra que podes querer adicionar ao teu DTO na API C#
-      // animalId: parseInt(animalId),
-      // tipoItem: itemAtual,
-      // quantidade: parseInt(quantidade)
     };
 
     try {
@@ -183,7 +121,7 @@ document.addEventListener("DOMContentLoaded", function () {
       btnConfirmar.disabled = true;
 
       // Enviar para o Mountebank (via tua API C#)
-      const resposta = await fetch("http://localhost:5013/api/doacoes", {
+      const resposta = await fetch("http://localhost:5013/api/payments", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(dadosDoacao),
@@ -193,8 +131,34 @@ document.addEventListener("DOMContentLoaded", function () {
 
       if (!resposta.ok) {
         // Se o Mountebank ou a API recusarem (ex: cartão 0000)
-        throw new Error(resultado.mensagem || "Erro no processamento da doação");
+        throw new Error(
+          resultado.mensagem || "Erro no processamento da doação"
+        );
       }
+
+      let descricao = "";
+      if (selectAnimal.value === "-1") {
+        const lista = document.getElementById("inputListaAnimais").value;
+        descricao = `Cães selecionados: ${lista}`;
+      } else if (selectAnimal.value === "0") {
+        descricao = "Doação sem preferência";
+      } else {
+        const nomeAnimal =
+          selectAnimal.options[selectAnimal.selectedIndex].text;
+        descricao = `${nomeAnimal}`;
+      }
+
+      await fetch("http://localhost:5013/api/doacoes", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          nomeDoador,
+          tipoDoacao: "Bens ou Comida",
+          valor: valorTotal,
+          descricao,
+          data: new Date().toISOString(),
+        }),
+      });
 
       // Sucesso!
       alert(`🎉 Sucesso! ${resultado.mensagem}`);

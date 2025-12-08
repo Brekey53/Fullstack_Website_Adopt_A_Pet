@@ -17,6 +17,7 @@ USE croae_projeto;
 */
 
 -- Criar as tabelas com chaves primárias e foreign keys 
+
 DROP TABLE IF EXISTS racas;
 CREATE TABLE racas (
     raca_id INT PRIMARY KEY AUTO_INCREMENT,
@@ -52,6 +53,16 @@ CREATE TABLE caes (
     disponivel BOOLEAN NOT NULL DEFAULT TRUE,
     CONSTRAINT fk_caes_racas FOREIGN KEY (raca_id) REFERENCES racas(raca_id) ON DELETE SET NULL, -- nao quero apagar um cao só porque se apagou uma raça
     CONSTRAINT fk_caes_boxes FOREIGN KEY (box_id) REFERENCES boxes(box_id) ON DELETE SET NULL -- nao quero apagar um cao só porque se apagou uma box
+);
+
+DROP TABLE IF EXISTS doacoes_web;
+CREATE TABLE doacoes_web (
+	doacao_web_id INT PRIMARY KEY AUTO_INCREMENT,
+    nome_doador VARCHAR(100) NOT NULL,
+    objeto_doado VARCHAR(15) NOT NULL,
+    quantidade_doada INT NOT NULL,
+    valor_pago DOUBLE NOT NULL,
+    descricao VARCHAR(100)
 );
 
 DROP TABLE IF EXISTS padrinhos;
@@ -314,7 +325,7 @@ VALUES
 	(6, 'Joca', '2022-03-03', 'Grande', 'M', '2024-02-05 09:20:00', NULL, 3, FALSE, 'Muito brincalhão', TRUE), -- 15
 	(16, 'Jynx', '2021-04-16', 'Grande', 'M', '2024-05-15 13:35:00', NULL, 1, FALSE, 'Muito inteligente', FALSE),
     (16, 'Bitoke', '2020-04-16', 'Médio', 'M', '2024-05-15 13:35:00', 'Rotweiller', 5, TRUE, 'Muito inteligente, resmungão', TRUE),
-    (15, 'Chibi', '2018-01-11', 'Pequeno', 'M', '2025-04-15 13:35:00', NULL, 10, FALSE, 'Medroso e pouco sociável', FALSE),
+    (17, 'Chibi', '2018-01-11', 'Pequeno', 'M', '2025-04-15 13:35:00', NULL, 10, FALSE, 'Medroso e pouco sociável', FALSE),
     (16, 'Chucky', '2023-01-01', 'Grande', 'M', '2024-02-15 13:35:00', NULL, 5, FALSE, 'Adora brincar na Praia', TRUE),
     (16, 'Duque', '2022-08-15', 'Grande', 'M', '2023-03-24 13:35:00', NULL, 1, TRUE, 'Adora crianças e festas', TRUE), -- 20
     (16, 'Faial', '2023-01-01', 'Grande', 'M', '2024-03-24 13:35:00', 'Pitbull', 1, TRUE, 'Adora correr e jogar com uma bola', TRUE),
