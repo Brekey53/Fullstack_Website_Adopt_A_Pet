@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using ApiAndreLeonorProjetoFinal.Models;
+using ApiAndreLeonorProjetoFinal.Data;
 
 namespace ApiAndreLeonorProjetoFinal.Controllers
 {
@@ -8,42 +10,30 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
     [ApiController]
     public class DoacoesController : ControllerBase
     {
-        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly CroaeDbContext _context;
 
-        public DoacoesController(IHttpClientFactory httpClientFactory)
+        public DoacoesController(CroaeDbContext context)
         {
-            _httpClientFactory = httpClientFactory;
+            _context = context;
         }
 
         [HttpPost]
-        public async Task<IActionResult> FazerDoacao([FromBody] DoacaoDto doacao)
+        public async Task<IActionResult> Post(DoacaoDTO dto)
         {
-            // Criar o cliente que aponta para o Mountebank
-            var client = _httpClientFactory.CreateClient("BancoMock");
-
-            // Dados para enviar
-            var dadosPagamento = new
+            var doacao = new Doacoes
             {
-                numeroCartao = doacao.NumeroCartao, // Mountebank espera isto
-                valor = doacao.Valor
+                NomeDoador = dto.NomeDoador,
+                TipoDoacao = dto.TipoDoacao,
+                Valor = dto.Valor,
+                Descricao = dto.Descricao,
+                FuncionarioId = null,
+                DataDoacao = DateOnly.FromDateTime(dto.Data)
             };
 
-            // Enviar pedido ao Mountebank (POST /payments)
-            var response = await client.PostAsJsonAsync("payments", dadosPagamento);
+            _context.Doacoes.Add(doacao);
+            await _context.SaveChangesAsync();
 
-            if (!response.IsSuccessStatusCode)
-            {
-                // Se o Mountebank devolver erro 402 (regra do cartao 0000)
-                return BadRequest(new { erro = "Pagamento recusado pelo banco." });
-            }
-
-            return Ok(new { mensagem = "Doação aceite com sucesso!" });
+            return Ok(new { mensagem = "Doação registada com sucesso" });
         }
-    }
-
-    public class DoacaoDto
-    {
-        public string? NumeroCartao { get; set; }
-        public decimal Valor { get; set; }
     }
 }
