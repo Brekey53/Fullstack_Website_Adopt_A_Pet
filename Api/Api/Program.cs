@@ -5,6 +5,8 @@ using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Polly;
+using Polly.Extensions.Http;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -52,11 +54,25 @@ builder.Services.AddControllers().AddNewtonsoftJson();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// builder para Mock do mountbank
+// Para Mock do Banco
+// Definir Política de Retry (Tentar 3 vezes em caso de falha)
+var retryPolicy = HttpPolicyExtensions
+    .HandleTransientHttpError() // Trata erros 5xx e 408 (timeout)
+    .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
+
+// Definir Política de Circuit Breaker (Para de tentar após 5 falhas seguidas)
+var circuitBreakerPolicy = HttpPolicyExtensions
+    .HandleTransientHttpError()
+    .CircuitBreakerAsync(5, TimeSpan.FromSeconds(30));
+
+// Registar o HttpClient com as políticas
 builder.Services.AddHttpClient("BancoMock", client =>
 {
     client.BaseAddress = new Uri("http://localhost:4545/");
-});
+})
+.AddPolicyHandler(retryPolicy)
+.AddPolicyHandler(circuitBreakerPolicy);
+
 
 // CORS - para que qualquer origem comunique com a API
 builder.Services.AddCors(options =>
