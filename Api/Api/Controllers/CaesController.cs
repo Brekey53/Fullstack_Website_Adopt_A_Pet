@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
+using Polly;
+using Polly.Caching;
 
 namespace ApiAndreLeonorProjetoFinal.Controllers
 {
@@ -18,15 +20,17 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
         // Dependência de cache
         private readonly IMemoryCache _memoryCache; // a cache local não tem de ser polly? 
         private readonly IDistributedCache _distributedCache;
+        private readonly IAsyncPolicy<List<CaoDto>> _cachePolicy;
 
         // Chave de cache
         private const string CaesCacheKey = "lista_caes"; //talvez disponivel aqui? 
 
-        public CaesController(CroaeDbContext dbContext, IMemoryCache memoryCache, IDistributedCache distributedCache)
+        public CaesController(CroaeDbContext dbContext, IDistributedCache distributedCache, IAsyncPolicy<List<CaoDto>> cachePolicy)
         {
             _dbContext = dbContext;
-            _memoryCache = memoryCache;
             _distributedCache = distributedCache;
+            _cachePolicy = cachePolicy;
+
         }
 
         // Get: api/Caes
@@ -34,62 +38,52 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
         public async Task<IActionResult> GetCaes()
         {
 
-            // Obter do Cache L1
-            if (_memoryCache.TryGetValue(CaesCacheKey, out List<CaoDto> caes))
+            var caesDisponiveis = await _cachePolicy.ExecuteAsync(async context =>
             {
-                // Encontra e devolve imediatamente.
-                return Ok(caes);
-            }
 
-            // Obter do Cache L2
-            var caesJsonRedis = await _distributedCache.GetStringAsync(CaesCacheKey);
+                // Obter do Cache L2
+                var caesJsonRedis = await _distributedCache.GetStringAsync(CaesCacheKey);
 
-            if (!string.IsNullOrEmpty(caesJsonRedis))
-            {
-                // Encontra o L2!
-                // Desserializar o JSON do Redis
-                caes = JsonConvert.DeserializeObject<List<CaoDto>>(caesJsonRedis);
-
-                // Guardar no L1 (Memória) para o próximo pedido ser mais rápido
-                _memoryCache.Set(CaesCacheKey, caes, TimeSpan.FromSeconds(30)); // Expirar L1 em 5 min
-
-                return Ok(caes);
-            }
-
-            // Não está em cache. Ir à Base de Dados
-            caes = await _dbContext.Caes.Include(c => c.Fotos)
-                .Select(c => new CaoDto
+                if (!string.IsNullOrEmpty(caesJsonRedis))
                 {
-                    CaoId = c.CaoId,
-                    Nome = c.Nome,
-                    DataNascimento = c.DataNascimento,
-                    Porte = c.Porte,
-                    Sexo = c.Sexo,
-                    Castrado = c.Castrado,
-                    Disponivel = c.Disponivel,
-                    Caracteristica = c.Caracteristica,
-                    Foto = c.Fotos.Select(f => f.Foto1).FirstOrDefault() ?? "images/adotados/default.jpg"
-                }).ToListAsync();
+                    return JsonConvert.DeserializeObject<List<CaoDto>>(caesJsonRedis);
+                }
 
-            // Guardar o resultado nos Caches (L2 e L1)
+                // Não está em cache. Ir à Base de Dados
+                var caes = await _dbContext.Caes.Include(c => c.Fotos)
+                    .Select(c => new CaoDto
+                    {
+                        CaoId = c.CaoId,
+                        Nome = c.Nome,
+                        DataNascimento = c.DataNascimento,
+                        Porte = c.Porte,
+                        Sexo = c.Sexo,
+                        Castrado = c.Castrado,
+                        Disponivel = c.Disponivel,
+                        Caracteristica = c.Caracteristica,
+                        Foto = c.Fotos.Select(f => f.Foto1).FirstOrDefault() ?? "images/adotados/default.jpg"
+                    }).ToListAsync();
 
-            // Serializar para guardar no Redis
-            var caesParaCacheJson = JsonConvert.SerializeObject(caes);
+                // Guardar o resultado nos Caches (L2 e L1)
 
-            // Definir opções de expiração para o Redis (ex: 30 minutos)
-            var opcoesRedis = new DistributedCacheEntryOptions
-            {
-                AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(1)
-            };
+                // Serializar para guardar no Redis
+                var caesParaCacheJson = JsonConvert.SerializeObject(caes);
 
-            // Guardar no L2 (Redis)
-            await _distributedCache.SetStringAsync(CaesCacheKey, caesParaCacheJson, opcoesRedis);
+                // Definir opções de expiração para o Redis (ex: 30 minutos)
+                var opcoesRedis = new DistributedCacheEntryOptions
+                {
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(1)
+                };
 
-            // Guardar também no L1 (Memória)
-            _memoryCache.Set(CaesCacheKey, caes, TimeSpan.FromMinutes(5)); // L1 expira mais rápido
+                // Guardar no L2 (Redis)
+                await _distributedCache.SetStringAsync(CaesCacheKey, caesParaCacheJson, opcoesRedis);
 
+
+                return caes;
+
+            }, new Context(CaesCacheKey));
             // Devolver o resultado acabado de ir buscar à BD
-            return Ok(caes);
+            return Ok(caesDisponiveis);
         }
 
         // Get: api/Caes/1
@@ -314,9 +308,11 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
             await _distributedCache.RemoveAsync(adotadosKey);
             await _distributedCache.RemoveAsync(porAdotarKey);
 
+            // Funciona para limpar a cache local também (polly)
             _memoryCache.Remove(CaesCacheKey);
             _memoryCache.Remove(adotadosKey);
             _memoryCache.Remove(porAdotarKey);
+
 
             // Se fornecermos um ID, limpar também o cache desse cão específico
             if (caoId.HasValue)

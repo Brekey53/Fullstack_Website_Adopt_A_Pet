@@ -1,4 +1,5 @@
-﻿using ApiAndreLeonorProjetoFinal.Models;
+﻿using ApiAndreLeonorProjetoFinal.Data;
+using ApiAndreLeonorProjetoFinal.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,24 +15,40 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
     public class LoginController : ControllerBase
     {
         private readonly IConfiguration _config;
+        private readonly CroaeDbContext _dbcontext;
 
-        public LoginController(IConfiguration config)
+        public LoginController(IConfiguration config, CroaeDbContext context)
         {
             _config = config;
+            _dbcontext = context;
         }
 
-        // TODO: get information from database, agora está só aqui agora
+
         [HttpPost]
         //Recebe um JSON com a mesma informação que temos na classe Login
-        public IActionResult Login([FromBody] Login loginData)
+        public async Task<IActionResult> LoginAsync([FromBody] Login loginData)
         {
-            if (loginData.Username != "administrador" || loginData.Password != "root")
-                return Unauthorized(); // 401 - Não autorizado
+            // Verificação de campos no forms
+            if (loginData == null || string.IsNullOrEmpty(loginData.Username) || string.IsNullOrEmpty(loginData.Password))
+            {
+                return BadRequest("Dados de login inválidos.");
+            }
+
+            // vamos à procura do funcionario na DB
+            var funcionario = await _dbcontext.Funcionarios.FirstOrDefaultAsync(f => f.Email.ToLower() == loginData.Username.ToLower());
+            
+            // se não encontrou com aquele email dá erro, se encontrou validar a password
+            if (funcionario == null || funcionario.Nif != loginData.Password)
+            {
+                return Unauthorized("Email ou password incorretos.");
+            }
+
 
             //Se for um utilizador válido, gera o token abaixo
-            var token = GenerateJwtToken(loginData.Username);
-            return Ok(new { token }); //200
+            var token = GenerateJwtToken(funcionario.Nome);
+            return Ok(new { token }); //200 - OK com o token
         }
+
 
         // Para gerar um token aleatorio que depois é usado para requests que sejam POST, PATCH ou
         // DELETE, porque não queremos que qualquer um os faça

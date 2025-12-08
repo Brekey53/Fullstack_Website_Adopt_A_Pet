@@ -120,6 +120,7 @@ document.addEventListener("DOMContentLoaded", function () {
         '<i class="fa fa-spinner fa-spin"></i> A processar...';
       btnConfirmar.disabled = true;
 
+      // Enviar para o Mountebank (via tua API C#)
       const resposta = await fetch("http://localhost:5013/api/Pagamentos", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
