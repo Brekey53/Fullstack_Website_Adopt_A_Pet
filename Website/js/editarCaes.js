@@ -70,7 +70,13 @@ async function guardar() {
     return;
   }
 
-  window.location.back
+  if (document.referrer.includes("paraAdotar.html")) {
+    window.location.href = "paraAdotar.html";
+} else {
+    // Caso contrário assume que veio dos adotados ou outro sitio
+    window.location.href = "adotados.html";
+}
+  //window.location.back;
 }
 
 async function apagar() {
