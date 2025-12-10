@@ -26,8 +26,9 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
         // Chave de cache
         private const string CaesCacheKey = "lista_caes"; //talvez disponivel aqui? 
 
-        public CaesController(CroaeDbContext dbContext, IDistributedCache distributedCache, IAsyncPolicy<List<CaoDto>> cachePolicy, IAsyncPolicy<CaoDto> singleCachePolicy)
+        public CaesController(CroaeDbContext dbContext, IDistributedCache distributedCache, IAsyncPolicy<List<CaoDto>> cachePolicy, IAsyncPolicy<CaoDto> singleCachePolicy, IMemoryCache memoryCache)
         {
+            _memoryCache = memoryCache;
             _dbContext = dbContext;
             _distributedCache = distributedCache;
             _cachePolicy = cachePolicy;
@@ -148,19 +149,43 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
 
         // Post: api/Caes
         [HttpPost]
-        public async Task<IActionResult> PostCao([FromBody] Caes cao)
+        public async Task<IActionResult> PostCao([FromBody] CaoDto dto)
         {
+            // Verificar duplicação
+            var existente = await _dbContext.Caes.FirstOrDefaultAsync(c =>
+                c.Nome == dto.Nome &&
+                c.DataNascimento == dto.DataNascimento &&
+                c.Porte == dto.Porte
+            );
 
-            // Fazer verificação se já existe um cão com o mesmo nome, data de nascimento e porte
-            var caoExistente = await _dbContext.Caes.FirstOrDefaultAsync(c => c.Nome == cao.Nome && c.DataNascimento == cao.DataNascimento && c.Porte == cao.Porte);
-            if (caoExistente != null)
+            if (existente != null)
+                return Conflict("Já existe um cão com essas características.");
+
+            // Criar o modelo para inserir
+            var cao = new Caes
             {
-                return Conflict("Já existe um cão com essa caracteristicas na base de dados");
+                Nome = dto.Nome,
+                DataNascimento = dto.DataNascimento,
+                Porte = dto.Porte,
+                Sexo = dto.Sexo,
+                Castrado = dto.Castrado,
+                Disponivel = dto.Disponivel,
+                Caracteristica = dto.Caracteristica
+                // FOTO 
+            };
+
+            if (dto.RacaId == 16)
+            {
+                cao.RacaId = 16;
+                cao.CruzamentoRaca = dto.CruzamentoRaca; 
+            }
+            else
+            {
+                cao.RacaId = dto.RacaId;
+                cao.CruzamentoRaca = null;
             }
 
-            // Adicionar o novo cão à base de dados
             await _dbContext.Caes.AddAsync(cao);
-
             // Guardar as alterações
             await _dbContext.SaveChangesAsync();
 
@@ -169,8 +194,8 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
 
             // Retorna 201 Created + URL para o novo Cão e objeto Cão
             return CreatedAtAction(nameof(GetCao), new { id = cao.CaoId }, cao);
-
         }
+
 
         // Put: api/Caes/1
         [HttpPut("{id}")]
