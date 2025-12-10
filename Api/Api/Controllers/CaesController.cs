@@ -22,16 +22,19 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
         private readonly IDistributedCache _distributedCache;
         private readonly IAsyncPolicy<List<CaoDto>> _cachePolicy; // Polly para listas de cães
         private readonly IAsyncPolicy<CaoDto> _singleCachePolicy; // Polly para cão individual
+        private readonly IWebHostEnvironment _env; // para mudança de fotos
 
         // Chave de cache
         private const string CaesCacheKey = "lista_caes"; //talvez disponivel aqui? 
 
-        public CaesController(CroaeDbContext dbContext, IDistributedCache distributedCache, IAsyncPolicy<List<CaoDto>> cachePolicy, IAsyncPolicy<CaoDto> singleCachePolicy)
+        public CaesController(CroaeDbContext dbContext, IDistributedCache distributedCache, IAsyncPolicy<List<CaoDto>> cachePolicy, IAsyncPolicy<CaoDto> singleCachePolicy, IMemoryCache memoryCache, IWebHostEnvironment env)
         {
             _dbContext = dbContext;
             _distributedCache = distributedCache;
             _cachePolicy = cachePolicy;
             _singleCachePolicy = singleCachePolicy;
+            _memoryCache = memoryCache;
+            _env = env;
         }
 
         // Get: api/Caes
@@ -170,6 +173,63 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
             // Retorna 201 Created + URL para o novo Cão e objeto Cão
             return CreatedAtAction(nameof(GetCao), new { id = cao.CaoId }, cao);
 
+        }
+
+        [HttpPost("{id}/foto")]
+        public async Task<IActionResult> UploadFoto(int id, IFormFile ficheiro)
+        {
+            if (ficheiro == null || ficheiro.Length == 0)
+                return BadRequest("Nenhum ficheiro enviado.");
+
+            // incluir a tabela de fotos aqui
+            var cao = await _dbContext.Caes
+                .Include(c => c.Fotos)
+                .FirstOrDefaultAsync(c => c.CaoId == id);
+
+            if (cao == null) return NotFound("Cão não encontrado.");
+
+            // lógica de guardar foto no disco 
+            string pastaUpload = Path.Combine(_env.WebRootPath, "images", "adotados");
+            if (!Directory.Exists(pastaUpload)) Directory.CreateDirectory(pastaUpload);
+
+            string extensao = Path.GetExtension(ficheiro.FileName);
+            string novoNome = $"{cao.Nome.ToLower()}{extensao}";
+            string caminhoCompleto = Path.Combine(pastaUpload, novoNome);
+
+            using (var stream = new FileStream(caminhoCompleto, FileMode.Create))
+            {
+                await ficheiro.CopyToAsync(stream);
+            }
+
+            // O caminho relativo para guardar na BD
+            string caminhoRelativo = Path.Combine("images", "adotados", novoNome).Replace("\\", "/");
+
+            // Verifica se o cão já tem alguma foto na lista
+            var fotoExistente = cao.Fotos.FirstOrDefault();
+
+            if (fotoExistente != null)
+            {
+                // já tem foto -> Atualizar o caminho da foto
+                fotoExistente.Foto1 = caminhoRelativo;
+            }
+            else
+            {
+                // Não tem foto -> Criar um novo registo na tabela Fotos
+                var novaFoto = new Foto
+                {
+                    Foto1 = caminhoRelativo,
+                    CaoId = id
+                    // Preenche outros campos obrigatórios da tabela Foto se existirem
+                };
+                _dbContext.Fotos.Add(novaFoto); // Adiciona à tabela de Fotos
+            }
+
+            await _dbContext.SaveChangesAsync();
+
+            // Invalida o cache porque a foto mudou
+            // await InvalidateCacheAsync(id); 
+
+            return Ok(new { caminho = caminhoRelativo });
         }
 
         // Put: api/Caes/1
