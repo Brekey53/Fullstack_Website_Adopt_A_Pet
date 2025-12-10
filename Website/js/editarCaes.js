@@ -125,3 +125,66 @@ async function apagar() {
     alert("Ocorreu um erro de comunicação com o servidor.");
   }
 }
+
+async function novaFoto() {
+    const inputFoto = document.getElementById("foto");
+    const caoId = document.getElementById("caoId").value;
+
+    // validar se carregou a foto
+    if (inputFoto.files.length === 0) {
+        alert("Por favor, selecione uma foto primeiro.");
+        return;
+    }
+
+    const ficheiro = inputFoto.files[0];
+
+    // formulário de dados
+    const formData = new FormData();
+    formData.append("ficheiro", ficheiro); // "ficheiro" tem de ser igual ao nome no C# (IFormFile ficheiro)
+
+    try {
+        // Botão a carregar...
+        const btn = document.querySelector("button[onclick='novaFoto()']");
+        const textoOriginal = btn.innerText;
+        btn.innerText = "A enviar...";
+        btn.disabled = true;
+
+        // enviar para a API
+        const resposta = await fetch(`http://localhost:5013/api/caes/${caoId}/foto`, {
+            method: "POST",
+            headers: {
+                // NOTA: Quando usamos FormData, NÃO definimos 'Content-Type': 'application/json'
+                // O browser define automaticamente como 'multipart/form-data'
+                "Authorization": "Bearer " + localStorage.getItem("token")
+            },
+            body: formData
+        });
+
+        if (!resposta.ok) {
+            const erro = await resposta.text();
+            throw new Error(erro);
+        }
+
+        // sucesso: Atualizar a imagem no ecrã imediatamente
+        const dados = await resposta.json();
+
+        const timestamp = new Date().getTime();
+        
+        // Atualiza o src da imagem (adicionamos um timestamp para forçar o refresh do cache)
+        document.getElementById("fotoPreview").src = `http://localhost:5013/${dados.caminho}?t=${timestamp}`;
+        
+        alert("Foto atualizada com sucesso!");
+        
+        // Limpar o input
+        inputFoto.value = ""; 
+
+    } catch (erro) {
+        console.error(erro);
+        alert("Erro ao enviar foto: " + erro.message);
+    } finally {
+        // Restaurar botão
+        const btn = document.querySelector("button[onclick='novaFoto()']");
+        btn.innerText = "Guardar foto nova";
+        btn.disabled = false;
+    }
+}
