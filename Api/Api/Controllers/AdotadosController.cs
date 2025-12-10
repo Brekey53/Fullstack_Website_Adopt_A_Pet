@@ -58,6 +58,7 @@ public class AdotadosController : ControllerBase
                         Castrado = c.Castrado,
                         Disponivel = c.Disponivel,
                         Caracteristica = c.Caracteristica,
+                        Raca = c.RacaId == 16 ? (c.CruzamentoRaca ?? "Rafeiro") : (c.Raca != null ? c.Raca.Raca1 : "Desconhecida"),
                         Foto = c.Fotos.Select(f => f.Foto1).FirstOrDefault() ?? "images/adotados/default.jpg"
                     }).ToListAsync();
 

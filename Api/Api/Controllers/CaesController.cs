@@ -18,19 +18,20 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
         private readonly CroaeDbContext _dbContext;
 
         // Dependência de cache
-        private readonly IMemoryCache _memoryCache; // a cache local não tem de ser polly? 
+        private readonly IMemoryCache _memoryCache;
         private readonly IDistributedCache _distributedCache;
-        private readonly IAsyncPolicy<List<CaoDto>> _cachePolicy;
+        private readonly IAsyncPolicy<List<CaoDto>> _cachePolicy; // Polly para listas de cães
+        private readonly IAsyncPolicy<CaoDto> _singleCachePolicy; // Polly para cão individual
 
         // Chave de cache
         private const string CaesCacheKey = "lista_caes"; //talvez disponivel aqui? 
 
-        public CaesController(CroaeDbContext dbContext, IDistributedCache distributedCache, IAsyncPolicy<List<CaoDto>> cachePolicy)
+        public CaesController(CroaeDbContext dbContext, IDistributedCache distributedCache, IAsyncPolicy<List<CaoDto>> cachePolicy, IAsyncPolicy<CaoDto> singleCachePolicy)
         {
             _dbContext = dbContext;
             _distributedCache = distributedCache;
             _cachePolicy = cachePolicy;
-
+            _singleCachePolicy = singleCachePolicy;
         }
 
         // Get: api/Caes
@@ -61,6 +62,7 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
                         Castrado = c.Castrado,
                         Disponivel = c.Disponivel,
                         Caracteristica = c.Caracteristica,
+                        Raca = c.RacaId == 16 ? (c.CruzamentoRaca ?? "Rafeiro") : (c.Raca != null ? c.Raca.Raca1 : "Desconhecida"),
                         Foto = c.Fotos.Select(f => f.Foto1).FirstOrDefault() ?? "images/adotados/default.jpg"
                     }).ToListAsync();
 
@@ -92,52 +94,54 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
         {
             // Definir a Chave ÚNICA para este cão
             string cacheKey = $"cao_{id}";
-
-            // Tentar Cache L1 (Memória)
-            if (_memoryCache.TryGetValue(cacheKey, out CaoDto caoCache))
+            var cao = await _singleCachePolicy.ExecuteAsync(async context =>
             {
-                return Ok(caoCache);
-            }
-
-            // Tentar Cache L2 (Redis)
-            var caoJsonRedis = await _distributedCache.GetStringAsync(cacheKey);
-            if (!string.IsNullOrEmpty(caoJsonRedis))
-            {
-                caoCache = JsonConvert.DeserializeObject<CaoDto>(caoJsonRedis);
-                _memoryCache.Set(cacheKey, caoCache, TimeSpan.FromMinutes(5));
-                return Ok(caoCache);
-            }
-
-            // Não está em cache. Ir à Base de Dados
-            var cao = await _dbContext.Caes.Include(c => c.Fotos)
-                .Where(c => c.CaoId == id)
-                .Select(c => new CaoDto
+                // Tentar Cache L2 (Redis)
+                var caoJsonRedis = await _distributedCache.GetStringAsync(cacheKey);
+                if (!string.IsNullOrEmpty(caoJsonRedis))
                 {
-                    CaoId = c.CaoId,
-                    Nome = c.Nome,
-                    DataNascimento = c.DataNascimento,
-                    Porte = c.Porte,
-                    Sexo = c.Sexo,
-                    Castrado = c.Castrado,
-                    Disponivel = c.Disponivel,
-                    Caracteristica = c.Caracteristica,
-                    Foto = c.Fotos.Select(f => f.Foto1).FirstOrDefault() ?? "images/adotados/default.jpg"
-                })
-                .FirstOrDefaultAsync(); // Aqui já tens o objeto ou null
+                    return JsonConvert.DeserializeObject<CaoDto>(caoJsonRedis);
+                }
+
+                // Não está em cache. Ir à Base de Dados
+                var caoDaBd = await _dbContext.Caes.Include(c => c.Fotos)
+                    .Where(c => c.CaoId == id)
+                    .Select(c => new CaoDto
+                    {
+                        CaoId = c.CaoId,
+                        Nome = c.Nome,
+                        DataNascimento = c.DataNascimento,
+                        Porte = c.Porte,
+                        Sexo = c.Sexo,
+                        Castrado = c.Castrado,
+                        Disponivel = c.Disponivel,
+                        Caracteristica = c.Caracteristica,
+                        Raca = c.RacaId == 16 ? (c.CruzamentoRaca ?? "Rafeiro") : (c.Raca != null ? c.Raca.Raca1 : "Desconhecida"),
+                        Foto = c.Fotos.Select(f => f.Foto1).FirstOrDefault() ?? "images/adotados/default.jpg"
+                    })
+                    .FirstOrDefaultAsync(); // Aqui já tens o objeto ou null
+
+                if (caoDaBd == null)
+                    return null;
+
+                // Guardar no Redis
+                var caoParaCacheJson = JsonConvert.SerializeObject(caoDaBd);
+
+                var opcoesRedis = new DistributedCacheEntryOptions
+                {
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(30)
+                };
+
+                await _distributedCache.SetStringAsync(cacheKey, caoParaCacheJson, opcoesRedis);
+
+
+                return caoDaBd;
+            }, new Context(cacheKey));
 
             if (cao == null)
-                return NotFound("Cão não encontrado.");
-
-            // Guardar nos Caches (L2 e L1)
-            var caoParaCacheJson = JsonConvert.SerializeObject(cao);
-
-            var opcoesRedis = new DistributedCacheEntryOptions
             {
-                AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(30)
-            };
-
-            await _distributedCache.SetStringAsync(cacheKey, caoParaCacheJson, opcoesRedis);
-            _memoryCache.Set(cacheKey, cao, TimeSpan.FromMinutes(5));
+                return NotFound("Cão não encontrado.");
+            }
 
             return Ok(cao);
         }
