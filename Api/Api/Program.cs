@@ -46,6 +46,7 @@ builder.Services.AddSingleton<IAsyncCacheProvider, MemoryCacheProvider>();
 
 // Definir a política de cache (expira em 5 minutos) - Politica generica para List<CaoDto>, pois todos os Endpoints que retornam listas de cães usam o mesmo cache
 
+// Polly para lista cães
 builder.Services.AddSingleton<IAsyncPolicy<List<CaoDto>>>(serviceProvider =>
 {
     var cacheProvider = serviceProvider.GetRequiredService<IAsyncCacheProvider>();
@@ -54,6 +55,17 @@ builder.Services.AddSingleton<IAsyncPolicy<List<CaoDto>>>(serviceProvider =>
         cacheProvider,
         TimeSpan.FromMinutes(5),
         (context, key, ex) => { } // Callback de erro
+    );
+});
+
+// Polly para Cão Id
+builder.Services.AddSingleton<IAsyncPolicy<CaoDto>>(serviceProvider =>
+{
+    var cacheProvider = serviceProvider.GetRequiredService<IAsyncCacheProvider>();
+    return Policy.CacheAsync<CaoDto>(
+        cacheProvider,
+        TimeSpan.FromMinutes(5), // Podes dar um tempo diferente se quiseres
+        (context, key, ex) => { }
     );
 });
 
