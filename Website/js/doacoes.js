@@ -12,7 +12,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // Elementos do DOM
   const selectAnimal = document.getElementById("selectAnimal");
   const inputQuantidade = document.getElementById("inputQuantidade");
   const labelTotal = document.getElementById("labelTotal");
@@ -94,13 +93,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // 5. Enviar a Doação (Ao clicar em Confirmar no Modal)
   btnConfirmar.addEventListener("click", async function () {
-    // Validação simples
     const numeroCartao = document.getElementById("inputCartao").value;
     const nomeDoador = document.getElementById("inputNomeDoador").value;
     const animalId = selectAnimal.value;
     const quantidade = inputQuantidade.value;
     const valorTotal = quantidade * precoUnitarioAtual;
-    const animaisDoacoes = document.getElementById("animaisDoacoes");
 
     if (!numeroCartao || !nomeDoador || !animalId || quantidade <= 0) {
       alert("Por favor, preencha todos os campos obrigatórios.");
@@ -114,20 +111,18 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     try {
-      // Botão em estado de "carregando"
       const textoOriginal = btnConfirmar.innerHTML;
       btnConfirmar.innerHTML =
         '<i class="fa fa-spinner fa-spin"></i> A processar...';
       btnConfirmar.disabled = true;
 
-      // Enviar para o Mountebank (via tua API C#)
+      // Enviar para o Mountebank
       const resposta = await fetch("http://localhost:5013/api/Pagamentos", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(dadosDoacao),
       });
 
-      // ← EVITA CRASH QUANDO A RESPOSTA NÃO É JSON
       let resultado = null;
       try {
         resultado = await resposta.json();
