@@ -50,6 +50,14 @@ Todos os botões
   background-color: rgb(168, 5, 5);
 }
 
+.btn-success {
+  background-color: green;
+}
+
+.btn-success:hover {
+  background-color: rgb(2, 83, 22);
+}
+
 @media (max-width: 992px) {
   .back-to-top {
       right: 20px;
