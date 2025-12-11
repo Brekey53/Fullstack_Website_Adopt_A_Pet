@@ -96,7 +96,36 @@
     <section class="animais">
         <div class="container">
             <h3 class="text-center m-4">Adotados</h3>
-            <div class="row" id="adotados-container">
+            <a class="btn btn-success round-pill-lg" id="buttonAddCao" href="adicionarCao.html" style="display: none;">ADICIONAR CÃO</a>
+            <!-- Filtro Por idade -->
+            <section class="py-4 bg-light">
+                <div class="container">
+                    <h3 class="text-center mb-3">Filtrar Animais</h3>
+
+                    <div class="row justify-content-center g-3">
+                        <div class="col-12 col-md-4">
+                            <input type="text" id="filtroRaca" class="form-control" placeholder="Procurar por raça...">
+                        </div>
+
+                        <div class="col-12 col-md-3">
+                            <select id="filtroIdade" class="form-control">
+                                <option value="">Qualquer idade</option>
+                                <option value="1">Menos de 1 ano</option>
+                                <option value="2">1 a 5 anos</option>
+                                <option value="3">Mais de 5 anos</option>
+                            </select>
+                        </div>
+                        <div>
+                            
+                        </div>
+
+                        <div class="col-12 col-md-2">
+                            <button id="btnFiltrar" class="btn btn-primary w-100">Filtrar</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <div class="row pt-3" id="adotados-container">
                 <!-- Onde vai aparecer os caes adotados-->
             </div>
         </div>
@@ -120,7 +149,7 @@
 
     <!--Script próprio JS-->
     <script src="../../js/script.js"></script>
-    <script src="../../js/carregarCaes.js"></script>
+    <script src="../../js/carregarCaesAdotados.js"></script>
 </body>
 
 </html>
