@@ -251,7 +251,7 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
             await _dbContext.SaveChangesAsync();
 
             // Invalida o cache porque a foto mudou
-            // await InvalidateCacheAsync(id); 
+             await InvalidateCacheAsync(id);
 
             return Ok(new { caminho = caminhoRelativo });
         }
