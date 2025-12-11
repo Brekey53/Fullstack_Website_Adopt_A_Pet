@@ -373,11 +373,11 @@ VALUES  -- São todos nomes ficticios com datas ficticias
 	('Mantorras', 'Veterinário', 'mantorras@gmail.com', '911111113', '333333333'),
 	('Nuno Gomes', 'Tratador', 'nunogomes@gmail.com', '911111114', '444444444'),
 	('Óscar Cardozo', 'Tratador', 'tenhamcuidado@gmail.com', '911111115', '555555555'),
-	('Pablo Aimar', 'Administrativo', 'mago@gmail.com', '911111116', '666666666'),
+	('Pablo Aimar', 'Admin', 'mago@gmail.com', '911111116', '666666666'),
 	('Quim', 'Tratador', 'quim@gmail.com', '911111117', '777777777'),
 	('Rollheiser', 'Auxiliar', 'roll@gmail.com', '911111118', '888888888'),
 	('Salvio', 'Treinador', 'salvio@gmail.com', '911111119', '999999999'),
-	('Talisca', 'Treinador', 'talisca@gmail.com', '911111120', '000000000');
+	('Talisca', 'Admin', 'talisca@gmail.com', '911111120', '000000000');
 
 INSERT INTO voluntarios (
 	nome, email, telemovel, disponibilidade
