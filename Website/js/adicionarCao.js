@@ -66,7 +66,7 @@ function guardar() {
         method: "POST",
         headers: { 
             "Content-Type": "application/json",
-            "Authorization": "Bearer " + token },
+            "Authorization": "Bearer " + localStorage.getItem("token") },
         body: JSON.stringify(cao)
     })
         .then(res => res.json())

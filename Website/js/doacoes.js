@@ -99,6 +99,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const quantidade = inputQuantidade.value;
     const valorTotal = quantidade * precoUnitarioAtual;
 
+    if (quantidade >= 10){
+      alert("Por favor insira no máximo 10 produtos por doação");
+      inputQuantidade.value = 1;
+      return;
+    }
+
     if (!numeroCartao || !nomeDoador || !animalId || quantidade <= 0) {
       alert("Por favor, preencha todos os campos obrigatórios.");
       return;

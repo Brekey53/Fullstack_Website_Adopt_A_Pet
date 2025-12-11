@@ -1,3 +1,7 @@
+document.addEventListener("DOMContentLoaded", () => {
+    visibilidadeBotao();
+});
+
 /* For the button "back to the top"*/
 const backToTopButton = () => {
   const backToTopButton = document.querySelector('.back-to-top');
@@ -54,3 +58,13 @@ const lightbox = GLightbox({
 });
 
 
+function visibilidadeBotao(){
+  let botao = document.getElementById("buttonAddCao")
+
+  if (localStorage.getItem("token") != null){
+    botao.style.display = "inline";
+
+  } else{
+    botao.style.display = "none";
+  }
+}
