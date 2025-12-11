@@ -16,7 +16,7 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
         {
             _context = context;
         }
-
+        //api/racas 
         [HttpGet]
         public async Task<IActionResult> GetRacas()
         {

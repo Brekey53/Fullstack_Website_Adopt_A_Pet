@@ -1,5 +1,6 @@
 ﻿using ApiAndreLeonorProjetoFinal.Data;
 using ApiAndreLeonorProjetoFinal.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -151,6 +152,7 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
         }
 
         // Post: api/Caes
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> PostCao([FromBody] CaoDto dto)
         {
@@ -199,6 +201,7 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
             return CreatedAtAction(nameof(GetCao), new { id = cao.CaoId }, cao);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost("{id}/foto")]
         public async Task<IActionResult> UploadFoto(int id, IFormFile ficheiro)
         {
@@ -257,6 +260,7 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
         }
 
         // Put: api/Caes/1
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCao(int id, [FromBody] Caes cao)
         {
@@ -321,7 +325,7 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
             return NoContent(); // HTTP 204
         }
 
-
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCao(int id)
         {
@@ -345,6 +349,7 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
         }
 
         // Patch: api/caes/1
+        [Authorize(Roles = "Admin")]
         [HttpPatch("{id}")]
         public async Task<IActionResult> PatchAdotado(int id, [FromBody] JsonPatchDocument<Caes> patchDoc)
         {

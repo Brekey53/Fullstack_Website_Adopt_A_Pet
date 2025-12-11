@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using StackExchange.Redis;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -45,14 +46,14 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
 
 
             //Se for um utilizador válido, gera o token abaixo
-            var token = GenerateJwtToken(funcionario.Nome);
+            var token = GenerateJwtToken(funcionario.Nome, funcionario.Ocupacao);
             return Ok(new { token }); //200 - OK com o token
         }
 
 
         // Para gerar um token aleatorio que depois é usado para requests que sejam POST, PATCH ou
         // DELETE, porque não queremos que qualquer um os faça
-        private string GenerateJwtToken(string username)
+        private string GenerateJwtToken(string username, string ocupacao)
         {   
             //key definida na appsettings.json
             var key = Encoding.UTF8.GetBytes(_config["JwtSettings:Key"]);
@@ -61,7 +62,10 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
             var securityKey = new SymmetricSecurityKey(key);
             var creds = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
-            var claims = new[] { new Claim (ClaimTypes.Name, username) };
+            var claims = new[] { 
+                new Claim (ClaimTypes.Name, username),
+                new Claim(ClaimTypes.Role, ocupacao)
+            };
 
             var token = new JwtSecurityToken(
                 issuer: _config["JwtSettings:Issuer"], //api
