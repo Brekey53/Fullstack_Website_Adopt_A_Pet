@@ -22,7 +22,7 @@ async function carregarAnimaisParaAdotar() {
       <a href="adotados/adotadosDetalhes.html?id=${animal.caoId}">
         <img src="http://localhost:5013/${animal.foto}" alt="${
           animal.nome
-        }" class="img-cao">
+        }" class="img-cao" onerror="this.onerror=null; this.src='http://localhost:5013/images/adotados/default.jpg';">
 
         <div class="animal-header d-flex justify-content-between align-items-center px-3 py-2">
           <h5 class="mb-0 text-white fw-bold">${animal.nome}</h5>
