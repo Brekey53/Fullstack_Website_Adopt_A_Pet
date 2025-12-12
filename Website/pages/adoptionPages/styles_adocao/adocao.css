@@ -116,3 +116,7 @@ Icones nas cards para  sexo masculino feminino
             object-fit: cover;
             border-radius: 12px;
 }
+
+.adopt-card {
+  font-size: x-large;
+}
