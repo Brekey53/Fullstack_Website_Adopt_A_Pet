@@ -24,8 +24,7 @@ async function carregarDados() {
     document.getElementById("porte").value = cao.porte ?? "Pequeno";
     document.getElementById("castrado").checked = cao.castrado;
     document.getElementById("disponivel").checked = cao.disponivel;
-    document.getElementById("caracteristica").value =
-      cao.caracteristica ?? "Fofo";
+    document.getElementById("caracteristica").value = cao.caracteristica ?? "Fofo";
 
     if (cao.foto) {
       document.getElementById(
