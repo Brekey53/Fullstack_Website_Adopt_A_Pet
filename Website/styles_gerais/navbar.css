@@ -105,15 +105,11 @@
   border-bottom: 1px solid white;
 }
 
-.dropdown-menu li:last-child .dropdown-item {
-  border-bottom: none;
+.dropdown-item:last-child {
+  border-bottom: none !important;
 }
 
 #ativo {
   color: #000 !important;
   border-bottom: 2px solid white;
-}
-
-.dropdown-menu li:last-child #ativo {
-  border-bottom: none;
 }
