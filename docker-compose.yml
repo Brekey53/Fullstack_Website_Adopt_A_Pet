@@ -9,5 +9,22 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
 
+  redis:
+    image: redis:alpine  
+    container_name: RedisLG
+    ports:
+      - "6379:6379"
+
+  imposter:
+    image: bbyars/mountebank:latest
+    container_name: ImposterLG
+    ports:
+      - "2525:2525"
+      - "4545:4545"
+    volumes:
+      - ./Mocks:/Mocks
+    command: start --configfile /Mocks/imposters.json --allowInjection
+
+
 volumes:
   mysql_data:
