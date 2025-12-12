@@ -79,7 +79,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (selectAnimal.value === "-1") {
           animaisDoacoes.innerHTML = `
             <label class="my-2">A que cães gostaria de oferecer? (Ex: Simba, Timon, Jaime)</label>
-            <input type="text" style="width: 300px; height: 35px; padding: 5px;"/> `;
+            <input type="text" id="inputListaAnimais" style="width: 300px; height: 35px; padding: 5px;"/> `;
         } else {
           animaisDoacoes.innerHTML = "";
         }
@@ -99,7 +99,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const quantidade = inputQuantidade.value;
     const valorTotal = quantidade * precoUnitarioAtual;
 
-    if (quantidade >= 10){
+    if (quantidade >= 10) {
       alert("Por favor insira no máximo 10 produtos por doação");
       inputQuantidade.value = 1;
       return;
@@ -144,6 +144,8 @@ document.addEventListener("DOMContentLoaded", function () {
         );
       }
 
+      let produtoAtual = document.querySelector('[data-item]').dataset.item;
+      
       let descricaoDoacao = "";
       if (selectAnimal.value === "-1") {
         const lista = document.getElementById("inputListaAnimais").value;
@@ -156,6 +158,8 @@ document.addEventListener("DOMContentLoaded", function () {
         descricaoDoacao = `${nomeAnimal}`;
       }
 
+   
+
       await fetch("https://localhost:7035/api/doacoes", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -163,7 +167,7 @@ document.addEventListener("DOMContentLoaded", function () {
           nomeDoador,
           tipoDoacao: "Bens ou Comida",
           valor: valorTotal,
-          descricaoDoacao,
+          descricao: descricaoDoacao + " - " + produtoAtual,
           data: new Date().toISOString(),
         }),
       });
