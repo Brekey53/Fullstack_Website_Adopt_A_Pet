@@ -16,16 +16,10 @@
     <link rel="stylesheet" href="../../styles_gerais/footer.css">
     <link rel="stylesheet" href="../../styles_gerais/tipografia.css">
     <link rel="stylesheet" href="../../styles_gerais/buttons.css">
+    <link rel="stylesheet" href="styles_adocao/adocao.css">
 
-    <!-- ALTERAR ISTO PARA FOLHA CSS EXTERIROR-->
-    <style>
-        #fotoPreview {
-            width: 500px;
-            height: 500px;
-            object-fit: cover;
-            border-radius: 12px;
-        }
-    </style>
+    <!-- Font Awesome Icons-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
 <body>
@@ -80,6 +74,9 @@
                             <a class="nav-link" href="../blog/noticias.html">Notícias</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="../doarPagina/doacao.html"><i class="fa-solid fa-bone text-light p-1"></i>Doar um Osso<a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="../contacts/contactos.html">Contactos</a>
                         </li>
                     </ul>
@@ -90,14 +87,14 @@
 
     <section class="py-5 mt-5">
         <div class="container">
-            <h2 class="fw-bold text-center mb-4">Editar Cão</h2>
+            <h3 class="fw-bold text-center my-4">Editar Cão</h3>
             <div class="row g-4">
-                <div class="col-lg-5 text-center m-4">
+                <div class="col-lg-6 text-center m-4">
                     <img id="fotoPreview" src="" class="shadow-sm mb-3 h-100">
                     <input type="file" id="foto" class="form-control mt-2">
                     <button class="btn btn-primary w-45 mt-2" onclick="novaFoto()">Guardar foto nova</button>
                 </div>
-                <div class="col-lg-5">
+                <div class="col-lg-5 mx-3">
                     <div class="form-box">
                         <input type="hidden" id="caoId">
                         <h5 class="section-title">Informações Gerais</h5>

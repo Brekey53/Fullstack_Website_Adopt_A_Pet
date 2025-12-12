@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="../../../styles_gerais/font_awesome.css">
     <link rel="stylesheet" href="../../../styles_gerais/buttons.css">
     <link rel="stylesheet" href="styles_gerais/styles_index.css" />
-
+    <link rel="stylesheet" href="adotadosCaes.css">
 
     <!-- CSS desta página -->
     <link rel="stylesheet" href="adotadosCaes.css">
@@ -30,8 +30,13 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@100..900&family=Roboto:wght@100..900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@100..900&family=Roboto:wght@100..900&display=swap"
+        rel="stylesheet">
+    <!-- Font Awesome Icons-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
+
 <body>
     <header>
         <nav id="mainNavbar" class="navbar navbar-expand-lg fixed-top navbar-custom navbar-dark">
@@ -63,19 +68,24 @@
                         </li>
 
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="../../servicos/servicos.html" id="servicosDropdown"
-                                data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="../../servicos/servicos.html"
+                                id="servicosDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                                 Serviços CROAE
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="../../servicos/servicos.html">Serviços CROAE</a></li>
-                                <li><a class="dropdown-item" href="../../servicos/servicosVet.html">Serviços Veterinários</a></li>
-                                <li><a class="dropdown-item" href="../../servicos/servicosRecolha.html">Serviços Recolha</a></li>
+                                <li><a class="dropdown-item" href="../../servicos/servicosVet.html">Serviços
+                                        Veterinários</a></li>
+                                <li><a class="dropdown-item" href="../../servicos/servicosRecolha.html">Serviços
+                                        Recolha</a></li>
                             </ul>
                         </li>
 
                         <li class="nav-item"><a class="nav-link" href="../../visits/visitar.html">Marcar Visita</a></li>
                         <li class="nav-item"><a class="nav-link" href="../../blog/noticias.html">Notícias</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../../doarPagina/doacao.html"><i class="fa-solid fa-bone text-light p-1"></i>Doar um Osso<a>
+                        </li>
                         <li class="nav-item"><a class="nav-link" href="../../contacts/contactos.html">Contactos</a></li>
                     </ul>
                 </div>
@@ -105,7 +115,8 @@
                         <p id="descricao" class="mt-3"></p>
 
                         <div class="text-center mt-4">
-                            <button class="btn rounded-pill btn-secondary px-4 py-2 fw-semibold shadow-sm" onclick="window.history.back()">Voltar</button>
+                            <button class="btn rounded-pill btn-secondary px-4 py-2 fw-semibold shadow-sm"
+                                onclick="window.history.back()">Voltar</button>
                         </div>
                     </div>
                 </div>
@@ -128,4 +139,5 @@
     <script src="../../../js/script.js"></script>
     <script src="../../../js/adotadosDetalhes.js"></script>
 </body>
+
 </html>

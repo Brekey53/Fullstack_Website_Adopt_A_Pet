@@ -109,3 +109,10 @@ Icones nas cards para  sexo masculino feminino
     padding-top: 130px;
   }
 }
+
+ #fotoPreview {
+            width: 500px;
+            height: 500px;
+            object-fit: cover;
+            border-radius: 12px;
+}
