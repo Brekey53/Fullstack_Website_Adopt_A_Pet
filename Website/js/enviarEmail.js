@@ -5,6 +5,7 @@ const tipoVisita = document.getElementById("tipo_visita");
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
+
   const dados = new FormData();
   dados.append("nome", nomeVoluntario.value);
   dados.append("email", emailVoluntario.value);
@@ -22,12 +23,34 @@ form.addEventListener("submit", async (e) => {
     if (!resposta.ok) {
       throw new Error("Erro no envio");
     }
+    
+    mostrarMensagem("Obrigado pelo seu contacto!", "Entraremos em contacto consigo brevemente 😊", "text-success");
 
-    const texto = await resposta.text();
-    console.log("Sucesso:", texto); // TODO: podemos apagar, só queria testar
-    alert("Email enviado com sucesso!");
   } catch (erro) {
     console.error("Erro:", erro);
-    alert("Falha ao enviar email.");
+    mostrarMensagem("Falha no envio 😢", "Tente novamente mais tarde.", "text-danger");
   }
 });
+
+function mostrarMensagem(tituloMsg, textoMsg, classeTexto) {
+  // limpar formulário
+  form.innerHTML = "";
+
+  // criar container
+  const div = document.createElement("div");
+  div.classList.add("text-center", "p-4");
+
+  // título
+  const titulo = document.createElement("h2");
+  titulo.classList.add(classeTexto);
+  titulo.textContent = tituloMsg;
+
+  // parágrafo
+  const paragrafo = document.createElement("p");
+  paragrafo.textContent = textoMsg;
+
+  // adicionar tudo
+  div.appendChild(titulo);
+  div.appendChild(paragrafo);
+  form.appendChild(div);
+}
