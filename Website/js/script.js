@@ -62,8 +62,7 @@ function visibilidadeBotao(){
   let botao = document.getElementById("buttonAddCao")
 
   if (localStorage.getItem("token") != null){
-    botao.style.display = "inline";
-
+    botao.style.display = "block";
   } else{
     botao.style.display = "none";
   }
