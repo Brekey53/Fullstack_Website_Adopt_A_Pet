@@ -79,7 +79,7 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
                 // Definir opções de expiração para o Redis (ex: 30 minutos)
                 var opcoesRedis = new DistributedCacheEntryOptions
                 {
-                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(1)
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(30)
                 };
 
                 // Guardar no L2 (Redis)
@@ -290,6 +290,8 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
             caoParaAtualizar.Castrado = cao.Castrado;
             caoParaAtualizar.Disponivel = cao.Disponivel;
             caoParaAtualizar.Caracteristica = cao.Caracteristica;
+            caoParaAtualizar.RacaId = cao.RacaId;
+            caoParaAtualizar.CruzamentoRaca = cao.CruzamentoRaca;
 
             // Nota: Não atualizamos o CaoId, pois é a chave primária.
 

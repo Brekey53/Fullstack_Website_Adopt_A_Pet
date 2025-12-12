@@ -70,7 +70,7 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
                 // Definir opções de expiração para o Redis (ex: 30 minutos)
                 var opcoesRedis = new DistributedCacheEntryOptions
                 {
-                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(2)
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(30)
                 };
 
                 // Guardar no L2 (Redis)
