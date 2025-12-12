@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // 4. Função para carregar animais da API
   async function carregarAnimais() {
     try {
-      const response = await fetch("http://localhost:5013/api/caes");
+      const response = await fetch("https://localhost:7035/api/caes");
 
       if (!response.ok) throw new Error("Erro ao carregar animais");
 
@@ -123,7 +123,7 @@ document.addEventListener("DOMContentLoaded", function () {
       btnConfirmar.disabled = true;
 
       // Enviar para o Mountebank
-      const resposta = await fetch("http://localhost:5013/api/Pagamentos", {
+      const resposta = await fetch("https://localhost:7035/api/Pagamentos", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(dadosDoacao),
@@ -156,7 +156,7 @@ document.addEventListener("DOMContentLoaded", function () {
         descricaoDoacao = `${nomeAnimal}`;
       }
 
-      await fetch("http://localhost:5013/api/doacoes", {
+      await fetch("https://localhost:7035/api/doacoes", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

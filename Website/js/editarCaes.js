@@ -1,8 +1,13 @@
+document.addEventListener("DOMContentLoaded", () => {
+    carregarRacas();        
+    prepararEventoRaca();  
+});
+
 const id = new URLSearchParams(window.location.search).get("id");
 
 async function carregarDados() {
   try {
-    const resposta = await fetch(`http://localhost:5013/api/caes/${id}`, {
+    const resposta = await fetch(`https://localhost:7035/api/caes/${id}`, {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
@@ -24,12 +29,14 @@ async function carregarDados() {
     document.getElementById("porte").value = cao.porte ?? "Pequeno";
     document.getElementById("castrado").checked = cao.castrado;
     document.getElementById("disponivel").checked = cao.disponivel;
-    document.getElementById("caracteristica").value = cao.caracteristica ?? "Fofo";
+    document.getElementById("caracteristica").value =
+      cao.caracteristica ?? "Fofo";
+    document.getElementById("raca_select").value;
 
     if (cao.foto) {
       document.getElementById(
         "fotoPreview"
-      ).src = `http://localhost:5013/${cao.foto}`;
+      ).src = `https://localhost:7035/${cao.foto}`;
     }
   } catch (erro) {
     console.error(erro);
@@ -39,6 +46,8 @@ async function carregarDados() {
 carregarDados();
 
 async function guardar() {
+  const cruzamentoInput = document.getElementById("cruzamentoRaca");
+
   const dados = {
     caoId: Number(document.getElementById("caoId").value),
     nome: document.getElementById("nome").value,
@@ -48,10 +57,13 @@ async function guardar() {
     castrado: document.getElementById("castrado").checked,
     disponivel: document.getElementById("disponivel").checked,
     caracteristica: document.getElementById("caracteristica").value,
+
+    racaId: parseInt(document.getElementById("raca_select").value),
+    cruzamentoRaca: cruzamentoInput ? cruzamentoInput.value : null
   };
 
   const resposta = await fetch(
-    `http://localhost:5013/api/caes/${dados.caoId}`,
+    `https://localhost:7035/api/caes/${dados.caoId}`,
     {
       method: "PUT",
       headers: {
@@ -69,13 +81,13 @@ async function guardar() {
     return;
   }
 
-  if (document.referrer.includes("paraAdotar.html")) {
-    window.location.href = "paraAdotar.html";
-} else {
-    // Caso contrário assume que veio dos adotados ou outro sitio
-    window.location.href = "adotados.html";
-}
-  //window.location.back;
+  const estavaDisponivel = document.getElementById("disponivel").checked;
+
+      if (estavaDisponivel) {
+        window.location.href = "paraAdotar.html";
+      } else {
+        window.location.href = "adotados.html";
+      }
 }
 
 async function apagar() {
@@ -96,7 +108,7 @@ async function apagar() {
 
   try {
     // Chamar a API no metodo Delete
-    const resposta = await fetch(`http://localhost:5013/api/caes/${id}`, {
+    const resposta = await fetch(`https://localhost:7035/api/caes/${id}`, {
       method: "DELETE",
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token"),
@@ -126,64 +138,108 @@ async function apagar() {
 }
 
 async function novaFoto() {
-    const inputFoto = document.getElementById("foto");
-    const caoId = document.getElementById("caoId").value;
+  const inputFoto = document.getElementById("foto");
+  const caoId = document.getElementById("caoId").value;
 
-    // validar se carregou a foto
-    if (inputFoto.files.length === 0) {
-        alert("Por favor, selecione uma foto primeiro.");
-        return;
+  // validar se carregou a foto
+  if (inputFoto.files.length === 0) {
+    alert("Por favor, selecione uma foto primeiro.");
+    return;
+  }
+
+  const ficheiro = inputFoto.files[0];
+
+  // formulário de dados
+  const formData = new FormData();
+  formData.append("ficheiro", ficheiro); // "ficheiro" tem de ser igual ao nome no C# (IFormFile ficheiro)
+
+  try {
+    // Botão a carregar...
+    const btn = document.querySelector("button[onclick='novaFoto()']");
+    const textoOriginal = btn.innerText;
+    btn.innerText = "A enviar...";
+    btn.disabled = true;
+
+    // enviar para a API
+    const resposta = await fetch(
+      `https://localhost:7035/api/caes/${caoId}/foto`,
+      {
+        method: "POST",
+        headers: {
+          // NOTA: Quando usamos FormData, NÃO definimos 'Content-Type': 'application/json'
+          // O browser define automaticamente como 'multipart/form-data'
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+        body: formData,
+      }
+    );
+
+    if (!resposta.ok) {
+      const erro = await resposta.text();
+      throw new Error(erro);
     }
 
-    const ficheiro = inputFoto.files[0];
+    // sucesso: Atualizar a imagem no ecrã imediatamente
+    const dados = await resposta.json();
 
-    // formulário de dados
-    const formData = new FormData();
-    formData.append("ficheiro", ficheiro); // "ficheiro" tem de ser igual ao nome no C# (IFormFile ficheiro)
+    const timestamp = new Date().getTime();
 
-    try {
-        // Botão a carregar...
-        const btn = document.querySelector("button[onclick='novaFoto()']");
-        const textoOriginal = btn.innerText;
-        btn.innerText = "A enviar...";
-        btn.disabled = true;
+    // Atualiza o src da imagem (adicionamos um timestamp para forçar o refresh do cache)
+    document.getElementById(
+      "fotoPreview"
+    ).src = `https://localhost:7035/${dados.caminho}?t=${timestamp}`;
 
-        // enviar para a API
-        const resposta = await fetch(`http://localhost:5013/api/caes/${caoId}/foto`, {
-            method: "POST",
-            headers: {
-                // NOTA: Quando usamos FormData, NÃO definimos 'Content-Type': 'application/json'
-                // O browser define automaticamente como 'multipart/form-data'
-                "Authorization": "Bearer " + localStorage.getItem("token")
-            },
-            body: formData
-        });
+    alert("Foto atualizada com sucesso!");
 
-        if (!resposta.ok) {
-            const erro = await resposta.text();
-            throw new Error(erro);
-        }
+    // Limpar o input
+    inputFoto.value = "";
+  } catch (erro) {
+    console.error(erro);
+    alert("Erro ao enviar foto: " + erro.message);
+  } finally {
+    // Restaurar botão
+    const btn = document.querySelector("button[onclick='novaFoto()']");
+    btn.innerText = "Guardar foto nova";
+    btn.disabled = false;
+  }
+}
 
-        // sucesso: Atualizar a imagem no ecrã imediatamente
-        const dados = await resposta.json();
+function carregarRacas() {
+    const select = document.getElementById("raca_select");
 
-        const timestamp = new Date().getTime();
-        
-        // Atualiza o src da imagem (adicionamos um timestamp para forçar o refresh do cache)
-        document.getElementById("fotoPreview").src = `http://localhost:5013/${dados.caminho}?t=${timestamp}`;
-        
-        alert("Foto atualizada com sucesso!");
-        
-        // Limpar o input
-        inputFoto.value = ""; 
+    fetch("https://localhost:7035/api/Racas")
+        .then(res => res.json())
+        .then(racas => {
 
-    } catch (erro) {
-        console.error(erro);
-        alert("Erro ao enviar foto: " + erro.message);
-    } finally {
-        // Restaurar botão
-        const btn = document.querySelector("button[onclick='novaFoto()']");
-        btn.innerText = "Guardar foto nova";
-        btn.disabled = false;
+            select.innerHTML = "";
+
+            racas.forEach(r => {
+                const op = document.createElement("option");
+                op.value = r.racaId;
+                op.textContent = r.raca1;
+                select.appendChild(op);
+            });
+        })
+        .catch(err => console.error("Erro ao carregar raças:", err));
+}
+
+function prepararEventoRaca() {
+  const select = document.getElementById("raca_select");
+
+  const container = document.createElement("div");
+  container.id = "inputCruzamentoContainer";
+  container.classList.add("mt-2");
+
+  select.parentNode.appendChild(container);
+
+  select.addEventListener("change", () => {
+    if (parseInt(select.value) === 16) {
+      container.innerHTML = `
+                <label class="form-label mt-2">Cruzamento (opcional)</label>
+                <input id="cruzamentoRaca" type="text" class="form-control" placeholder="Ex: Labrador">
+            `;
+    } else {
+      container.innerHTML = "";
     }
+  });
 }

@@ -2,13 +2,13 @@ const id = new URLSearchParams(window.location.search).get("id");
 
 async function carregarCao() {
     try {
-        const resposta = await fetch(`http://localhost:5013/api/caes/${id}`);
+        const resposta = await fetch(`https://localhost:7035/api/caes/${id}`);
         if (!resposta.ok) 
             throw new Error("Erro ao carregar dados.");
 
         const cao = await resposta.json();
 
-        const fotoUrl = `http://localhost:5013/${cao.foto}`;
+        const fotoUrl = `https://localhost:7035/${cao.foto}`;
         document.getElementById("fotoPrincipal").src = fotoUrl;
         document.getElementById("fotoPrincipalLink").href = fotoUrl;
         document.getElementById("fotoPrincipalLink").dataset.title = cao.nome;

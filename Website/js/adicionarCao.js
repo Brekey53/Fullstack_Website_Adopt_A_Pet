@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
 function carregarRacas() {
     const select = document.getElementById("raca_select");
 
-    fetch("http://localhost:5013/api/Racas")
+    fetch("https://localhost:7035/api/Racas")
         .then(res => res.json())
         .then(racas => {
 
@@ -62,7 +62,7 @@ function guardar() {
         cruzamentoRaca: cruzamentoInput ? cruzamentoInput.value : null
     };
 
-    fetch("http://localhost:5013/api/Caes", {
+    fetch("https://localhost:7035/api/Caes", {
         method: "POST",
         headers: { 
             "Content-Type": "application/json",

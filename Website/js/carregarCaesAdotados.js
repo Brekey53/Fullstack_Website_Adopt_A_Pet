@@ -1,12 +1,11 @@
 async function carregarAnimais() {
   try {
-    const resposta = await fetch("http://localhost:5013/api/adotados");
+    const resposta = await fetch("https://localhost:7035/api/adotados");
     if (!resposta.ok) throw new Error("Erro ao carregar os dados dos animais");
 
-   const animais = await resposta.json();
+    const animais = await resposta.json();
     const container = document.getElementById("adotados-container");
     const token = localStorage.getItem("token");
-    console.log(animais);
     container.innerHTML = animais
       .map((animal) => {
         const idadeNum =
@@ -20,9 +19,9 @@ async function carregarAnimais() {
          data-idade="${idadeNum}">
          
       <a href="adotados/adotadosDetalhes.html?id=${animal.caoId}">
-        <img src="http://localhost:5013/${animal.foto}" alt="${
+        <img src="https://localhost:7035/${animal.foto}" alt="${
           animal.nome
-        }" class="img-cao" onerror="this.onerror=null; this.src='http://localhost:5013/images/adotados/default.jpg';">
+        }" class="img-cao" onerror="this.onerror=null; this.src='https://localhost:7035/images/adotados/default.jpg';">
 
         <div class="animal-header d-flex justify-content-between align-items-center px-3 py-2">
           <h5 class="mb-0 text-white fw-bold">${animal.nome}</h5>
