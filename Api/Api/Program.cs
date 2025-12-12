@@ -44,7 +44,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddMemoryCache();
 builder.Services.AddSingleton<IAsyncCacheProvider, MemoryCacheProvider>();
 
-// Definir a política de cache (expira em 5 minutos) - Politica generica para List<CaoDto>, pois todos os Endpoints que retornam listas de cães usam o mesmo cache
+// Definir a política de cache (expira em 5 minutos) - Politica generica para List<CaoDto>,
+// pois todos os Endpoints que retornam listas de cães usam o mesmo cache
 
 // Polly para lista cães
 builder.Services.AddSingleton<IAsyncPolicy<List<CaoDto>>>(serviceProvider =>

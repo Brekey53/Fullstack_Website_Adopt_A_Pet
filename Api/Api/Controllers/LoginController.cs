@@ -44,7 +44,6 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
                 return Unauthorized("Email ou password incorretos.");
             }
 
-
             //Se for um utilizador válido, gera o token abaixo
             var token = GenerateJwtToken(funcionario.Nome, funcionario.Ocupacao);
             return Ok(new { token }); //200 - OK com o token
