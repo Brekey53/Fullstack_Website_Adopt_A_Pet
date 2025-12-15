@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using ApiAndreLeonorProjetoFinal.Data.Models;
+using ApiAndreLeonorProjetoFinal.Models;
 using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Scaffolding.Internal;
 
@@ -17,7 +17,7 @@ public partial class CroaeDbContext : DbContext
     {
     }
 
-    public virtual DbSet<Adoco> Adocoes { get; set; }
+    public virtual DbSet<Adocoes> Adocoes { get; set; }
 
     public virtual DbSet<Ala> Alas { get; set; }
 
@@ -25,11 +25,11 @@ public partial class CroaeDbContext : DbContext
 
     public virtual DbSet<Box> Boxes { get; set; }
 
-    public virtual DbSet<Cae> Caes { get; set; }
+    public virtual DbSet<Caes> Caes { get; set; }
 
     public virtual DbSet<ConsultasVeterinario> ConsultasVeterinarios { get; set; }
 
-    public virtual DbSet<Doaco> Doacoes { get; set; }
+    public virtual DbSet<Doacoes> Doacoes { get; set; }
 
     public virtual DbSet<FamiliaAdotante> FamiliaAdotantes { get; set; }
 
@@ -39,7 +39,7 @@ public partial class CroaeDbContext : DbContext
 
     public virtual DbSet<OcorrenciasCaoVoluntario> OcorrenciasCaoVoluntarios { get; set; }
 
-    public virtual DbSet<OcorrenciasEntreCae> OcorrenciasEntreCaes { get; set; }
+    public virtual DbSet<OcorrenciasEntreCaes> OcorrenciasEntreCaes { get; set; }
 
     public virtual DbSet<OrdensTribunal> OrdensTribunals { get; set; }
 
@@ -49,12 +49,13 @@ public partial class CroaeDbContext : DbContext
 
     public virtual DbSet<Vacina> Vacinas { get; set; }
 
-    public virtual DbSet<Vacinaco> Vacinacoes { get; set; }
+    public virtual DbSet<Vacinacao> Vacinacoes { get; set; }
 
     public virtual DbSet<Voluntario> Voluntarios { get; set; }
 
+        // TODO: Move the connection string out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+            //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to */read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263. 
         => optionsBuilder.UseMySql("server=localhost;port=3306;database=croae_projeto;user=root;password=root", Microsoft.EntityFrameworkCore.ServerVersion.Parse("9.3.0-mysql"));
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -63,7 +64,7 @@ public partial class CroaeDbContext : DbContext
             .UseCollation("utf8mb4_0900_ai_ci")
             .HasCharSet("utf8mb4");
 
-        modelBuilder.Entity<Adoco>(entity =>
+        modelBuilder.Entity<Adocoes>(entity =>
         {
             entity.HasKey(e => e.AdocaoId).HasName("PRIMARY");
 
@@ -82,12 +83,12 @@ public partial class CroaeDbContext : DbContext
                 .HasColumnName("estado");
             entity.Property(e => e.FamiliaId).HasColumnName("familia_id");
 
-            entity.HasOne(d => d.Cao).WithMany(p => p.Adocos)
+            entity.HasOne(d => d.Cao).WithMany(p => p.Adocoes)
                 .HasForeignKey(d => d.CaoId)
                 .OnDelete(DeleteBehavior.SetNull)
                 .HasConstraintName("fk_adocoes_caes");
 
-            entity.HasOne(d => d.Familia).WithMany(p => p.Adocos)
+            entity.HasOne(d => d.Familia).WithMany(p => p.Adocoes)
                 .HasForeignKey(d => d.FamiliaId)
                 .OnDelete(DeleteBehavior.SetNull)
                 .HasConstraintName("fk_adocoes_familias");
@@ -149,7 +150,7 @@ public partial class CroaeDbContext : DbContext
                 .HasConstraintName("fk_boxes_alas");
         });
 
-        modelBuilder.Entity<Cae>(entity =>
+        modelBuilder.Entity<Caes>(entity =>
         {
             entity.HasKey(e => e.CaoId).HasName("PRIMARY");
 
@@ -234,7 +235,7 @@ public partial class CroaeDbContext : DbContext
                 .HasConstraintName("fk_consultas_veterinario_funcionarios");
         });
 
-        modelBuilder.Entity<Doaco>(entity =>
+        modelBuilder.Entity<Doacoes>(entity =>
         {
             entity.HasKey(e => e.DoacaoId).HasName("PRIMARY");
 
@@ -370,7 +371,7 @@ public partial class CroaeDbContext : DbContext
                 .HasConstraintName("fk_ocorrencias_voluntarios");
         });
 
-        modelBuilder.Entity<OcorrenciasEntreCae>(entity =>
+        modelBuilder.Entity<OcorrenciasEntreCaes>(entity =>
         {
             entity.HasKey(e => e.OcorrenciaCaesId).HasName("PRIMARY");
 
@@ -467,7 +468,7 @@ public partial class CroaeDbContext : DbContext
                 .HasColumnName("nome");
         });
 
-        modelBuilder.Entity<Vacinaco>(entity =>
+        modelBuilder.Entity<Vacinacao>(entity =>
         {
             entity.HasKey(e => e.VacinacaoId).HasName("PRIMARY");
 

@@ -1,0 +1,41 @@
+.hero-login {
+            /* Imagem de fundo com uma sombra escura por cima para melhorar a leitura */
+            /* Se quiseres usar a tua imagem local, substitui o URL abaixo por: ../../images/tua_imagem.jpg */
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1450778869180-41d0601e046e?q=80&w=1972&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            
+            /* Ocupa a altura toda do ecrã */
+            min-height: 100vh;
+            
+            /* Centra o formulário no meio do ecrã */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-top: 80px; /* Espaço para a navbar não tapar o topo */
+        }
+
+        .login-card {
+            background-color: rgba(255, 255, 255, 0.15); /* Fundo transparente */
+            backdrop-filter: blur(10px); /* Efeito de vidro embaciado */
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 40px;
+            border-radius: 15px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            color: white;
+        }
+
+        .login-card input {
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            height: 45px;
+        }
+
+        .login-card label {
+            font-weight: 600;
+            margin-bottom: 5px;
+            text-align: left;
+            display: block;
+        }

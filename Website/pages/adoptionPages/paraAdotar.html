@@ -12,11 +12,11 @@
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 
     <!--CSS Links-->
-    <link rel="stylesheet" href="../../styles_gerais/navbar.css">
     <link rel="stylesheet" href="../../styles_gerais/footer.css">
     <link rel="stylesheet" href="../../styles_gerais/tipografia.css">
     <link rel="stylesheet" href="../../styles_gerais/buttons.css">
     <link rel="stylesheet" href="../../styles_gerais/font_awesome.css">
+    <link rel="stylesheet" href="../../styles_gerais/navbar.css">
     <link rel="stylesheet" href="styles_adocao/adocao.css">
 
     <!-- For Lightbox2-->
@@ -55,13 +55,11 @@
                                 Adoção
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="adocaoDropdown">
-                                <li>
-                                    <a class="dropdown-item" href="adocao.html">Adotar no CROAE</a>
+                                <li><a class="dropdown-item" href="adocao.html">Adotar no CROAE</a></li>
+                                <li><a id="ativo" class="dropdown-item" href="paraAdotar.html">Animais para Adoção</a>
                                 </li>
-                                <li><a id="ativo" class="dropdown-item" href="paraAdotar.html">Animais para
-                                        adoção</a></li>
-                                <li><a class="dropdown-item" href="adotados.html">Animais
-                                        adotados</a></li>
+                                <li><a class="dropdown-item" href="adotados.html">Animais adotados</a></li>
+                                <li><a class="dropdown-item" id="buttonAddCao" href="adicionarCao.html">Adicionar Cão</a></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
@@ -86,110 +84,54 @@
                             <a class="nav-link" href="../blog/noticias.html">Notícias</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="../doarPagina/doacao.html"><i
+                                    class="fa-solid fa-bone text-light p-1"></i>Doar um Osso<a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="../contacts/contactos.html">Contactos</a>
                         </li>
-
+                        <li class="nav-item"><a id="loginBtn" class="nav-link" href="../login/login.html">Login</a></li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-
     <!-- Galeria de animais por Adotar-->
     <section class="animais">
         <div class="container">
             <h3 class="text-center m-4">Adoção</h3>
-            <div class="row">
-                <div class="col-12 col-sm-6 col-lg-4 ">
-                    <div class="animal-card shadow-sm">
-                        <a href="porAdotar/1.html">
-                            <img src="images/porAdotar/jaime_2.jpg" alt="Jaime" class="img-cao">
-                            <div class="animal-header d-flex justify-content-between align-items-center px-3 py-2">
-                                <h5 class="mb-0 text-white fw-bold">Jaime</h5>
-                                <i class="fa-solid fa-mars "></i>
-                            </div>
-                            <div class="animal-body p-3">
-                                <p class="mb-1">Cão | Jovem</p>
-                                <p class="mb-0">Porte Grande</p>
-                            </div>
-                        </a>
+            <!-- Filtro Por idade -->
+            <section class="py-4 bg-light">
+                <div class="container">
+                    <h3 class="text-center mb-3">Filtrar Animais</h3>
+                    <div class="text-center"><img
+                            src="https://www.animatedimages.org/data/media/202/animated-dog-image-0030.gif" border="0"
+                            alt="animated-dog-image-0030" /></div>
+                    <div class="row justify-content-center g-3">
+                        <div class="col-12 col-md-4">
+                            <input type="text" id="filtroRaca" class="form-control" placeholder="Procurar por raça...">
+                        </div>
+
+                        <div class="col-12 col-md-3">
+                            <select id="filtroIdade" class="form-control">
+                                <option value="">Qualquer idade</option>
+                                <option value="1">Menos de 1 ano</option>
+                                <option value="2">1 a 5 anos</option>
+                                <option value="3">Mais de 5 anos</option>
+                            </select>
+                        </div>
+                        <div>
+
+                        </div>
+
+                        <div class="col-12 col-md-2">
+                            <button id="btnFiltrar" class="btn btn-primary w-100">Filtrar</button>
+                        </div>
                     </div>
                 </div>
-                <div class="col-12 col-sm-6 col-lg-4 mb-4">
-                    <div class="animal-card shadow-sm">
-                        <a href="porAdotar/2.html">
-                            <img src="images/porAdotar/kyra.png" alt="Kyra" class="img-cao">
-                            <div class="animal-header d-flex justify-content-between align-items-center px-3 py-2">
-                                <h5 class="mb-0 text-white fw-bold">Kyra</h5>
-                                <i class="fa-solid fa-venus"></i>
-                            </div>
-                            <div class="animal-body p-3">
-                                <p class="mb-1">Cão | Jovem</p>
-                                <p class="mb-0">Porte Grande</p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-12 col-sm-6 col-lg-4 mb-4">
-                    <div class="animal-card shadow-sm">
-                        <a href="porAdotar/3.html">
-                            <img src="images/porAdotar/migalha.jpg" alt="Migalha" class="img-cao">
-                            <div class="animal-header d-flex justify-content-between align-items-center px-3 py-2">
-                                <h5 class="mb-0 text-white fw-bold">Migalha</h5>
-                                <i class="fa-solid fa-mars"></i>
-                            </div>
-                            <div class="animal-body p-3">
-                                <p class="mb-1">Cão | Jovem</p>
-                                <p class="mb-0">Porte Pequeno</p>
-                            </div>
-                    </div>
-                    </a>
-                </div>
-                <div class="col-12 col-sm-6 col-lg-4 mb-4">
-                    <div class="animal-card shadow-sm">
-                        <a href="porAdotar/4.html">
-                            <img src="images/porAdotar/nina.jpg" alt="Nina" class="img-cao">
-                            <div class="animal-header d-flex justify-content-between align-items-center px-3 py-2">
-                                <h5 class="mb-0 text-white fw-bold">Nina</h5>
-                                <i class="fa-solid fa-venus"></i>
-                            </div>
-                            <div class="animal-body p-3">
-                                <p class="mb-1">Cão | Adulto</p>
-                                <p class="mb-0">Porte Grande</p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-12 col-sm-6 col-lg-4 mb-4">
-                    <div class="animal-card shadow-sm">
-                        <a href="porAdotar/5.html">
-                            <img src="images/porAdotar/pirulito.jpg" alt="Pirulito" class="img-cao">
-                            <div class="animal-header d-flex justify-content-between align-items-center px-3 py-2">
-                                <h5 class="mb-0 text-white fw-bold">Pirulito</h5>
-                                <i class="fa-solid fa-mars"></i>
-                            </div>
-                            <div class="animal-body p-3">
-                                <p class="mb-1">Cão | Jovem</p>
-                                <p class="mb-0">Porte Grande</p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-12 col-sm-6 col-lg-4 mb-4">
-                    <div class="animal-card shadow-sm">
-                        <a href="porAdotar/6.html">
-                            <img src="images/porAdotar/timon.jpg" alt="Timon" class="img-cao">
-                            <div class="animal-header d-flex justify-content-between align-items-center px-3 py-2">
-                                <h5 class="mb-0 text-white fw-bold">Timon</h5>
-                                <i class="fa-solid fa-mars"></i>
-                            </div>
-                            <div class="animal-body p-3">
-                                <p class="mb-1">Cão | Adulto</p>
-                                <p class="mb-0">Porte Médio</p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
+            </section>
+            <div class="row" id="adotados-container">
+                <!-- Onde vai aparecer os caes adotados-->
             </div>
         </div>
     </section>
@@ -212,6 +154,9 @@
 
     <!--Script JS próprio-->
     <script src="../../js/script.js"></script>
+    <script src="../../js/carregarCaesParaAdotar.js"></script>
+    <script src="../../js/login.js"></script>
+
 </body>
 
 </html>

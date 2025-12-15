@@ -3,7 +3,7 @@
 	       Criar e Utilizar a DB
 --------------------------------------------
 */
-
+-- Drop database croae_projeto;
 -- Criar base de dados
 CREATE DATABASE IF NOT EXISTS croae_projeto;
 
@@ -17,6 +17,7 @@ USE croae_projeto;
 */
 
 -- Criar as tabelas com chaves primárias e foreign keys 
+
 DROP TABLE IF EXISTS racas;
 CREATE TABLE racas (
     raca_id INT PRIMARY KEY AUTO_INCREMENT,
@@ -53,6 +54,16 @@ CREATE TABLE caes (
     CONSTRAINT fk_caes_racas FOREIGN KEY (raca_id) REFERENCES racas(raca_id) ON DELETE SET NULL, -- nao quero apagar um cao só porque se apagou uma raça
     CONSTRAINT fk_caes_boxes FOREIGN KEY (box_id) REFERENCES boxes(box_id) ON DELETE SET NULL -- nao quero apagar um cao só porque se apagou uma box
 );
+
+/*DROP TABLE IF EXISTS doacoes_web;
+CREATE TABLE doacoes_web (
+	doacao_web_id INT PRIMARY KEY AUTO_INCREMENT,
+    nome_doador VARCHAR(100) NOT NULL,
+    objeto_doado VARCHAR(15) NOT NULL,
+    quantidade_doada INT NOT NULL,
+    valor_pago DOUBLE NOT NULL,
+    descricao VARCHAR(100)
+);*/
 
 DROP TABLE IF EXISTS padrinhos;
 CREATE TABLE padrinhos (
@@ -189,7 +200,7 @@ DROP TABLE IF EXISTS fotos;
 CREATE TABLE fotos (
 	foto_id INT PRIMARY KEY AUTO_INCREMENT,
     cao_id INT NOT NULL,
-    foto LONGBLOB, 
+    foto varchar(255), 
     CONSTRAINT fk_fotos_caes FOREIGN KEY (cao_id) REFERENCES caes(cao_id) ON DELETE CASCADE -- não faz sentido guardar fotos se um cão falecer ou for adotado. Sim pode ser devolvido, mas se o registo do cão ainda existe é mais facil colocar fotos que ficar a pesar na database
 );
 
@@ -263,8 +274,7 @@ VALUES
     ('Cão de Água'), 
     ('Husky'), 
     ('Chihuahua'), -- 15
-    ('Rafeiro'),
-    ('chihahua');
+    ('Rafeiro');
  
  INSERT INTO alas ( -- não coloquei 4 registos porque não se adap
 	tipo
@@ -304,12 +314,12 @@ VALUES
 	(16, 'Timon', '2017-12-09', 'Médio', 'M', '2021-10-10 13:45:00', 'Labrador', 4, TRUE, 'Muito obediente', TRUE), -- 5
 	(16, 'Dino', '2020-08-01', 'Pequeno', 'M', '2023-02-22 15:00:00', NULL, 2, TRUE, 'Calmo e educado', FALSE),
 	(16, 'Simba', '2019-04-10', 'Médio', 'M', '2022-09-14 10:30:00', NULL, 3, FALSE, 'Muito curioso', TRUE),
-	(16, 'Martinha', '2022-01-28', 'Médio', 'F', '2024-06-02 12:00:00', NULL, 1, FALSE, 'Adora brincar', TRUE),
-	(16, 'Martinho', '2020-07-07', 'Médio', 'M', '2023-05-20 09:00:00', NULL, 4, TRUE, 'Muito dócil', TRUE),
-	(2, 'Nina', '2016-06-15', 'Grande', 'F', '2020-11-30 08:15:00', NULL, 2, TRUE, 'Veterana calma e experiente', TRUE), -- 10
+	(16, 'Martinha', '2022-01-28', 'Médio', 'F', '2024-06-02 12:00:00', 'Pitbull', 1, FALSE, 'Adora brincar', TRUE),
+	(16, 'Martinho', '2020-07-07', 'Médio', 'M', '2023-05-20 09:00:00', 'Pitbull', 4, TRUE, 'Muito dócil', TRUE),
+	(11, 'Nina', '2016-06-15', 'Grande', 'F', '2020-11-30 08:15:00', NULL, 2, TRUE, 'Veterana calma e experiente', TRUE), -- 10
 	(16, 'Dina', '2021-10-25', 'Pequeno', 'F', '2024-04-18 10:45:00', 'Pinscher', 3, FALSE, 'Muito ativa', TRUE),
 	(16, 'Judy', '2018-01-30', 'Grande', 'F', '2021-01-01 11:00:00', NULL, 1, TRUE, 'Guardiã atenta', TRUE),
-	(16, 'Pirulito', '2019-09-14', 'Médio', 'M', '2022-12-12 14:30:00', NULL, 2, FALSE, 'Muito afetuoso', TRUE),
+	(16, 'Pirulito', '2019-09-14', 'Médio', 'M', '2022-12-12 14:30:00', 'Pitbull', 2, FALSE, 'Muito afetuoso', TRUE),
 	(16, 'Pepa', '2020-06-01', 'Pequeno', 'F', '2023-07-07 10:10:00', NULL, 4, TRUE, 'Adora correr', TRUE),
 	(6, 'Joca', '2022-03-03', 'Grande', 'M', '2024-02-05 09:20:00', NULL, 3, FALSE, 'Muito brincalhão', TRUE), -- 15
 	(16, 'Jynx', '2021-04-16', 'Grande', 'M', '2024-05-15 13:35:00', NULL, 1, FALSE, 'Muito inteligente', FALSE),
@@ -317,8 +327,8 @@ VALUES
     (15, 'Chibi', '2018-01-11', 'Pequeno', 'M', '2025-04-15 13:35:00', NULL, 10, FALSE, 'Medroso e pouco sociável', FALSE),
     (16, 'Chucky', '2023-01-01', 'Grande', 'M', '2024-02-15 13:35:00', NULL, 5, FALSE, 'Adora brincar na Praia', TRUE),
     (16, 'Duque', '2022-08-15', 'Grande', 'M', '2023-03-24 13:35:00', NULL, 1, TRUE, 'Adora crianças e festas', TRUE), -- 20
-    (16, 'Faial', '2023-01-01', 'Grande', 'M', '2024-03-24 13:35:00', NULL, 1, TRUE, 'Adora correr e jogar com uma bola', TRUE),
-    (16, 'Jeny', '2023-05-05', 'Grande', 'F', '2024-03-24 13:35:00', 'Rafeiro Alentejano', 1, TRUE, 'Passeios grandes mas demorados', TRUE),
+    (16, 'Faial', '2023-01-01', 'Grande', 'M', '2024-03-24 13:35:00', 'Pitbull', 1, TRUE, 'Adora correr e jogar com uma bola', TRUE),
+    (6, 'Jeny', '2023-05-05', 'Grande', 'F', '2024-03-24 13:35:00', NULL, 1, TRUE, 'Passeios grandes mas demorados', TRUE),
     (16, 'Jujú', '2023-05-05', 'Pequeno', 'F', '2025-07-01 13:35:00', NULL, 1, TRUE, 'Adora Mimos', TRUE),
     (16, 'Migalha', '2025-01-01', 'Pequeno', 'M', '2025-06-24 13:35:00', NULL, 1, TRUE, 'Medroso', TRUE); -- 24
     
@@ -362,11 +372,11 @@ VALUES  -- São todos nomes ficticios com datas ficticias
 	('Mantorras', 'Veterinário', 'mantorras@gmail.com', '911111113', '333333333'),
 	('Nuno Gomes', 'Tratador', 'nunogomes@gmail.com', '911111114', '444444444'),
 	('Óscar Cardozo', 'Tratador', 'tenhamcuidado@gmail.com', '911111115', '555555555'),
-	('Pablo Aimar', 'Administrativo', 'mago@gmail.com', '911111116', '666666666'),
+	('Pablo Aimar', 'Admin', 'mago@gmail.com', '911111116', '666666666'),
 	('Quim', 'Tratador', 'quim@gmail.com', '911111117', '777777777'),
 	('Rollheiser', 'Auxiliar', 'roll@gmail.com', '911111118', '888888888'),
 	('Salvio', 'Treinador', 'salvio@gmail.com', '911111119', '999999999'),
-	('Talisca', 'Treinador', 'talisca@gmail.com', '911111120', '000000000');
+	('Talisca', 'Admin', 'talisca@gmail.com', '911111120', '000000000');
 
 INSERT INTO voluntarios (
 	nome, email, telemovel, disponibilidade
@@ -525,379 +535,31 @@ VALUES -- fiquei sem nomes para jogadores
 	('Continente', 3, '2025-06-20', 'Bens ou Comida', 0.00, 'Doou produtos de higiene animal, ração e cobertores recolhidos.'),
 	('Afonso Eulálio', 4, '2025-07-01', 'Monetária', 200.00, 'Doação em memória do seu cão adotado.');
 
-INSERT INTO fotos (
-	cao_id, foto
-) 
-VALUES 
-	(1, LOAD_FILE('C:\\CROAE\\kyra.jpg')),
-	(2, LOAD_FILE('C:\\CROAE\\jaime.jpg')), 
-	(2, LOAD_FILE('C:\\CROAE\\jaime_2.jpg')),
-    (3, LOAD_FILE('C:\\CROAE\\be.jpg')),
-	(4, LOAD_FILE('C:\\CROAE\\tino.jpg')), 
-	(5, LOAD_FILE('C:\\CROAE\\timon.jpg')), 
-	(6, LOAD_FILE('C:\\CROAE\\dino.jpg')), 
-	(8, LOAD_FILE('C:\\CROAE\\martinha.jpg')), 
-	(9, LOAD_FILE('C:\\CROAE\\martinho.jpg')), 
-	(10, LOAD_FILE('C:\\CROAE\\nina.jpg')),
-    (11, LOAD_FILE('C:\\CROAE\\dina.jpg')),
-	(12, LOAD_FILE('C:\\CROAE\\judy.jpg')),
-    (13, LOAD_FILE('C:\\CROAE\\pirulito.jpg')), 
-    (14, LOAD_FILE('C:\\CROAE\\pepa.jpg')), 
-    (15, LOAD_FILE('C:\\CROAE\\joca.jpg')), 
-    (16, LOAD_FILE('C:\\CROAE\\jynx.jpg')),
-    (17, LOAD_FILE('C:\\CROAE\\bitoke.jpg')),
-    (18, LOAD_FILE('C:\\CROAE\\chibi.jpg')),
-    (19, LOAD_FILE('C:\\CROAE\\chucky.jpg')),
-    (20, LOAD_FILE('C:\\CROAE\\duque.jpg')),
-    (21, LOAD_FILE('C:\\CROAE\\faial.jpg')),
-    (22, LOAD_FILE('C:\\CROAE\\jeny.jpg')),
-    (23, LOAD_FILE('C:\\CROAE\\juju.jpg')),
-    (24, LOAD_FILE('C:\\CROAE\\migalha.jpg'));
-    
-/* 
------------------------------------------------
-	    Atualização/Alteração de Dados 
------------------------------------------------
-*/
+INSERT INTO fotos (cao_id, foto)
+VALUES
+(1, 'images/adotados/kyra.jpg'),
+(2, 'images/adotados/jaime.jpg'),
+(3, 'images/adotados/be.jpg'),
+(20, 'images/adotados/duque.jpg'),
+(8, 'images/adotados/martinha.jpg'),
+(6, 'images/adotados/dino.jpg'),
+(7, 'images/adotados/simba.jpg'),
+(9, 'images/adotados/martinho.jpg'),
+(10, 'images/adotados/nina.jpg'),
+(11, 'images/adotados/dina.jpg'),
+(12, 'images/adotados/judy.jpg'),
+(13, 'images/adotados/pirulito.jpg'),
+(14, 'images/adotados/pepa.jpg'),
+(15, 'images/adotados/joca.jpg'),
+(16, 'images/adotados/jynx.jpg'),
+(17, 'images/adotados/bitoke.jpg'),
+(18, 'images/adotados/chibi.jpg'),
+(19, 'images/adotados/chucky.jpg'),
+(21, 'images/adotados/faial.jpg'),
+(22, 'images/adotados/jeny.jpg'),
+(23, 'images/adotados/juju.jpg'),
+(5, 'images/adotados/timon.jpg'),
+(4, 'images/adotados/tino.jpg'),
+(24, 'images/adotados/migalha.jpg');
 
--- Tabela boxes
-UPDATE boxes
-SET ala_id = 1
-WHERE box_id = 3;
 
--- Tabela adocoes 
-UPDATE adocoes
-SET estado = 'Cancelada'
-WHERE adocao_id = 5; -- alterar de a decorrer para cancelada
-
-UPDATE adocoes
-SET estado = 'Concluida'
-WHERE adocao_id = 8; -- alterar de a decorrer para concluida
-
--- Tabela familia_adotantes
-UPDATE familia_adotantes
-SET nome = 'Marciano',
-    telemovel = '934111222'
-WHERE familia_id = 1;
-
--- Tabela doacoes
-UPDATE doacoes
-SET valor = 150.00,
-    descricao = 'Doação extra para medicamentos'
-WHERE doacao_id = 2;
-
--- Tabela vacinacoes
-UPDATE vacinacoes
-SET funcionario_id = NULL
-WHERE vacinacao_id = 2;
-
--- Tabela caes
-UPDATE caes -- adotado
-SET disponivel = FALSE 
-WHERE cao_id = 5;
-
-UPDATE caes -- adotado
-SET disponivel = FALSE
-WHERE cao_id = 8;
-
-UPDATE caes -- atualização em massa por surto de parvovirose 
-SET disponivel = FALSE;
-
-UPDATE caes  -- atualizar varios registos de uma vez
-SET castrado = TRUE 
-WHERE sexo = 'M' AND porte = 'grande';
-
--- Tabela funcionarios
-UPDATE funcionarios
-SET nome = 'Tomás Araujo', email = 'melhordefesadireito@gmail.com', telemovel = '919191919'
-WHERE funcionario_id = 10;
-
-UPDATE funcionarios
-SET ocupacao = 'Tratadores';
-
--- Tabela apadrinhamentos
-UPDATE apadrinhamentos 
-SET data_fim = '2025-07-31' 
-WHERE apadrinhamento_id = 10;
-
--- Tabela padrinhos
-UPDATE padrinhos 
-SET nome = 'Macaco Adriano' 
-WHERE padrinho_id = 1;
-
--- Tabela voluntarios 
-UPDATE voluntarios 
-SET disponibilidade = 'Todos' 
-WHERE voluntario_id = 3;
-
-UPDATE voluntarios
-SET nome = 'Tomás Araújo'
-WHERE voluntario_id = 10;
-
-UPDATE voluntarios
-SET email = 'melhordefesadireito@gmail.com', telemovel = '919191919'
-WHERE voluntario_id = 10;
-
--- Tabela vacinas 
-UPDATE vacinas 
-SET nome = 'raiva' 
-WHERE vacina_id = 2;
-
-UPDATE vacinas 
-SET nome = 'parvovirose' 
-WHERE vacina_id = 3;
-
--- Tabela ocorrencias_cao_voluntario
-UPDATE ocorrencias_cao_voluntario 
-SET seguro_ativado = FALSE 
-WHERE ocorrencias_cao_voluntario_id = 3;
-
-UPDATE ocorrencias_cao_voluntario 
-SET cao_id = 3
-WHERE voluntario_id = 2;
-
--- Tabela ocorrencias_entre_caes
-UPDATE ocorrencias_entre_caes
-SET descricao = 'Cão 3 mordeu cão 1 na Box. Foram separados por agora'
-WHERE ocorrencia_caes_id = 4;
-
--- Tabela ordens_tribunal
-UPDATE ordens_tribunal 
-SET observacao = 'Cao a ser devolvido à familia original' 
-WHERE ordem_id = 3;
-
-UPDATE ordens_tribunal
-SET cao_id = 1
-WHERE ordem_id = 2;
-
--- Tabela racas
-UPDATE racas
-SET raca = 'Labrador Retriever'
-WHERE raca_id = 5;
-
--- Tabela alas
-UPDATE alas
-SET tipo = 'Solitária'
-WHERE ala_id = 4;
-
--- Tabela consultas_veterinario
-UPDATE consultas_veterinario
-SET custo = 250.00,
-    observacao = 'Necessario ficar internado'
-WHERE consulta_id = 2;
-
--- Tabela fotos
-UPDATE fotos
-SET foto = LOAD_FILE('C:\\CROAE\\kyra_2.jpg')
-WHERE cao_id = 1;
-
-/* 
------------------------------------------
-            Exclusão de Registos
------------------------------------------
-*/
--- Eliminar alguns registos
-
--- Tabela racas
-DELETE FROM racas 
-WHERE raca_id = 16; -- deixou de ser proibido usar o termo "Rafeiro"
-
-DELETE FROM racas 
-WHERE raca = 'chihahua'; -- dois chihuahuas na lista
-
--- Tabela boxes
-DELETE FROM boxes 
-WHERE box_id = 5; -- box que é destruida
-
-DELETE FROM boxes 
-WHERE box_id = 6; -- box que é destruida
-
--- Tabela caes
-DELETE FROM caes 
-WHERE cao_id = 10; -- cão que morreu
-
-DELETE FROM caes 
-WHERE data_nascimento < '2020-01-01'; -- situações como há transferencia de cães para outra associação
-
--- Tabela adocoes 
-DELETE FROM adocoes 
-WHERE estado = 'Cancelada';
-
-DELETE FROM adocoes 
-WHERE estado = 'Concluida';
-
--- Tabela padrinhos
-DELETE FROM padrinhos -- pediu para eliminar registos pessoais
-WHERE padrinho_ID = 5;
-
-DELETE FROM padrinhos  -- padrinho quis eliminar registo mas só sabia o email.
-WHERE email = 'beto@gmail.com';
-
--- Tabela apadrinhamentos
-DELETE FROM apadrinhamentos 
-WHERE data_fim < '2025-07-01'; -- apagar registos de apadrinhamentos que já acabaram no inicio do ano
-
--- Tabela familia_adotantes
-DELETE FROM familia_adotantes
-WHERE familia_id = 4; -- pediu para eliminar registos pessoais
-
--- Tabela ocorrencias_cao_voluntario
-DELETE FROM ocorrencias_cao_voluntario -- situação resolvida
-WHERE ocorrencias_cao_voluntario_id = 3;
-
-DELETE FROM ocorrencias_cao_voluntario  -- muito antigos para manter
-WHERE data_ocorrencia < '2020-01-01';
-
--- Tabela ocorrencias_entre_caes
-DELETE FROM ocorrencias_entre_caes 
-WHERE data_ocorrencia < '2025-01-01';-- apagar registos de ocorrencias que são de outros anos
-
--- Tabela consultas_veterinario
-DELETE FROM consultas_veterinario 
-WHERE data_consulta < '2020-01-01'; -- apagar registos de consultas que sao anteriores há 5 anos
-
--- Tabela vacinas
-DELETE FROM vacinas 
-WHERE nome LIKE '%Esgana%'; -- vacina desatualizada que já não é administrada
-
--- Tabela vacinacoes
-DELETE FROM vacinacoes 
-WHERE data_vacinacao < '2020-01-01'; -- eliminar vacinas anteriores a 5 anos 
-
--- Tabela ordens_tribunal
-DELETE FROM ordens_tribunal
-WHERE cao_id = 4;
-
-DELETE FROM ordens_tribunal -- apagar todos
-WHERE observacao LIKE '%';
-
--- Tabela funcionarios
-DELETE FROM funcionarios -- impedir emails mal inseridos
-WHERE email NOT LIKE '%@%';
-
--- Tabela voluntarios
-DELETE FROM voluntarios -- impedir emails mal inseridos
-WHERE email NOT LIKE '%@%';
-
--- Tabela alas
-DELETE FROM alas  -- está a ser construida uma nova
-WHERE ala_id = 2; 
-
-DELETE FROM alas 
-WHERE ala_id > 3;
-
--- Tabela doacoes
-DELETE FROM doacoes 
-WHERE doacao_id = 10;
-
-DELETE FROM doacoes -- evitar valores negativos.
-WHERE valor < 0;
-
--- Tabela fotos
-DELETE FROM fotos 
-WHERE foto_id = 10; -- adotado
-
-DELETE FROM fotos 
-WHERE cao_id = 1; -- Não pode ser adotado, foto retirada
-
--- Eliminar todos os registos nas tabelas 
-DELETE FROM fotos;
-DELETE FROM doacoes;
-DELETE FROM adocoes;
-DELETE FROM familia_adotantes;
-DELETE FROM ordens_tribunal; 
-DELETE FROM ocorrencias_entre_caes;
-DELETE FROM ocorrencias_cao_voluntario;
-DELETE FROM vacinacoes;
-DELETE FROM vacinas;
-DELETE FROM consultas_veterinario;
-DELETE FROM voluntarios;
-DELETE FROM funcionarios;
-DELETE FROM apadrinhamentos;
-DELETE FROM padrinhos;
-DELETE FROM caes;
-DELETE FROM boxes;
-DELETE FROM alas;
-DELETE FROM racas;
-
-/* 
----------------------------------------------------------
-        Apagar Chaves Estrangeiras e Indices 
----------------------------------------------------------
-*/
-
--- Apagar Chaves Estrangeiras que são usadas nos Índices
-ALTER TABLE caes DROP FOREIGN KEY fk_caes_racas;
-ALTER TABLE caes DROP FOREIGN KEY fk_caes_boxes;
-ALTER TABLE consultas_veterinario DROP FOREIGN KEY fk_consultas_veterinario_caes;
-ALTER TABLE consultas_veterinario DROP FOREIGN KEY fk_consultas_veterinario_funcionarios;
-ALTER TABLE vacinacoes DROP FOREIGN KEY fk_vacinacoes_caes;
-ALTER TABLE vacinacoes DROP FOREIGN KEY fk_vacinacoes_vacinas;
-
--- Apagar indices 
-ALTER TABLE caes DROP INDEX idx_data_nascimento;
--- Para as racas
-ALTER TABLE caes DROP INDEX  idx_raca_id;
--- Consultas
-ALTER TABLE consultas_veterinario DROP INDEX idx_consultas_cao_data;
--- Vacinacoes
-ALTER TABLE vacinacoes DROP INDEX idx_vacinacoes_cao_data;
-
-/*
--------------------------------------------------
-        Remover Privilégios e Utilizadores
--------------------------------------------------
-*/
-
--- Apagar Privilégios
-REVOKE ALL PRIVILEGES, GRANT OPTION FROM 'administrador'@'localhost';
-FLUSH PRIVILEGES;
-
-REVOKE SELECT, INSERT, UPDATE ON croae_projeto.* FROM 'funcionario'@'localhost';
-FLUSH PRIVILEGES;
-
-REVOKE SELECT ON croae_projeto.caes FROM 'utilizador'@'localhost';
-FLUSH PRIVILEGES;
-
-REVOKE SELECT ON croae_projeto.racas FROM 'utilizador'@'localhost';
-FLUSH PRIVILEGES;
-
--- Apagar Utilizadores
-DROP USER IF EXISTS 'administrador'@'localhost';
-
-DROP USER IF EXISTS 'funcionario'@'localhost';
-
-DROP USER IF EXISTS 'utilizador'@'localhost';
-
-/*
---------------------------------
-        Apagar Entidades
---------------------------------
-*/
-
-DROP TABLE IF EXISTS fotos;
-DROP TABLE IF EXISTS doacoes;
-DROP TABLE IF EXISTS adocoes;
-DROP TABLE IF EXISTS familia_adotantes;
-DROP TABLE IF EXISTS ordens_tribunal; 
-DROP TABLE IF EXISTS ocorrencias_entre_caes;
-DROP TABLE IF EXISTS ocorrencias_cao_voluntario;
-DROP TABLE IF EXISTS vacinacoes;
-DROP TABLE IF EXISTS vacinas;
-DROP TABLE IF EXISTS consultas_veterinario;
-DROP TABLE IF EXISTS voluntarios;
-DROP TABLE IF EXISTS funcionarios;
-DROP TABLE IF EXISTS apadrinhamentos;
-DROP TABLE IF EXISTS padrinhos;
-DROP TABLE IF EXISTS caes;
-DROP TABLE IF EXISTS boxes;
-DROP TABLE IF EXISTS alas;
-DROP TABLE IF EXISTS racas;
-
-/*
---------------------------------
-        Apagar Database
---------------------------------
-*/
-
-DROP DATABASE IF EXISTS croae_projeto;
