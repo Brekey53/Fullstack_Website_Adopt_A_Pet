@@ -255,12 +255,12 @@ function prepararEventoRaca() {
 function validarDadosCao(dados) {
     const erros = [];
 
-    // 1. Validação do Nome
+    // Validação do Nome
     if (!dados.nome || dados.nome.trim().length < 2) {
         erros.push("O nome do cão é obrigatório e deve ter pelo menos 2 letras.");
     }
 
-    // 2. Validação da Data de Nascimento
+    // Validação da Data de Nascimento
     if (!dados.dataNascimento) {
         erros.push("A data de nascimento é obrigatória.");
     } else {
@@ -273,8 +273,8 @@ function validarDadosCao(dados) {
         }
     }
 
-    // 3. Validação de Selects (Porte, Sexo, Raça)
-    const portesValidos = ["Pequeno", "Médio", "Grande"]; // Ajusta conforme os teus values
+    // Validação de Selects (Porte, Sexo, Raça)
+    const portesValidos = ["Pequeno", "Médio", "Grande"];
     if (!portesValidos.includes(dados.porte)) {
         erros.push("Selecione um porte válido.");
     }
@@ -283,12 +283,12 @@ function validarDadosCao(dados) {
         erros.push("Selecione o sexo do animal.");
     }
 
-    // 4. Validação da Raça (ID deve ser número positivo)
+    // Validação da Raça
     if (!dados.racaId || isNaN(dados.racaId) || dados.racaId <= 0) {
         erros.push("Selecione uma raça válida.");
     }
 
-    // 6. Característica
+    // Característica
     if (dados.caracteristica && dados.caracteristica.length > 500) {
         erros.push("A característica é muito longa (máximo 500 caracteres).");
     }
