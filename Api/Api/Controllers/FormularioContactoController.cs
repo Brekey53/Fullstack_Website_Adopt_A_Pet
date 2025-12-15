@@ -19,7 +19,8 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
                 mail.From = new MailAddress("croaemoita@gmail.com", "CROAE");
                 mail.To.Add(form.Email);
                 mail.Subject = $"Resposta ao contacto: {form.Nome}";
-                mail.Body = $"Olá {form.Nome},\n\nObrigado pelo teu contacto!\nTipo de visita escolhido: {form.TipoVisita}";
+                mail.Body = $"Olá {form.Nome},\n\nObrigado pelo teu contacto! Tipo de visita escolhido: {form.TipoVisita}" + 
+                    "\nEm breve entraremos em contacto consigo :) !\nObrigado!\n\nCROAE ";
                 mail.IsBodyHtml = false;
 
                 using var smtp = new SmtpClient("smtp.gmail.com", 587)
@@ -32,9 +33,13 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
 
                 return Ok("Email enviado com sucesso.");
             }
-            catch (Exception ex)
+            catch (SmtpException)
             {
-                return BadRequest($"Erro ao enviar email: {ex.Message}");
+                return StatusCode(500, "Erro ao enviar email. Tente mais tarde.");
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Erro do servidor.");
             }
         }
     }

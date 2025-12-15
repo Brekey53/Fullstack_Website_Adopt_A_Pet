@@ -62,6 +62,14 @@ async function guardar() {
     cruzamentoRaca: cruzamentoInput ? cruzamentoInput.value : null
   };
 
+    const resultadoValidacao = validarDadosCao(dados);
+
+    if (!resultadoValidacao.valido) {
+        // Exibe os erros
+        alert("Por favor, corrija os seguintes erros:\n- " + resultadoValidacao.erros.join("\n- "));
+        return; // Pára a execução para não enviar dados errados
+    }
+
   const resposta = await fetch(
     `https://localhost:7035/api/caes/${dados.caoId}`,
     {
@@ -242,4 +250,51 @@ function prepararEventoRaca() {
       container.innerHTML = "";
     }
   });
+}
+
+function validarDadosCao(dados) {
+    const erros = [];
+
+    // 1. Validação do Nome
+    if (!dados.nome || dados.nome.trim().length < 2) {
+        erros.push("O nome do cão é obrigatório e deve ter pelo menos 2 letras.");
+    }
+
+    // 2. Validação da Data de Nascimento
+    if (!dados.dataNascimento) {
+        erros.push("A data de nascimento é obrigatória.");
+    } else {
+        const dataNasc = new Date(dados.dataNascimento);
+        const hoje = new Date();
+        if (isNaN(dataNasc.getTime())) {
+            erros.push("Data de nascimento inválida.");
+        } else if (dataNasc > hoje) {
+            erros.push("A data de nascimento não pode ser no futuro.");
+        }
+    }
+
+    // 3. Validação de Selects (Porte, Sexo, Raça)
+    const portesValidos = ["Pequeno", "Médio", "Grande"]; // Ajusta conforme os teus values
+    if (!portesValidos.includes(dados.porte)) {
+        erros.push("Selecione um porte válido.");
+    }
+
+    if (dados.sexo !== "M" && dados.sexo !== "F") {
+        erros.push("Selecione o sexo do animal.");
+    }
+
+    // 4. Validação da Raça (ID deve ser número positivo)
+    if (!dados.racaId || isNaN(dados.racaId) || dados.racaId <= 0) {
+        erros.push("Selecione uma raça válida.");
+    }
+
+    // 6. Característica
+    if (dados.caracteristica && dados.caracteristica.length > 500) {
+        erros.push("A característica é muito longa (máximo 500 caracteres).");
+    }
+
+    return {
+        valido: erros.length === 0,
+        erros: erros
+    };
 }

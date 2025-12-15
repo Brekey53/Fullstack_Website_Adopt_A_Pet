@@ -167,7 +167,7 @@ document.addEventListener("DOMContentLoaded", function () {
           nomeDoador,
           tipoDoacao: "Bens ou Comida",
           valor: valorTotal,
-          descricao: descricaoDoacao + " - " + produtoAtual,
+          descricao: descricaoDoacao + " - Produto: " + produtoAtual + " - Quantidade: " + quantidade,
           data: new Date().toISOString(),
         }),
       });
