@@ -19,7 +19,8 @@ namespace ApiAndreLeonorProjetoFinal.Controllers
                 mail.From = new MailAddress("croaemoita@gmail.com", "CROAE");
                 mail.To.Add(form.Email);
                 mail.Subject = $"Resposta ao contacto: {form.Nome}";
-                mail.Body = $"Olá {form.Nome},\n\nObrigado pelo teu contacto!\nTipo de visita escolhido: {form.TipoVisita}";
+                mail.Body = $"Olá {form.Nome},\n\nObrigado pelo teu contacto!\nTipo de visita escolhido: {form.TipoVisita}" + 
+                    "\nEm breve entraremos em contacto consigo!\nObrigado!\n CROAE ";
                 mail.IsBodyHtml = false;
 
                 using var smtp = new SmtpClient("smtp.gmail.com", 587)
