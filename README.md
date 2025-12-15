@@ -162,12 +162,4 @@ Fullstack_Website_Adopt_A_Pet/
 
 ### Desenvolvido por André Correia e Leonor Joaquim || 2025
 
-<<<<<<< HEAD
-[![GitHub](https://img.shields.io/badge/GitHub-leonormcjoaquim-181717?style=for-the-badge&logo=github)](https://github.com/leonormcjoaquim) [![GitHub](https://img.shields.io/badge/GitHub-Brekey53-181717?style=for-the-badge&logo=github)](https://github.com/Brekey53)
-
-```
-
-```
-=======
 [![GitHub](https://img.shields.io/badge/GitHub-Brekey53-181717?style=for-the-badge&logo=github)](https://github.com/Brekey53) [![GitHub](https://img.shields.io/badge/GitHub-leonormcjoaquim-181717?style=for-the-badge&logo=github)](https://github.com/leonormcjoaquim)
->>>>>>> 28782b28653e7776d92098cdd4f9a4c0714ae408
